@@ -34,3 +34,10 @@ These are demo projects we have built using **bluey**.
 - [Blueybeacon][4] - displaying sensor data on web using a Raspberry Pi as gateway.
 
 ## Coming Soon...
+
+- Data logging
+- HID on Raspberry Pi
+- Pedometer
+- Object Tracker
+- nRF IoT SDK 6LowPAN demo
+- Quadcopter
