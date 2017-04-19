@@ -1,19 +1,29 @@
-Nordic nRF52832 BLE development board with sensors.
+![bluey](bluey-1.0.png)
+
+**Bluey** is a BLE development board with Temperature/Humidity, Ambient Light and
+Accelerometer sensors.
+
 
 ## Specifications
 
-- Nordic nRF52832 
-- TI HDC1010 Temperature/Humidity sensor 
-- Avago APDS-9301 ambient light sensor 
-- MMA8653 accelerometer 
-- RGB LED 
-- 2 push buttons 
-- CP2104 USB interface (built-in serial bootloader for code upload) 
-- Coin cell holder 
-- External Power supply options 
-- SWD interface 
-- 2.4 GHz PCB antenna 
-- built-in NFC PCB antenna 
-
+- Nordic nRF52832 QFAA BLE SoC
+- TI HDC1010 Temperature/Humidity sensor
+- APDS-9300-020 ambient light sensor
+- LSM6DS3 accelerometer
+- RGB LED
+- 2 push buttons
+- CP2104 USB interface
+- Coin cell holder
+- Micro SD slot
+- 2.4 GHz PCB antenna
+- NFC PCB antenna
 
 https://hackaday.io/project/19962-bluey
+
+## Examples
+
+These are demo projects that use **bluey**.
+
+- [SensorTest][1] - outputs all sensor data via UART/USB
+
+[1]:  
