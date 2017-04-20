@@ -8,7 +8,7 @@ Accelerometer sensors.
 
 - Nordic nRF52832 QFAA BLE SoC
 - TI HDC1010 Temperature/Humidity sensor
-- Broadcom APDS-9300-020 ambient light sensor
+- APDS-9300-020 ambient light sensor
 - ST Micro LSM6DS3 accelerometer
 - CREE RGB LED
 - CP2104 USB interface
@@ -18,13 +18,19 @@ Accelerometer sensors.
 - 2.4 GHz PCB antenna
 - NFC PCB antenna
 
+## What can you do with Bluey?
+
+Well, it's up to your imagination. :-)
+
+## Getting Started with Bluey
+
+
+
+## Bluey project on hackaday.io
+
 https://hackaday.io/project/19962-bluey
 
-## What can you use Bluey for?
-
-...
-
-## Examples
+## Projects that use Bluey
 
 These are demo projects we have built using **bluey**.
 
@@ -34,6 +40,8 @@ These are demo projects we have built using **bluey**.
 - [Blueybeacon][4] - displaying sensor data on web using a Raspberry Pi as gateway.
 
 ## Coming Soon...
+
+Some of the things that we are working on...
 
 - Data logging
 - HID on Raspberry Pi
