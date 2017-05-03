@@ -13,6 +13,18 @@
 #include "LSM6DS3.h"
 
 static struct IMU_settings settings;
+
+/*
+ * function to test availablility of IMU
+*/
+void LSM6DS3_who_am_i(void)
+{
+  uint32_t err_code;
+  uint8_t who_am_i = 0;
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, WHO_AM_I, &who_am_i, 1, false);
+  APP_ERROR_CHECK(err_code);
+}
+
 /*
  * init function
 */
@@ -23,13 +35,13 @@ void LSM6DS3_init(void)
   settings.accel_enable           = 1;      // 0 - Disable. 1 - Enable
   settings.accel_ODR              = 1;
   settings.accel_range            = 2;     // Full Scale(FS) range (in g). Select from: 2, 4, 8, 16
-  settings.accel_samplerate       = 104;    // Hz. Select from: 13, 26, 52, 104, 208, 416, 833, 1666
-  settings.accel_bandwidth        = 100;    // Hz. Select from: 50, 100, 200, 400
+  settings.accel_samplerate       = 416;    // Hz. Select from: 13, 26, 52, 104, 208, 416, 833, 1666
+  settings.accel_bandwidth        = 200;    // Hz. Select from: 50, 100, 200, 400
   settings.accel_FIFO_enable      = 0;      // Set to include accelerometer data in FIFO buffer
   settings.accel_FIFO_decimation  = 0;      // Set to activate.
 
   settings.gyro_enable            = 1;      // 0 - Disable. 1 - Enable
-  settings.gyro_range             = 2000;   // Anguar Rate range (in deg/s).  Can be: 125, 245, 500, 1000, 2000
+  settings.gyro_range             = 2000;   // Angular Rate range (in deg/s).  Can be: 125, 245, 500, 1000, 2000
 	settings.gyro_samplerate        = 104;    // Hz. Select from: 13, 26, 52, 104, 208, 416, 833, 1666
 	settings.gyro_bandwidth         = 400;    // Hz. Select from: 50, 100, 200, 400;
 	settings.gyro_FIFO_enable       = 0;      // Set to include gyroscope data in FIFO buffer
@@ -54,17 +66,8 @@ void LSM6DS3_init(void)
 }
 
 /*
- * function to test availablility of IMU
+ * function to configure IMU parameters.
 */
-void LSM6DS3_who_am_i(void)
-{
-  uint32_t err_code;
-  uint8_t who_am_i = 0;
-  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, WHO_AM_I, &who_am_i, 1, false);
-  APP_ERROR_CHECK(err_code);
-}
-
-
 void LSM6DS3_config(void)
 {
   ret_code_t err_code;
@@ -261,11 +264,17 @@ void LSM6DS3_read_accl_data(int16_t *x_axis, int16_t *y_axis, int16_t *z_axis)
   *z_axis = (data[5] << 8) | data[4];
 }
 
+/*
+ * function to compute raw accelerometer data in g
+*/
 float LSM6DS3_accelData_in_g(int16_t raw_data)
 {
   return ((float) ((raw_data * 0.061 * (settings.accel_range >> 1)) / 1000 ));
 }
 
+/*
+ * function to compute raw gyroscope data in degrees per second (dps)
+*/
 float LSM6DS3_gyroData_in_dps(int16_t raw_data)
 {
   uint8_t gyro_range_divisor;
@@ -279,6 +288,7 @@ float LSM6DS3_gyroData_in_dps(int16_t raw_data)
 
   return ((float) ((raw_data * 4.375 * gyro_range_divisor) / 1000 ));
 }
+
 /*
  * functioon to read gyroscope data
 */
@@ -463,4 +473,43 @@ void LSM6DS3_clear_FIFO_buffer(void)
   while((LSM6DS3_read_FIFO_status() & 0x1000) == 0) {
     LSM6DS3_read_FIFO_buffer();
   }
+}
+
+/*
+ * function to configure tap functionality
+*/
+void LSM6DS3_tap_detect_config()
+{
+  ret_code_t err_code;
+  uint8_t tx_data[2];
+
+  // Enable tap detection on X, Y, Z axis, but do not latch output
+  tx_data[0] = TAP_CFG;
+  tx_data[1] = 0x0E;
+  err_code =  nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // Set tap threshold
+  tx_data[0] = TAP_THRS_6D;
+  tx_data[1] = 0x03;
+  err_code =  nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // Set Duration, Quiet and Shock time windows
+  tx_data[0] = INT_DUR2;
+  tx_data[1] = 0x7F;
+  err_code =  nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // Single & Double tap enabled (SINGLE_DOUBLE_TAP = 1)
+  tx_data[0] = WAKE_UP_THRS;
+  tx_data[1] = 0x80;
+  err_code =  nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // Single tap interrupt driven to INT1 pin -- enable latch
+  tx_data[0] = MD2_CFG;
+  tx_data[1] = 0x48;
+  err_code =  nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
 }

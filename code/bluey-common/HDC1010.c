@@ -91,13 +91,15 @@ uint16_t HDC1010_get_manuf_id(void)
   return manuf_id;
 }
 
-// read temperature values only. (raw)
-void HDC1010_get_temp_raw(uint16_t* temp_val)
+// read temperature values only.
+float HDC1010_get_temp(void)
 {
   ret_code_t err_code;
   uint8_t tx_buffer = TEMP_REG;
   uint8_t temp_data[2];
-    // trigger measurement.
+  uint16_t temp_val;
+  float temp;
+  // trigger measurement.
   err_code = nrf_drv_twi_tx(&p_twi_sensors, HDC1010_ADDR, &tx_buffer, 1, false);
   APP_ERROR_CHECK(err_code);
   // wait for measurement to complete
@@ -106,25 +108,21 @@ void HDC1010_get_temp_raw(uint16_t* temp_val)
   err_code = nrf_drv_twi_rx(&p_twi_sensors, HDC1010_ADDR, temp_data, sizeof(temp_data));
   APP_ERROR_CHECK(err_code);
 
-  *temp_val = (temp_data[0] << 8) | temp_data[1];
-}
-// read temperature values only.
-float HDC1010_get_temp(void)
-{
-  uint16_t temp_val;
-  HDC1010_get_temp_raw(&temp_val);
+  temp_val = (temp_data[0] << 8) | temp_data[1];
 
   // temperature (in C)
-  float temp = ((temp_val / pow_16) * 165 - 40);
+  temp = ((temp_val / pow_16) * 165 - 40);
   return temp;
 }
 
-// read humidity values only (RAW values)
-void HDC1010_get_humid_raw(uint16_t* humid_val)
+// read humidity values only.
+float HDC1010_get_humid(void)
 {
   ret_code_t err_code;
   uint8_t tx_buffer = HUMIDITY_REG;
   uint8_t humid_data[2];
+  uint16_t humid_val;
+  float humid;
   // trigger measurement.
   err_code = nrf_drv_twi_tx(&p_twi_sensors, HDC1010_ADDR, &tx_buffer, 1, false);
   APP_ERROR_CHECK(err_code);
@@ -134,17 +132,10 @@ void HDC1010_get_humid_raw(uint16_t* humid_val)
   err_code = nrf_drv_twi_rx(&p_twi_sensors, HDC1010_ADDR, humid_data, sizeof(humid_data));
   APP_ERROR_CHECK(err_code);
 
-  *humid_val = (humid_data[0] << 8) | humid_data[1];
-}
-
-// read humidity values only.
-float HDC1010_get_humid(void)
-{
-  uint16_t humid_val;
-  HDC1010_get_humid_raw(&humid_val);
+  humid_val = (humid_data[0] << 8) | humid_data[1];
 
   // temperature (in C)
-  float humid = ((humid_val / pow_16) * 100);
+  humid = ((humid_val / pow_16) * 100);
   return humid;
 }
 

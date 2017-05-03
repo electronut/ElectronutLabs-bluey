@@ -76,6 +76,16 @@
 #define FIFO_DATA_OUT_L         0x3E
 #define FIFO_DATA_OUT_H         0x3F
 
+#define FUNC_SRC								0x53
+#define TAP_CFG									0x58
+#define TAP_THRS_6D							0X59
+#define INT_DUR2								0X5A
+#define WAKE_UP_THRS						0X5B
+#define WAKE_UP_DUR 						0x5C
+#define FREE_FALL 							0x5D
+#define MD1_CFG 								0x5E
+#define MD2_CFG 								0x5F
+
 /*******************************************************************************
 * Register      : FIFO_CTRL1
 * Address       : 0X06
@@ -222,6 +232,172 @@ typedef enum {
 } LSM6DS3_IMU_ODR_FIFO_t;
 
 /*******************************************************************************
+* Register      : INT1_CTRL
+* Address       : 0X0D
+* Bit Group Name: INT1_DRDY_XL
+* Permission    : R/W
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_DRDY_XL_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_DRDY_XL_ENABLED 		   = 0x01,
+} LSM6DS3_IMU_INT1_DRDY_XL_t;
+
+/*******************************************************************************
+* Register      : INT1_CTRL
+* Address       : 0X0D
+* Bit Group Name: INT1_DRDY_G
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_DRDY_G_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_DRDY_G_ENABLED 		 = 0x02,
+} LSM6DS3_IMU_INT1_DRDY_G_t;
+
+/*******************************************************************************
+* Register      : INT1_CTRL
+* Address       : 0X0D
+* Bit Group Name: INT1_BOOT
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_BOOT_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_BOOT_ENABLED 		 = 0x04,
+} LSM6DS3_IMU_INT1_BOOT_t;
+
+/*******************************************************************************
+* Register      : INT1_CTRL
+* Address       : 0X0D
+* Bit Group Name: INT1_FTH
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_FTH_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_FTH_ENABLED 		   = 0x08,
+} LSM6DS3_IMU_INT1_FTH_t;
+
+/*******************************************************************************
+* Register      : INT1_CTRL
+* Address       : 0X0D
+* Bit Group Name: INT1_OVR
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_OVR_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_OVR_ENABLED 		   = 0x10,
+} LSM6DS3_IMU_INT1_OVR_t;
+
+/*******************************************************************************
+* Register      : INT1_CTRL
+* Address       : 0X0D
+* Bit Group Name: INT1_FSS5
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_FSS5_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_FSS5_ENABLED 		 = 0x20,
+} LSM6DS3_IMU_INT1_FSS5_t;
+
+/*******************************************************************************
+* Register      : INT1_CTRL
+* Address       : 0X0D
+* Bit Group Name: INT1_SIGN_MOT
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_SIGN_MOT_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_SIGN_MOT_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_INT1_SIGN_MOT_t;
+
+/*******************************************************************************
+* Register      : INT1_CTRL
+* Address       : 0X0D
+* Bit Group Name: INT1_PEDO
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_PEDO_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_PEDO_ENABLED 		 = 0x80,
+} LSM6DS3_IMU_INT1_PEDO_t;
+
+/*******************************************************************************
+* Register      : INT2_CTRL
+* Address       : 0X0E
+* Bit Group Name: INT2_DRDY_XL
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_DRDY_XL_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_DRDY_XL_ENABLED 		   = 0x01,
+} LSM6DS3_IMU_INT2_DRDY_XL_t;
+
+/*******************************************************************************
+* Register      : INT2_CTRL
+* Address       : 0X0E
+* Bit Group Name: INT2_DRDY_G
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_DRDY_G_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_DRDY_G_ENABLED 		 = 0x02,
+} LSM6DS3_IMU_INT2_DRDY_G_t;
+
+/*******************************************************************************
+* Register      : INT2_CTRL
+* Address       : 0X0E
+* Bit Group Name: INT2_FTH
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_FTH_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_FTH_ENABLED 		   = 0x08,
+} LSM6DS3_IMU_INT2_FTH_t;
+
+/*******************************************************************************
+* Register      : INT2_CTRL
+* Address       : 0X0E
+* Bit Group Name: INT2_OVR
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_OVR_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_OVR_ENABLED 		   = 0x10,
+} LSM6DS3_IMU_INT2_OVR_t;
+
+/*******************************************************************************
+* Register      : INT2_CTRL
+* Address       : 0X0E
+* Bit Group Name: INT2_FSS5
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_FSS5_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_FSS5_ENABLED 		 = 0x20,
+} LSM6DS3_IMU_INT2_FSS5_t;
+
+/*******************************************************************************
+* Register      : INT2_CTRL
+* Address       : 0X0E
+* Bit Group Name: INT2_SIGN_MOT
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_SIGN_MOT_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_SIGN_MOT_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_INT2_SIGN_MOT_t;
+
+/*******************************************************************************
+* Register      : INT2_CTRL
+* Address       : 0X0E
+* Bit Group Name: INT2_PEDO
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_PEDO_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_PEDO_ENABLED 		 = 0x80,
+} LSM6DS3_IMU_INT2_PEDO_t;
+
+
+/*******************************************************************************
 * Register      : CTRL1_XL
 * Address       : 0X10
 * Bit Group Name: BW_XL
@@ -311,6 +487,298 @@ typedef enum {
 } LSM6DS3_IMU_ODR_G_t;
 
 /*******************************************************************************
+* Register      : CTRL3_C
+* Address       : 0X12
+* Bit Group Name: SW_RESET
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SW_RESET_NORMAL_MODE 		 = 0x00,
+	LSM6DS3_IMU_SW_RESET_RESET_DEVICE 		 = 0x01,
+} LSM6DS3_IMU_SW_RESET_t;
+
+/*******************************************************************************
+* Register      : CTRL3_C
+* Address       : 0X12
+* Bit Group Name: BLE
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_BLE_LSB 		 = 0x00,
+	LSM6DS3_IMU_BLE_MSB 		 = 0x02,
+} LSM6DS3_IMU_BLE_t;
+
+/*******************************************************************************
+* Register      : CTRL3_C
+* Address       : 0X12
+* Bit Group Name: IF_INC
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_IF_INC_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_IF_INC_ENABLED 		 = 0x04,
+} LSM6DS3_IMU_IF_INC_t;
+
+/*******************************************************************************
+* Register      : CTRL3_C
+* Address       : 0X12
+* Bit Group Name: SIM
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SIM_4_WIRE 		 = 0x00,
+	LSM6DS3_IMU_SIM_3_WIRE 		 = 0x08,
+} LSM6DS3_IMU_SIM_t;
+
+/*******************************************************************************
+* Register      : CTRL3_C
+* Address       : 0X12
+* Bit Group Name: PP_OD
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_PP_OD_PUSH_PULL 		 = 0x00,
+	LSM6DS3_IMU_PP_OD_OPEN_DRAIN 		 = 0x10,
+} LSM6DS3_IMU_PP_OD_t;
+
+/*******************************************************************************
+* Register      : CTRL3_C
+* Address       : 0X12
+* Bit Group Name: INT_ACT_LEVEL
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT_ACT_LEVEL_ACTIVE_HI 		 = 0x00,
+	LSM6DS3_IMU_INT_ACT_LEVEL_ACTIVE_LO 		 = 0x20,
+} LSM6DS3_IMU_INT_ACT_LEVEL_t;
+
+/*******************************************************************************
+* Register      : CTRL3_C
+* Address       : 0X12
+* Bit Group Name: BDU
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_BDU_CONTINUOS 		 = 0x00,
+	LSM6DS3_IMU_BDU_BLOCK_UPDATE 		 = 0x40,
+} LSM6DS3_IMU_BDU_t;
+
+/*******************************************************************************
+* Register      : CTRL3_C
+* Address       : 0X12
+* Bit Group Name: BOOT
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_BOOT_NORMAL_MODE 		 = 0x00,
+	LSM6DS3_IMU_BOOT_REBOOT_MODE 		 = 0x80,
+} LSM6DS3_IMU_BOOT_t;
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: STOP_ON_FTH
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_STOP_ON_FTH_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_STOP_ON_FTH_ENABLED 		 = 0x01,
+} LSM6DS3_IMU_STOP_ON_FTH_t;
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: MODE3_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_MODE3_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_MODE3_EN_ENABLED 		 = 0x02,
+} LSM6DS3_IMU_MODE3_EN_t;
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: I2C_DISABLE
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_I2C_DISABLE_I2C_AND_SPI 		 = 0x00,
+	LSM6DS3_IMU_I2C_DISABLE_SPI_ONLY 		 = 0x04,
+} LSM6DS3_IMU_I2C_DISABLE_t;
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: DRDY_MSK
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DRDY_MSK_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_DRDY_MSK_ENABLED 		 = 0x08,
+} LSM6DS3_IMU_DRDY_MSK_t;
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: FIFO_TEMP_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_FIFO_TEMP_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_FIFO_TEMP_EN_ENABLED 		 = 0x10,
+} LSM6DS3_IMU_FIFO_TEMP_EN_t;
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: INT2_ON_INT1
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_ON_INT1_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_ON_INT1_ENABLED 		 = 0x20,
+} LSM6DS3_IMU_INT2_ON_INT1_t;
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: SLEEP_G
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SLEEP_G_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_SLEEP_G_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_SLEEP_G_t;
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: BW_SCAL_ODR
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_BW_SCAL_ODR_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_BW_SCAL_ODR_ENABLED 		 = 0x80,
+} LSM6DS3_IMU_BW_SCAL_ODR_t;
+
+/*******************************************************************************
+* Register      : CTRL5_C
+* Address       : 0X14
+* Bit Group Name: ST_XL
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_ST_XL_NORMAL_MODE 		 = 0x00,
+	LSM6DS3_IMU_ST_XL_POS_SIGN_TEST 		 = 0x01,
+	LSM6DS3_IMU_ST_XL_NEG_SIGN_TEST 		 = 0x02,
+	LSM6DS3_IMU_ST_XL_NA 		 = 0x03,
+} LSM6DS3_IMU_ST_XL_t;
+
+/*******************************************************************************
+* Register      : CTRL5_C
+* Address       : 0X14
+* Bit Group Name: ST_G
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_ST_G_NORMAL_MODE 		 = 0x00,
+	LSM6DS3_IMU_ST_G_POS_SIGN_TEST 		 = 0x04,
+	LSM6DS3_IMU_ST_G_NA 		 = 0x08,
+	LSM6DS3_IMU_ST_G_NEG_SIGN_TEST 		 = 0x0C,
+} LSM6DS3_IMU_ST_G_t;
+
+/*******************************************************************************
+* Register      : CTRL6_G
+* Address       : 0X15
+* Bit Group Name: LP_XL
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_LP_XL_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_LP_XL_ENABLED 		 = 0x10,
+} LSM6DS3_IMU_LP_XL_t;
+
+/*******************************************************************************
+* Register      : CTRL6_G
+* Address       : 0X15
+* Bit Group Name: DEN_LVL2_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DEN_LVL2_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_DEN_LVL2_EN_ENABLED 		 = 0x20,
+} LSM6DS3_IMU_DEN_LVL2_EN_t;
+
+/*******************************************************************************
+* Register      : CTRL6_G
+* Address       : 0X15
+* Bit Group Name: DEN_LVL_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DEN_LVL_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_DEN_LVL_EN_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_DEN_LVL_EN_t;
+
+/*******************************************************************************
+* Register      : CTRL6_G
+* Address       : 0X15
+* Bit Group Name: DEN_EDGE_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DEN_EDGE_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_DEN_EDGE_EN_ENABLED 		 = 0x80,
+} LSM6DS3_IMU_DEN_EDGE_EN_t;
+
+/*******************************************************************************
+* Register      : CTRL7_G
+* Address       : 0X16
+* Bit Group Name: HPM_G
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_HPM_G_NORMAL_MODE 		 = 0x00,
+	LSM6DS3_IMU_HPM_G_REF_SIGNAL 		 = 0x10,
+	LSM6DS3_IMU_HPM_G_NORMAL_MODE_2 		 = 0x20,
+	LSM6DS3_IMU_HPM_G_AUTO_RESET_ON_INT 		 = 0x30,
+} LSM6DS3_IMU_HPM_G_t;
+
+/*******************************************************************************
+* Register      : CTRL7_G
+* Address       : 0X16
+* Bit Group Name: HP_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_HP_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_HP_EN_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_HP_EN_t;
+
+/*******************************************************************************
+* Register      : CTRL7_G
+* Address       : 0X16
+* Bit Group Name: LP_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_LP_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_LP_EN_ENABLED 		 = 0x80,
+} LSM6DS3_IMU_LP_EN_t;
+
+/*******************************************************************************
+* Register      : CTRL8_XL
+* Address       : 0X17
+* Bit Group Name: FDS
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_FDS_FILTER_OFF 		 = 0x00,
+	LSM6DS3_IMU_FDS_FILTER_ON 		 = 0x04,
+} LSM6DS3_IMU_FDS_t;
+
+/*******************************************************************************
 * Register      : CTRL9_XL
 * Address       : 0X18
 * Bit Group Name: XEN_XL
@@ -351,7 +819,7 @@ typedef enum {
 *******************************************************************************/
 typedef enum {
 	LSM6DS3_IMU_SIGN_MOTION_EN_DISABLED 		 = 0x00,
-	LSM6DS3_IMU_SIGN_MOTION_EN_ENABLED 		 = 0x01,
+	LSM6DS3_IMU_SIGN_MOTION_EN_ENABLED 		   = 0x01,
 } LSM6DS3_IMU_SIGN_MOTION_EN_t;
 
 /*******************************************************************************
@@ -409,16 +877,347 @@ typedef enum {
 	LSM6DS3_IMU_FUNC_EN_ENABLED 	 = 0x04,
 } LSM6DS3_IMU_FUNC_EN_t;
 
+
+/*******************************************************************************
+* Register      : MASTER_CONFIG
+* Address       : 0X1A
+* Bit Group Name: MASTER_ON
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_MASTER_ON_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_MASTER_ON_ENABLED 		 = 0x01,
+} LSM6DS3_IMU_MASTER_ON_t;
+
+/*******************************************************************************
+* Register      : MASTER_CONFIG
+* Address       : 0X1A
+* Bit Group Name: IRON_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_IRON_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_IRON_EN_ENABLED 		 = 0x02,
+} LSM6DS3_IMU_IRON_EN_t;
+
+/*******************************************************************************
+* Register      : MASTER_CONFIG
+* Address       : 0X1A
+* Bit Group Name: PASS_THRU_MODE
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_PASS_THRU_MODE_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_PASS_THRU_MODE_ENABLED 		 = 0x04,
+} LSM6DS3_IMU_PASS_THRU_MODE_t;
+
+/*******************************************************************************
+* Register      : MASTER_CONFIG
+* Address       : 0X1A
+* Bit Group Name: PULL_UP_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_PULL_UP_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_PULL_UP_EN_ENABLED 		 = 0x08,
+} LSM6DS3_IMU_PULL_UP_EN_t;
+
+/*******************************************************************************
+* Register      : MASTER_CONFIG
+* Address       : 0X1A
+* Bit Group Name: START_CONFIG
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_START_CONFIG_XL_G_DRDY 		 = 0x00,
+	LSM6DS3_IMU_START_CONFIG_EXT_INT2 		 = 0x10,
+} LSM6DS3_IMU_START_CONFIG_t;
+
+/*******************************************************************************
+* Register      : MASTER_CONFIG
+* Address       : 0X1A
+* Bit Group Name: DATA_VAL_SEL_FIFO
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DATA_VAL_SEL_FIFO_XL_G_DRDY 		 = 0x00,
+	LSM6DS3_IMU_DATA_VAL_SEL_FIFO_SHUB_DRDY 		 = 0x40,
+} LSM6DS3_IMU_DATA_VAL_SEL_FIFO_t;
+
+/*******************************************************************************
+* Register      : MASTER_CONFIG
+* Address       : 0X1A
+* Bit Group Name: DRDY_ON_INT1
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DRDY_ON_INT1_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_DRDY_ON_INT1_ENABLED 		 = 0x80,
+} LSM6DS3_IMU_DRDY_ON_INT1_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_SRC
+* Address       : 0X1B
+* Bit Group Name: Z_WU
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_Z_WU_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_Z_WU_DETECTED 		 = 0x01,
+} LSM6DS3_IMU_Z_WU_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_SRC
+* Address       : 0X1B
+* Bit Group Name: Y_WU
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_Y_WU_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_Y_WU_DETECTED 		 = 0x02,
+} LSM6DS3_IMU_Y_WU_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_SRC
+* Address       : 0X1B
+* Bit Group Name: X_WU
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_X_WU_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_X_WU_DETECTED 		 = 0x04,
+} LSM6DS3_IMU_X_WU_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_SRC
+* Address       : 0X1B
+* Bit Group Name: WU_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_WU_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_WU_EV_STATUS_DETECTED 		 = 0x08,
+} LSM6DS3_IMU_WU_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_SRC
+* Address       : 0X1B
+* Bit Group Name: SLEEP_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SLEEP_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_SLEEP_EV_STATUS_DETECTED 		 = 0x10,
+} LSM6DS3_IMU_SLEEP_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_SRC
+* Address       : 0X1B
+* Bit Group Name: FF_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_FF_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_FF_EV_STATUS_DETECTED 		 = 0x20,
+} LSM6DS3_IMU_FF_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : TAP_SRC
+* Address       : 0X1C
+* Bit Group Name: Z_TAP
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_Z_TAP_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_Z_TAP_DETECTED 		 = 0x01,
+} LSM6DS3_IMU_Z_TAP_t;
+
+/*******************************************************************************
+* Register      : TAP_SRC
+* Address       : 0X1C
+* Bit Group Name: Y_TAP
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_Y_TAP_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_Y_TAP_DETECTED 		 = 0x02,
+} LSM6DS3_IMU_Y_TAP_t;
+
+/*******************************************************************************
+* Register      : TAP_SRC
+* Address       : 0X1C
+* Bit Group Name: X_TAP
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_X_TAP_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_X_TAP_DETECTED 		 = 0x04,
+} LSM6DS3_IMU_X_TAP_t;
+
+/*******************************************************************************
+* Register      : TAP_SRC
+* Address       : 0X1C
+* Bit Group Name: TAP_SIGN
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TAP_SIGN_POS_SIGN 		 = 0x00,
+	LSM6DS3_IMU_TAP_SIGN_NEG_SIGN 		 = 0x08,
+} LSM6DS3_IMU_TAP_SIGN_t;
+
+/*******************************************************************************
+* Register      : TAP_SRC
+* Address       : 0X1C
+* Bit Group Name: DOUBLE_TAP_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DOUBLE_TAP_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_DOUBLE_TAP_EV_STATUS_DETECTED 		 = 0x10,
+} LSM6DS3_IMU_DOUBLE_TAP_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : TAP_SRC
+* Address       : 0X1C
+* Bit Group Name: SINGLE_TAP_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SINGLE_TAP_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_SINGLE_TAP_EV_STATUS_DETECTED 		 = 0x20,
+} LSM6DS3_IMU_SINGLE_TAP_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : TAP_SRC
+* Address       : 0X1C
+* Bit Group Name: TAP_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TAP_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_TAP_EV_STATUS_DETECTED 		 = 0x40,
+} LSM6DS3_IMU_TAP_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : D6D_SRC
+* Address       : 0X1D
+* Bit Group Name: DSD_XL
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DSD_XL_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_DSD_XL_DETECTED 		 = 0x01,
+} LSM6DS3_IMU_DSD_XL_t;
+
+/*******************************************************************************
+* Register      : D6D_SRC
+* Address       : 0X1D
+* Bit Group Name: DSD_XH
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DSD_XH_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_DSD_XH_DETECTED 		 = 0x02,
+} LSM6DS3_IMU_DSD_XH_t;
+
+/*******************************************************************************
+* Register      : D6D_SRC
+* Address       : 0X1D
+* Bit Group Name: DSD_YL
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DSD_YL_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_DSD_YL_DETECTED 		 = 0x04,
+} LSM6DS3_IMU_DSD_YL_t;
+
+/*******************************************************************************
+* Register      : D6D_SRC
+* Address       : 0X1D
+* Bit Group Name: DSD_YH
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DSD_YH_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_DSD_YH_DETECTED 		 = 0x08,
+} LSM6DS3_IMU_DSD_YH_t;
+
+/*******************************************************************************
+* Register      : D6D_SRC
+* Address       : 0X1D
+* Bit Group Name: DSD_ZL
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DSD_ZL_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_DSD_ZL_DETECTED 		 = 0x10,
+} LSM6DS3_IMU_DSD_ZL_t;
+
+/*******************************************************************************
+* Register      : D6D_SRC
+* Address       : 0X1D
+* Bit Group Name: DSD_ZH
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_DSD_ZH_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_DSD_ZH_DETECTED 		 = 0x20,
+} LSM6DS3_IMU_DSD_ZH_t;
+
+/*******************************************************************************
+* Register      : D6D_SRC
+* Address       : 0X1D
+* Bit Group Name: D6D_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_D6D_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_D6D_EV_STATUS_DETECTED 		 = 0x40,
+} LSM6DS3_IMU_D6D_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : STATUS_REG
+* Address       : 0X1E
+* Bit Group Name: XLDA
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_XLDA_NO_DATA_AVAIL 		 = 0x00,
+	LSM6DS3_IMU_XLDA_DATA_AVAIL 		 = 0x01,
+} LSM6DS3_IMU_XLDA_t;
+
+/*******************************************************************************
+* Register      : STATUS_REG
+* Address       : 0X1E
+* Bit Group Name: GDA
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_GDA_NO_DATA_AVAIL 		 = 0x00,
+	LSM6DS3_IMU_GDA_DATA_AVAIL 		 = 0x02,
+} LSM6DS3_IMU_GDA_t;
+
+/*******************************************************************************
+* Register      : STATUS_REG
+* Address       : 0X1E
+* Bit Group Name: EV_BOOT
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_EV_BOOT_NO_BOOT_RUNNING 		 = 0x00,
+	LSM6DS3_IMU_EV_BOOT_BOOT_IS_RUNNING 		 = 0x08,
+} LSM6DS3_IMU_EV_BOOT_t;
+
 /*******************************************************************************
 * Register      : FIFO_STATUS1
 * Address       : 0X3A
 * Bit Group Name: DIFF_FIFO
 * Permission    : RO
 *******************************************************************************/
-#define  	LSM6DS3_ACC_GYRO_DIFF_FIFO_STATUS1_MASK  	0xFF
-#define  	LSM6DS3_ACC_GYRO_DIFF_FIFO_STATUS1_POSITION  	0
-#define  	LSM6DS3_ACC_GYRO_DIFF_FIFO_STATUS2_MASK  0xF
-#define  	LSM6DS3_ACC_GYRO_DIFF_FIFO_STATUS2_POSITION  	0
+#define  	LSM6DS3_IMU_DIFF_FIFO_STATUS1_MASK  	0xFF
+#define  	LSM6DS3_IMU_DIFF_FIFO_STATUS1_POSITION  	0
+#define  	LSM6DS3_IMU_DIFF_FIFO_STATUS2_MASK  0xF
+#define  	LSM6DS3_IMU_DIFF_FIFO_STATUS2_POSITION  	0
 
 /*******************************************************************************
 * Register      : FIFO_STATUS2
@@ -427,9 +1226,9 @@ typedef enum {
 * Permission    : RO
 *******************************************************************************/
 typedef enum {
-	LSM6DS3_ACC_GYRO_FIFO_EMPTY_FIFO_NOT_EMPTY 	= 0x00,
-	LSM6DS3_ACC_GYRO_FIFO_EMPTY_FIFO_EMPTY 		 	= 0x10,
-} LSM6DS3_ACC_GYRO_FIFO_EMPTY_t;
+	LSM6DS3_IMU_FIFO_EMPTY_FIFO_NOT_EMPTY 		 = 0x00,
+	LSM6DS3_IMU_FIFO_EMPTY_FIFO_EMPTY 		 = 0x10,
+} LSM6DS3_IMU_FIFO_EMPTY_t;
 
 /*******************************************************************************
 * Register      : FIFO_STATUS2
@@ -438,9 +1237,9 @@ typedef enum {
 * Permission    : RO
 *******************************************************************************/
 typedef enum {
-	LSM6DS3_ACC_GYRO_FIFO_FULL_FIFO_NOT_FULL 		= 0x00,
-	LSM6DS3_ACC_GYRO_FIFO_FULL_FIFO_FULL 		 		= 0x20,
-} LSM6DS3_ACC_GYRO_FIFO_FULL_t;
+	LSM6DS3_IMU_FIFO_FULL_FIFO_NOT_FULL 		 = 0x00,
+	LSM6DS3_IMU_FIFO_FULL_FIFO_FULL 		 = 0x20,
+} LSM6DS3_IMU_FIFO_FULL_t;
 
 /*******************************************************************************
 * Register      : FIFO_STATUS2
@@ -449,9 +1248,9 @@ typedef enum {
 * Permission    : RO
 *******************************************************************************/
 typedef enum {
-	LSM6DS3_ACC_GYRO_OVERRUN_NO_OVERRUN 		 		= 0x00,
-	LSM6DS3_ACC_GYRO_OVERRUN_OVERRUN 		 				= 0x40,
-} LSM6DS3_ACC_GYRO_OVERRUN_t;
+	LSM6DS3_IMU_OVERRUN_NO_OVERRUN 		 = 0x00,
+	LSM6DS3_IMU_OVERRUN_OVERRUN 		 = 0x40,
+} LSM6DS3_IMU_OVERRUN_t;
 
 /*******************************************************************************
 * Register      : FIFO_STATUS2
@@ -460,9 +1259,9 @@ typedef enum {
 * Permission    : RO
 *******************************************************************************/
 typedef enum {
-	LSM6DS3_ACC_GYRO_WTM_BELOW_WTM 		 					= 0x00,
-	LSM6DS3_ACC_GYRO_WTM_ABOVE_OR_EQUAL_WTM 		= 0x80,
-} LSM6DS3_ACC_GYRO_WTM_t;
+	LSM6DS3_IMU_WTM_BELOW_WTM 		 = 0x00,
+	LSM6DS3_IMU_WTM_ABOVE_OR_EQUAL_WTM 		 = 0x80,
+} LSM6DS3_IMU_WTM_t;
 
 /*******************************************************************************
 * Register      : FIFO_STATUS3
@@ -470,13 +1269,456 @@ typedef enum {
 * Bit Group Name: FIFO_PATTERN
 * Permission    : RO
 *******************************************************************************/
-#define  	LSM6DS3_ACC_GYRO_FIFO_STATUS3_PATTERN_MASK  		0xFF
-#define  	LSM6DS3_ACC_GYRO_FIFO_STATUS3_PATTERN_POSITION  0
-#define  	LSM6DS3_ACC_GYRO_FIFO_STATUS4_PATTERN_MASK  		0x03
-#define  	LSM6DS3_ACC_GYRO_FIFO_STATUS4_PATTERN_POSITION  0
+#define  	LSM6DS3_IMU_FIFO_STATUS3_PATTERN_MASK  	0xFF
+#define  	LSM6DS3_IMU_FIFO_STATUS3_PATTERN_POSITION  	0
+#define  	LSM6DS3_IMU_FIFO_STATUS4_PATTERN_MASK  	0x03
+#define  	LSM6DS3_IMU_FIFO_STATUS4_PATTERN_POSITION  	0
+
+/*******************************************************************************
+* Register      : FUNC_SRC
+* Address       : 0X53
+* Bit Group Name: SENS_HUB_END
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SENS_HUB_END_STILL_ONGOING 		 = 0x00,
+	LSM6DS3_IMU_SENS_HUB_END_OP_COMPLETED 		 = 0x01,
+} LSM6DS3_IMU_SENS_HUB_END_t;
+
+/*******************************************************************************
+* Register      : FUNC_SRC
+* Address       : 0X53
+* Bit Group Name: SOFT_IRON_END
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SOFT_IRON_END_NOT_COMPLETED 		 = 0x00,
+	LSM6DS3_IMU_SOFT_IRON_END_COMPLETED 		 = 0x02,
+} LSM6DS3_IMU_SOFT_IRON_END_t;
+
+/*******************************************************************************
+* Register      : FUNC_SRC
+* Address       : 0X53
+* Bit Group Name: PEDO_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_PEDO_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_PEDO_EV_STATUS_DETECTED 		 = 0x10,
+} LSM6DS3_IMU_PEDO_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : FUNC_SRC
+* Address       : 0X53
+* Bit Group Name: TILT_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TILT_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_TILT_EV_STATUS_DETECTED 		 = 0x20,
+} LSM6DS3_IMU_TILT_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : FUNC_SRC
+* Address       : 0X53
+* Bit Group Name: SIGN_MOT_EV_STATUS
+* Permission    : RO
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SIGN_MOT_EV_STATUS_NOT_DETECTED 		 = 0x00,
+	LSM6DS3_IMU_SIGN_MOT_EV_STATUS_DETECTED 		 = 0x40,
+} LSM6DS3_IMU_SIGN_MOT_EV_STATUS_t;
+
+/*******************************************************************************
+* Register      : TAP_CFG
+* Address       : 0X58
+* Bit Group Name: LIR
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_LIR_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_LIR_ENABLED 		 = 0x01,
+} LSM6DS3_IMU_LIR_t;
+
+/*******************************************************************************
+* Register      : TAP_CFG
+* Address       : 0X58
+* Bit Group Name: TAP_Z_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TAP_Z_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_TAP_Z_EN_ENABLED 		 = 0x02,
+} LSM6DS3_IMU_TAP_Z_EN_t;
+
+/*******************************************************************************
+* Register      : TAP_CFG
+* Address       : 0X58
+* Bit Group Name: TAP_Y_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TAP_Y_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_TAP_Y_EN_ENABLED 		 = 0x04,
+} LSM6DS3_IMU_TAP_Y_EN_t;
+
+/*******************************************************************************
+* Register      : TAP_CFG
+* Address       : 0X58
+* Bit Group Name: TAP_X_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TAP_X_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_TAP_X_EN_ENABLED 		 = 0x08,
+} LSM6DS3_IMU_TAP_X_EN_t;
+
+/*******************************************************************************
+* Register      : TAP_CFG
+* Address       : 0X58
+* Bit Group Name: TILT_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TILT_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_TILT_EN_ENABLED 		 = 0x20,
+} LSM6DS3_IMU_TILT_EN_t;
+
+/*******************************************************************************
+* Register      : TAP_CFG
+* Address       : 0X58
+* Bit Group Name: PEDO_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_PEDO_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_PEDO_EN_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_PEDO_EN_t;
+
+/*******************************************************************************
+* Register      : TAP_CFG
+* Address       : 0X58
+* Bit Group Name: TIMER_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TIMER_EN_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_TIMER_EN_ENABLED 		 = 0x80,
+} LSM6DS3_IMU_TIMER_EN_t;
+
+/*******************************************************************************
+* Register      : TAP_THS_6D
+* Address       : 0X59
+* Bit Group Name: TAP_THS
+* Permission    : RW
+*******************************************************************************/
+#define  	LSM6DS3_IMU_TAP_THS_MASK  	0x1F
+#define  	LSM6DS3_IMU_TAP_THS_POSITION  	0
+
+/*******************************************************************************
+* Register      : TAP_THS_6D
+* Address       : 0X59
+* Bit Group Name: SIXD_THS
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SIXD_THS_80_degree 		 = 0x00,
+	LSM6DS3_IMU_SIXD_THS_70_degree 		 = 0x20,
+	LSM6DS3_IMU_SIXD_THS_60_degree 		 = 0x40,
+	LSM6DS3_IMU_SIXD_THS_50_degree 		 = 0x60,
+} LSM6DS3_IMU_SIXD_THS_t;
+
+/*******************************************************************************
+* Register      : INT_DUR2
+* Address       : 0X5A
+* Bit Group Name: SHOCK
+* Permission    : RW
+*******************************************************************************/
+#define  	LSM6DS3_IMU_SHOCK_MASK  	0x03
+#define  	LSM6DS3_IMU_SHOCK_POSITION  	0
+
+/*******************************************************************************
+* Register      : INT_DUR2
+* Address       : 0X5A
+* Bit Group Name: QUIET
+* Permission    : RW
+*******************************************************************************/
+#define  	LSM6DS3_IMU_QUIET_MASK  	0x0C
+#define  	LSM6DS3_IMU_QUIET_POSITION  	2
+
+/*******************************************************************************
+* Register      : INT_DUR2
+* Address       : 0X5A
+* Bit Group Name: DUR
+* Permission    : RW
+*******************************************************************************/
+#define  	LSM6DS3_IMU_DUR_MASK  	0xF0
+#define  	LSM6DS3_IMU_DUR_POSITION  	4
+
+/*******************************************************************************
+* Register      : WAKE_UP_THS
+* Address       : 0X5B
+* Bit Group Name: WK_THS
+* Permission    : RW
+*******************************************************************************/
+#define  	LSM6DS3_IMU_WK_THS_MASK  	0x3F
+#define  	LSM6DS3_IMU_WK_THS_POSITION  	0
+
+/*******************************************************************************
+* Register      : WAKE_UP_THS
+* Address       : 0X5B
+* Bit Group Name: INACTIVITY_ON
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INACTIVITY_ON_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INACTIVITY_ON_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_INACTIVITY_ON_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_THS
+* Address       : 0X5B
+* Bit Group Name: SINGLE_DOUBLE_TAP
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_SINGLE_DOUBLE_TAP_DOUBLE_TAP 		 = 0x00,
+	LSM6DS3_IMU_SINGLE_DOUBLE_TAP_SINGLE_TAP 		 = 0x80,
+} LSM6DS3_IMU_SINGLE_DOUBLE_TAP_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_DUR
+* Address       : 0X5C
+* Bit Group Name: SLEEP_DUR
+* Permission    : RW
+*******************************************************************************/
+#define  	LSM6DS3_IMU_SLEEP_DUR_MASK  	0x0F
+#define  	LSM6DS3_IMU_SLEEP_DUR_POSITION  	0
+
+/*******************************************************************************
+* Register      : WAKE_UP_DUR
+* Address       : 0X5C
+* Bit Group Name: TIMER_HR
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_TIMER_HR_6_4ms 		 = 0x00,
+	LSM6DS3_IMU_TIMER_HR_25us 		 = 0x10,
+} LSM6DS3_IMU_TIMER_HR_t;
+
+/*******************************************************************************
+* Register      : WAKE_UP_DUR
+* Address       : 0X5C
+* Bit Group Name: WAKE_DUR
+* Permission    : RW
+*******************************************************************************/
+#define  	LSM6DS3_IMU_WAKE_DUR_MASK  	0x60
+#define  	LSM6DS3_IMU_WAKE_DUR_POSITION  	5
+
+/*******************************************************************************
+* Register      : FREE_FALL
+* Address       : 0X5D
+* Bit Group Name: FF_DUR
+* Permission    : RW
+*******************************************************************************/
+#define  	LSM6DS3_IMU_FF_FREE_FALL_DUR_MASK  		0xF8
+#define  	LSM6DS3_IMU_FF_FREE_FALL_DUR_POSITION  	3
+#define  	LSM6DS3_IMU_FF_WAKE_UP_DUR_MASK  			0x80
+#define  	LSM6DS3_IMU_FF_WAKE_UP_DUR_POSITION  	7
 
 
+/*******************************************************************************
+* Register      : FREE_FALL
+* Address       : 0X5D
+* Bit Group Name: FF_THS
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_FF_THS_5 		   = 0x00,
+	LSM6DS3_IMU_FF_THS_7 		   = 0x01,
+	LSM6DS3_IMU_FF_THS_8 		 	 = 0x02,
+	LSM6DS3_IMU_FF_THS_10 		 = 0x03,
+	LSM6DS3_IMU_FF_THS_11 		 = 0x04,
+	LSM6DS3_IMU_FF_THS_13 		 = 0x05,
+	LSM6DS3_IMU_FF_THS_15 		 = 0x06,
+	LSM6DS3_IMU_FF_THS_16 		 = 0x07,
+} LSM6DS3_IMU_FF_THS_t;
 
+/*******************************************************************************
+* Register      : MD1_CFG
+* Address       : 0X5E
+* Bit Group Name: INT1_TIMER
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_TIMER_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_TIMER_ENABLED 		 = 0x01,
+} LSM6DS3_IMU_INT1_TIMER_t;
+
+/*******************************************************************************
+* Register      : MD1_CFG
+* Address       : 0X5E
+* Bit Group Name: INT1_TILT
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_TILT_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_TILT_ENABLED 		 = 0x02,
+} LSM6DS3_IMU_INT1_TILT_t;
+
+/*******************************************************************************
+* Register      : MD1_CFG
+* Address       : 0X5E
+* Bit Group Name: INT1_6D
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_6D_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_6D_ENABLED 		 = 0x04,
+} LSM6DS3_IMU_INT1_6D_t;
+
+/*******************************************************************************
+* Register      : MD1_CFG
+* Address       : 0X5E
+* Bit Group Name: INT1_TAP
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_TAP_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_TAP_ENABLED 		 = 0x08,
+} LSM6DS3_IMU_INT1_TAP_t;
+
+/*******************************************************************************
+* Register      : MD1_CFG
+* Address       : 0X5E
+* Bit Group Name: INT1_FF
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_FF_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_FF_ENABLED 		 = 0x10,
+} LSM6DS3_IMU_INT1_FF_t;
+
+/*******************************************************************************
+* Register      : MD1_CFG
+* Address       : 0X5E
+* Bit Group Name: INT1_WU
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_WU_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_WU_ENABLED 		 = 0x20,
+} LSM6DS3_IMU_INT1_WU_t;
+
+/*******************************************************************************
+* Register      : MD1_CFG
+* Address       : 0X5E
+* Bit Group Name: INT1_SINGLE_TAP
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_SINGLE_TAP_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_SINGLE_TAP_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_INT1_SINGLE_TAP_t;
+
+/*******************************************************************************
+* Register      : MD1_CFG
+* Address       : 0X5E
+* Bit Group Name: INT1_SLEEP
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT1_SLEEP_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT1_SLEEP_ENABLED 		 = 0x80,
+} LSM6DS3_IMU_INT1_SLEEP_t;
+
+/*******************************************************************************
+* Register      : MD2_CFG
+* Address       : 0X5F
+* Bit Group Name: INT2_TIMER
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_TIMER_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_TIMER_ENABLED 		 = 0x01,
+} LSM6DS3_IMU_INT2_TIMER_t;
+
+/*******************************************************************************
+* Register      : MD2_CFG
+* Address       : 0X5F
+* Bit Group Name: INT2_TILT
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_TILT_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_TILT_ENABLED 		 = 0x02,
+} LSM6DS3_IMU_INT2_TILT_t;
+
+/*******************************************************************************
+* Register      : MD2_CFG
+* Address       : 0X5F
+* Bit Group Name: INT2_6D
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_6D_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_6D_ENABLED 		 = 0x04,
+} LSM6DS3_IMU_INT2_6D_t;
+
+/*******************************************************************************
+* Register      : MD2_CFG
+* Address       : 0X5F
+* Bit Group Name: INT2_TAP
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_TAP_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_TAP_ENABLED 		 = 0x08,
+} LSM6DS3_IMU_INT2_TAP_t;
+
+/*******************************************************************************
+* Register      : MD2_CFG
+* Address       : 0X5F
+* Bit Group Name: INT2_FF
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_FF_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_FF_ENABLED 		 = 0x10,
+} LSM6DS3_IMU_INT2_FF_t;
+
+/*******************************************************************************
+* Register      : MD2_CFG
+* Address       : 0X5F
+* Bit Group Name: INT2_WU
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_WU_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_WU_ENABLED 		 = 0x20,
+} LSM6DS3_IMU_INT2_WU_t;
+
+/*******************************************************************************
+* Register      : MD2_CFG
+* Address       : 0X5F
+* Bit Group Name: INT2_SINGLE_TAP
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_SINGLE_TAP_DISABLED 		 = 0x00,
+	LSM6DS3_IMU_INT2_SINGLE_TAP_ENABLED 		 = 0x40,
+} LSM6DS3_IMU_INT2_SINGLE_TAP_t;
+
+/*******************************************************************************
+* Register      : MD2_CFG
+* Address       : 0X5F
+* Bit Group Name: INT2_SLEEP
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+	LSM6DS3_IMU_INT2_SLEEP_DISABLED 		 		 = 0x00,
+	LSM6DS3_IMU_INT2_SLEEP_ENABLED 		 			 = 0x80,
+} LSM6DS3_IMU_INT2_SLEEP_t;
 
 
 struct IMU_settings {
@@ -524,7 +1766,7 @@ ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_
 void LSM6DS3_who_am_i(void);
 
 /*
- * function to configure accelerometer, gyroscope and temperature sensors
+ * function to configure IMU parameters
 */
 void LSM6DS3_config();
 
@@ -535,7 +1777,7 @@ void LSM6DS3_read_accl_data(int16_t *x_axis, int16_t *y_axis, int16_t *z_axis);
 
 
 /*
- * function to calculate acceleration value (in g)
+ * function to compute raw accelerometer data in g
 */
 float LSM6DS3_accelData_in_g(int16_t raw_data);
 
@@ -545,7 +1787,7 @@ float LSM6DS3_accelData_in_g(int16_t raw_data);
 void LSM6DS3_read_gyro_data(int16_t *gyro_x, int16_t *gyro_y, int16_t *gyro_z);
 
 /*
- * function to calculate gyroscope value (in dps)
+ * function to compute raw gyroscope data in degrees per second (dps)
 */
 float LSM6DS3_gyroData_in_dps(int16_t raw_data);
 
@@ -568,3 +1810,8 @@ uint16_t LSM6DS3_read_FIFO_status(void);
  * function to read FIFO buffer
 */
 int16_t LSM6DS3_read_FIFO_buffer(void);
+
+/*
+ * function to configure tap functionality
+*/
+void LSM6DS3_tap_detect_config();
