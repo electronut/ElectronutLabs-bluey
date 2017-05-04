@@ -26,11 +26,13 @@ NFC, and in fact the board comes with a built-in NFC PCB antenna.
 
 ## Getting Started with Bluey
 
-Now that you got yourself a **bluey** here's what you need to get started.
+Now that you got yourself a **bluey**, here's what you need to get started.
 
 ### Building code for Bluey
 
-
+If you are just getting started with the nRF52832, we recommend that you set up and
+use the Nordic nRF5 SDK for programming **bluey**. [Click here](nrf5-sdk-setup.md) to
+read our *Getting Started with nRF5 SDK* guide.
 
 ### Uploading code to Bluey
 
