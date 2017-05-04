@@ -60,5 +60,3 @@ currently out to use in Embedded Systems training courses.
 The *code/* folder
 in this repository has a bunch of interesting demo projects that we have built using
 **bluey** - so do take a look!
-
-[1]:
