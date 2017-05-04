@@ -11,7 +11,7 @@
 
 * Select following packages under Basic Setup:
 
-![](images/images/mingw.png)
+![](images/mingw.png)
 
 * Select: Installation > Apply Changes > Apply
 
