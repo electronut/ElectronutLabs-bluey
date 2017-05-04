@@ -37,11 +37,11 @@ Now that you got yourself a **bluey** here's what you need to get started.
 There are two main ways of uploading code into **bluey**:
 
 1. Use the built-in OTA (over the air) bootloader which lets you upload code
-using a phone.
+using a phone. [Click here](ota-prog.md) to read about this option.
 
 2. Use an external programmer to upload the code. Here are a few ways of doing this:
    1. Using the Nordic nRF52-DK. [Click here](nRF52-DK-prog.md) to explore this option.
-   2. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to read
+   2. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to learn
   about this option.
 
 ## What can you do with Bluey?
