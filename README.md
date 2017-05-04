@@ -26,14 +26,22 @@ NFC, and in fact the board comes with a built-in NFC PCB antenna.
 
 ## Getting Started with Bluey
 
+Now that you got yourself a **bluey** here's what you need to get started.
+
+### Building code for Bluey
+
+
+
+### Uploading code to Bluey
+
 There are two main ways of uploading code into **bluey**:
 
 1. Use the built-in OTA (over the air) bootloader which lets you upload code
 using a phone.
 
 2. Use an external programmer to upload the code. Here are a few ways of doing this:
-  1. Using the Nordic nRF52-DK. [Click here](nRF52-DK-prog.md) to explore this option.
-  2. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to read
+   1. Using the Nordic nRF52-DK. [Click here](nRF52-DK-prog.md) to explore this option.
+   2. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to read
   about this option.
 
 ## What can you do with Bluey?
