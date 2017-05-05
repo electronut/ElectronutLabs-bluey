@@ -14,17 +14,25 @@ using another cheap (USD 2) piece of hardware - an ST-Link V2 clone.
 
 These instructions are for Windows OS.
 
+### Preparing the hardware
+
 Here's what you need for this task:
 
 1. One STM32F103 "Blue Pill"
 2. One cheap ST-Link V2 clone
 3. [STM32 ST-Link Utility][2] from ST Microelectronics.
 
+(Why not just use two ST-Link V2s? Well, because some of those use the STMF32F101
+chip, and we need STM32F103 to ensure that Black Magic Probe firmware
+works properly.)
+
 Here's what the hardware looks like:
 
 ![blue-pill](images/bp-st.jpg)
 
 Now, hook them up as follows.
+
+### Using the hardware
 
 Ensure that the yellow jumpers on the "blue pill" are set such that BOOT0 and
 BOOT1 and connected to GND.
