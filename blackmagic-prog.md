@@ -1,6 +1,6 @@
-# Programming & Debugging Bluey using Black Magic Probe
+# Programming Bluey using Black Magic Probe
 
-The [Black Magic Probe][1]is an Open Source debugging tool for
+The [Black Magic Probe][1] is an Open Source debugging tool for
 embedded microprocessors. It greatly simplifies the debugging and code
 uploading process using just GDB. Another great thing is that the firmware
 for this tool can run on very inexpensive hardware. We're going to leverage this
