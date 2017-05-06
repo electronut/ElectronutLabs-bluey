@@ -116,8 +116,10 @@ Reading symbols from blinky.hex...(no debugging symbols found)...done.
 
 Now let's run the program.
 
+```
 (gdb) run
 Starting program: C:\mahesh\nRF5_SDK_12.2.0_f012efa\examples\peripheral\blinky\pca10040\blank\armgcc\_build\blinky.hex
+```
 
 At this point you'll be able to see the LED blinking on **bluey** in various colors.
 
