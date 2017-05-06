@@ -2,7 +2,7 @@
 
 *Note: A similar procedure will work with the nRF51-DK as well.*
 
-![Need setup photo...]()
+![nRF52-DK + Bluey](images/nRF52-DK-bluey.jpg)
 
 Connect the DK to Bluey as follows:
 
