@@ -73,10 +73,17 @@ Type "apropos word" to search for commands related to "word".
 (gdb)
 ```
 
+Now you need to connect to the target. The Black Magic Probe hardware will
+create two COM ports, and you need to connect to the first one for debugging.
+(You can see the ports in the *Device Manager*.)
+
+
 ```
 (gdb) target extended-remote COM5
 Remote debugging using COM5
 ```
+
+Now, we scan for targets. We're using SWD here.
 
 ```
 (gdb) monitor swdp_scan
@@ -86,6 +93,9 @@ No. Att Driver
  1      Nordic nRF52
 ```
 
+You can see above that it found our nRF52 target - the chip in Bluey. Now
+let's connect to it.
+
 ```
 (gdb) attach 1
 Attaching to Remote target
@@ -94,6 +104,13 @@ determining executable automatically.  Try using the "file" command.
 0x0002099e in ?? ()
 (gdb)
 ```
+
+Now let's upload soem code to the flash memory.
+
+Now we're ready to do some debugging. We'll use the *.out* file, since that has
+the symbols present for debugging.
+
+
 
 
 [1]: https://github.com/blacksphere/blackmagic/wiki
