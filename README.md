@@ -51,13 +51,13 @@ using a phone. [Click here](ota-prog.md) to read about this option.
 
 You can use **bluey** for a wide range of projects. The BLE part is ideal for IoT
 projects, or if you want to control something with your phone. The nRF52832 SoC
-has a powerful ARM Cortex-M4F CPU, so you can use this board for any general purpose
-microcontroller project as well.
+has a powerful ARM Cortex-M4F CPU, so you can use this board for general purpose
+microcontroller projects as well.
 
 With BLE and useful built-in sensors, **bluey** is a great platform for learning
 IoT, BLE programming, ARM, and microcontrollers in general. In fact, it's being
-currently out to use in Embedded Systems training courses.
+currently used in Embedded Systems training courses.
 
-The *code/* folder
+The [code](code/) folder
 in this repository has a bunch of interesting demo projects that we have built using
 **bluey** - so do take a look!
