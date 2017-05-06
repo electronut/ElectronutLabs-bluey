@@ -21,8 +21,8 @@ Here's what you need for this task:
 1. One STM32F103 "Blue Pill"
 2. One cheap ST-Link V2 clone
 3. [STM32 ST-Link Utility][2] from ST Microelectronics.
-4. Install the [GNU ARM Embedded][3] toolchain, and ensure that the tools
-are added to your PATH variable.
+4. Install the [GNU ARM Embedded][3] toolchain, and the Nordic nRF5 SDK. Read
+our [SDk setup guide](nrf5-sdk-setup.md) for help.
 
 (Why not just use two ST-Link V2s? Well, because some of those use the STMF32F101
 chip, and we need STM32F103 to ensure that Black Magic Probe firmware
@@ -34,14 +34,18 @@ Here's what the hardware looks like:
 
 Now, hook them up as follows.
 
-### Using the hardware
-
 Ensure that the yellow jumpers on the "blue pill" are set such that BOOT0 and
 BOOT1 and connected to GND.
 
+- driver issues -
+
+### Using the hardware
+
+Here, we assume that you have files *blinky.hex* and *blinky.out* in the
+
 Connect the debugger to bluey as follows:
 
-| debugger | bluey |
+| Debugger | bluey |
 |----------|-------|
 | 3.3 | VDD|
 | GND | GND|
@@ -69,6 +73,27 @@ Type "apropos word" to search for commands related to "word".
 (gdb)
 ```
 
+```
+(gdb) target extended-remote COM5
+Remote debugging using COM5
+```
+
+```
+(gdb) monitor swdp_scan
+Target voltage: unknown
+Available Targets:
+No. Att Driver
+ 1      Nordic nRF52
+```
+
+```
+(gdb) attach 1
+Attaching to Remote target
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x0002099e in ?? ()
+(gdb)
+```
 
 
 [1]: https://github.com/blacksphere/blackmagic/wiki
