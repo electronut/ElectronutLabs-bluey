@@ -26,9 +26,8 @@ NFC, and in fact the board comes with a built-in NFC PCB antenna.
 
 ## Getting Started with Bluey
 
-Now that you got yourself a **bluey**, here's what you need to get started. To
-get a project up and running, you need to first build the code and create a *.hex*
-file and then *upload* it to the board.
+To get a project up and running with **bluey**, you need to first build the code to generate a *.hex*
+file and then upload it to the board.
 
 ### Building code for Bluey
 

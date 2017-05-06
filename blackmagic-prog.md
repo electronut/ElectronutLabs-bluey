@@ -21,8 +21,8 @@ Here's what you need for this task:
 1. One STM32F103 "Blue Pill"
 2. One cheap ST-Link V2 clone
 3. [STM32 ST-Link Utility][2] from ST Microelectronics.
-4. Install the [GNU ARM Embedded][3] toolchain, and the Nordic nRF5 SDK. Read
-our [SDk setup guide](nrf5-sdk-setup.md) for help.
+4. Install the GNU ARM Embedded toolchain and the Nordic nRF5 SDK. Read
+our [SDk setup guide](nrf5-sdk-setup.md) for instructions.
 
 (Why not just use two ST-Link V2s? Well, because some of those use the STMF32F101
 chip, and we need STM32F103 to ensure that Black Magic Probe firmware
@@ -98,4 +98,3 @@ determining executable automatically.  Try using the "file" command.
 
 [1]: https://github.com/blacksphere/blackmagic/wiki
 [2]: http://www.st.com/en/embedded-software/stsw-link004.html
-[3]: https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
