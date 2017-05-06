@@ -41,7 +41,9 @@ BOOT1 and connected to GND.
 
 ### Using the hardware
 
-Here, we assume that you have files *blinky.hex* and *blinky.out* in the
+Here, we assume that you have files *blinky.hex* and *blinky.out* in the working
+directory where you start GDB. (You can generate these files yourself using the
+  *peripheral/blinky/pca10040/blank* example in the Nordic SDK.)
 
 Connect the debugger to bluey as follows:
 
@@ -105,7 +107,19 @@ determining executable automatically.  Try using the "file" command.
 (gdb)
 ```
 
-Now let's upload soem code to the flash memory.
+Now let's upload some code to the flash memory.
+
+```
+(gdb) file blinky.hex
+Reading symbols from blinky.hex...(no debugging symbols found)...done.
+```
+
+Now let's run the program.
+
+(gdb) run
+Starting program: C:\mahesh\nRF5_SDK_12.2.0_f012efa\examples\peripheral\blinky\pca10040\blank\armgcc\_build\blinky.hex
+
+At this point you'll be able to see the LED blinking on **bluey** in various colors.
 
 Now we're ready to do some debugging. We'll use the *.out* file, since that has
 the symbols present for debugging.
