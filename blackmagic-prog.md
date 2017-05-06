@@ -120,12 +120,12 @@ Now let's run the program.
 (gdb) run
 Starting program: C:\mahesh\nRF5_SDK_12.2.0_f012efa\examples\peripheral\blinky\pca10040\blank\armgcc\_build\blinky.hex
 ```
-
 At this point you'll be able to see the LED blinking on **bluey** in various colors.
 
-Now we're ready to do some debugging. We'll use the *.out* file, since that has
-the symbols present for debugging.
+Now we're ready to do some debugging. We'll use the *.out* file this time, since that has
+the necessary code symbols required for debugging.
 
+# Using GDB in the Atom editor
 
 
 
