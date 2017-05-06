@@ -127,7 +127,22 @@ the necessary code symbols required for debugging.
 
 # Using GDB in the Atom editor
 
+[Atom][3] is gaining popularity an easy to use modern code editor. It has support for a
+bewildering range of plugins, and so it has one for GDB as well - the [atom-gdb-debugger package][4].
 
+Follow the instructions for installing the above plugin, and ensure that *arm-eabi-none-gdb* is in your PATH.
+
+Search for "GDB Debugger" in the Atom help menu, and you'll find what you need.
+
+Here's a typical debugging session inside Atom.
+
+![Atom GDB]()
+
+The plugin is quite bare-bones and doesn't offer much more than what you get from a
+command shell. But it's nice to be able to see the code and step through it from
+within Atom.
 
 [1]: https://github.com/blacksphere/blackmagic/wiki
 [2]: http://www.st.com/en/embedded-software/stsw-link004.html
+[3]: https://atom.io/
+[4]: https://atom.io/packages/atom-gdb-debugger
