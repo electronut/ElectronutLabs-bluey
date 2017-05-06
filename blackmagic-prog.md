@@ -139,7 +139,7 @@ Here's a typical debugging session inside Atom.
 ![Atom GDB]()
 
 The plugin is quite bare-bones and doesn't offer much more than what you get from a
-command shell. But it's nice to be able to see the code and step through it from
+command shell. But I suppose it's nice to be able to see the code and step through it from
 within Atom.
 
 [1]: https://github.com/blacksphere/blackmagic/wiki
