@@ -23,7 +23,9 @@ Here's what you need for this task:
 3. [STM32 ST-Link Utility][2] from ST Microelectronics.
 4. GNU ARM Embedded toolchain and the Nordic nRF5 SDK. Read
 our [SDk setup guide](nrf5-sdk-setup.md) for instructions.
-5. Black Magic Probe firmware.
+5. Black Magic Probe firmware. [Click here][6] to read about how
+to build it. (You need *blackmagic.bin* and *blackmagic_dfu.bin* built
+with *make PROBE_HOST=stlink*.)
 
 (Why not just use two ST-Link V2s? Well, because some of those use the STMF32F101
 chip, and we need STM32F103 to ensure that Black Magic Probe firmware
@@ -35,10 +37,31 @@ Here's what the hardware looks like:
 
 Now, hook them up as follows.
 
+| ST-Link V2 | Blue Pill |
+|----------|-------|
+| 3.3 | 3.3|
+| GND | GND|
+| SWDIO | DIO|
+| SWCLK | DCLK|
+
+Here's what the connections look like:
+
+![ST Link & Blue Pill](images/stlink-bp.jpg)
+
 Ensure that the yellow jumpers on the "blue pill" are set such that BOOT0 and
 BOOT1 and connected to GND.
 
-- driver issues -
+Now open ST-Link utility and erase the target chip (blue pill). Then program *blackmagic_dfu.bin* to the blue pill at the address *0x8000000*.
+
+![ST Link Utility](images/stlink-util.png)
+
+Next, program *blackmagic.bin* at the address *0x8002000* in a similar fashion.
+
+If all went well, you'll see the following in the *Device Manager*.
+
+![Device Manager](images/dm.png)
+
+Now your Black Magic Probe clone is ready to some programming.
 
 ### Using the hardware
 
@@ -221,3 +244,4 @@ within Atom.
 [3]: https://atom.io/
 [4]: https://atom.io/packages/atom-gdb-debugger
 [5]: https://www.nostarch.com/debugging.htm
+[6]: https://github.com/blacksphere/blackmagic/wiki/Hacking
