@@ -212,10 +212,6 @@ Follow the instructions for installing the above plugin, and ensure that *arm-ea
 
 Search for "GDB Debugger" in the Atom help menu, and you'll find what you need.
 
-Here's a typical debugging session inside Atom.
-
-![Atom GDB]()
-
 The plugin is quite bare-bones and doesn't offer much more than what you get from a
 command shell. But I suppose it's nice to be able to see the code and step through it from
 within Atom.
