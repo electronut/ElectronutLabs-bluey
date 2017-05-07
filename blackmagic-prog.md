@@ -21,8 +21,9 @@ Here's what you need for this task:
 1. One STM32F103 "Blue Pill"
 2. One cheap ST-Link V2 clone
 3. [STM32 ST-Link Utility][2] from ST Microelectronics.
-4. Install the GNU ARM Embedded toolchain and the Nordic nRF5 SDK. Read
+4. GNU ARM Embedded toolchain and the Nordic nRF5 SDK. Read
 our [SDk setup guide](nrf5-sdk-setup.md) for instructions.
+5. Black Magic Probe firmware.
 
 (Why not just use two ST-Link V2s? Well, because some of those use the STMF32F101
 chip, and we need STM32F103 to ensure that Black Magic Probe firmware
@@ -53,6 +54,10 @@ Connect the debugger to bluey as follows:
 | GND | GND|
 | PA5 | SWCLK|
 | PB14 | SWDIO|
+
+Here's what the hookup looks like:
+
+![bluey blue pill](images/bluey-debug.jpg)
 
 Now, open a command shell and run **arm-none-eabi-gdb**:
 
@@ -125,6 +130,79 @@ At this point you'll be able to see the LED blinking on **bluey** in various col
 Now we're ready to do some debugging. We'll use the *.out* file this time, since that has
 the necessary code symbols required for debugging.
 
+```
+(gdb) file blinky.out
+A program is being debugged already.
+Are you sure you want to change the file? (y or n) y
+Reading symbols from blinky.out...done.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: C:\mahesh\nRF5_SDK_12.2.0_f012efa\examples\peripheral\blinky\pca10040\blank\armgcc\_build\blinky.out
+```
+
+Now press Ctrl-C.
+
+```
+Program received signal SIGINT, Interrupt.
+0x00001990 in nrf_delay_us (number_of_us=500000) at ../../../../../../components/drivers_nrf/delay/nrf_delay.h:128
+128     __ASM volatile (
+(gdb) list
+123     __STATIC_INLINE void nrf_delay_us(uint32_t number_of_us)
+124     {
+125         const uint32_t clock16MHz = CLOCK_FREQ_16MHz;
+126         if (number_of_us)
+127         {
+128     __ASM volatile (
+129     #if ( defined(__GNUC__) && (__CORTEX_M == (0x00U) ) )
+130             ".syntax unified\n"
+131     #endif
+132     "1:\n"
+(gdb)
+```
+
+As you can see, it's showing you the code being executed. Now let's put a breakpoint in
+*main.c*:
+
+```
+(gdb) break main.c:43
+Breakpoint 4 at 0x1a04: file ../../../main.c, line 43.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: C:\mahesh\nRF5_SDK_12.2.0_f012efa\examples\peripheral\blinky\pca10040\blank\armgcc\_build\blinky.out
+
+Breakpoint 4, main () at ../../../main.c:43
+43                  nrf_delay_ms(500);
+(gdb) list
+38          while (true)
+39          {
+40              for (int i = 0; i < LEDS_NUMBER; i++)
+41              {
+42                  bsp_board_led_invert(i);
+43                  nrf_delay_ms(500);
+44              }
+45          }
+46      }
+47
+(gdb) p i
+$2 = 0
+(gdb) continue
+Continuing.
+
+Breakpoint 4, main () at ../../../main.c:43
+43                  nrf_delay_ms(500);
+(gdb) p i
+$3 = 1
+(gdb)
+```
+
+As you can see above, as we loop through, we can see *i* changing. Cool huh?
+
+If you want to learn how to use GDB I highly recommend [Art of debugging][5] by
+Norman Matloff and Peter Jay Salzman.
+
+
 # Using GDB in the Atom editor
 
 [Atom][3] is gaining popularity an easy to use modern code editor. It has support for a
@@ -146,3 +224,4 @@ within Atom.
 [2]: http://www.st.com/en/embedded-software/stsw-link004.html
 [3]: https://atom.io/
 [4]: https://atom.io/packages/atom-gdb-debugger
+[5]: https://www.nostarch.com/debugging.htm
