@@ -1,4 +1,4 @@
-![bluey](images/bluey-1.1.jpg)
+![bluey](images/bluey1.1.jpg)
 
 ## What is Bluey?
 
