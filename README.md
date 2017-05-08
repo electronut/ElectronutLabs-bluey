@@ -1,4 +1,4 @@
-<img src="images/bluey1.1.jpg" alt="Bluey 1.1" style="width: 600px;"/>
+<img src="images/bluey1.1.jpg" alt="Bluey 1.1" width= "600"/>
 
 ## What is Bluey?
 
