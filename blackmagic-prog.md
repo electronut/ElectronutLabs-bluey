@@ -225,6 +225,44 @@ As you can see above, as we loop through, we can see *i* changing. Cool huh?
 If you want to learn how to use GDB I highly recommend [Art of debugging][5] by
 Norman Matloff and Peter Jay Salzman.
 
+# Loading code with Softdevice
+
+In the above example, we used the *blinky* code which did not have a Softdevice.
+Since most of our use of this chip will use BLE and hence a Nordic Softdevice, let's
+take the SDK example *ble_app_hrs* and see how to load it.
+
+First, build *ble_app_hrs* to generate the program hex file. Then use the
+Nordic *mergehex* tool to combine the softdevice and program as given below.
+The softdevice cam be found in *components/softdevice* folder of the SDK.
+
+```
+c:\mahesh\tmp>mergehex -m s132_nrf52_3.0.0_softdevice.hex nrf52832_xxaa.hex -o out.hex
+Parsing input hex files.
+Merging files.
+Storing merged file.
+
+c:\mahesh\tmp>ls -l
+total 467
+-rw-r--r--    1 info     Administ   130859 May  8 08:33 nrf52832_xxaa.hex
+-rw-r--r--    1 info     Administ   476926 May  8 08:35 out.hex
+-rw-r--r--    1 info     Administ   346118 Jul 25  2016 s132_nrf52_3.0.0_softdevice.hex
+```
+
+Now load it using our Black Magic Probe clone as shown before.
+
+```
+(gdb) load out.hex
+Loading section .sec1, size 0x964 lma 0x0
+Loading section .sec2, size 0xf000 lma 0x1000
+Loading section .sec3, size 0xe740 lma 0x10000
+Loading section .sec4, size 0x1000 lma 0x1f000
+Loading section .sec5, size 0xa5a4 lma 0x20000
+Start address 0x0, load size 169544
+Transfer rate: 17 KB/sec, 968 bytes/write.
+(gdb) run
+```
+
+And now you'll see the HRS app running happily on **bluey**!
 
 # Using GDB in the Atom editor
 
