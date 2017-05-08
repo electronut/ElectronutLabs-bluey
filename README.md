@@ -1,4 +1,4 @@
-![bluey](images/bluey1.1.jpg)
+<img src="images/bluey1.1.jpg" alt="Bluey 1.1" style="width: 600px;"/>
 
 ## What is Bluey?
 
