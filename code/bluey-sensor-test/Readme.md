@@ -40,7 +40,6 @@ Testing:
   * Data should be available on your screen.
 
 _Note! - The functionalities are selected by defining certain parameters in the main.c file to enable them.__
-
 Functionality   |         definition
 --------------- | ------------------
 HDC1010         |         #define TEMP_HUMID_DATA

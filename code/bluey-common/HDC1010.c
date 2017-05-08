@@ -91,15 +91,13 @@ uint16_t HDC1010_get_manuf_id(void)
   return manuf_id;
 }
 
-// read temperature values only.
-float HDC1010_get_temp(void)
+// read temperature values only. (raw)
+void HDC1010_get_temp_raw(uint16_t* temp_val)
 {
   ret_code_t err_code;
   uint8_t tx_buffer = TEMP_REG;
   uint8_t temp_data[2];
-  uint16_t temp_val;
-  float temp;
-  // trigger measurement.
+    // trigger measurement.
   err_code = nrf_drv_twi_tx(&p_twi_sensors, HDC1010_ADDR, &tx_buffer, 1, false);
   APP_ERROR_CHECK(err_code);
   // wait for measurement to complete
@@ -108,21 +106,27 @@ float HDC1010_get_temp(void)
   err_code = nrf_drv_twi_rx(&p_twi_sensors, HDC1010_ADDR, temp_data, sizeof(temp_data));
   APP_ERROR_CHECK(err_code);
 
-  temp_val = (temp_data[0] << 8) | temp_data[1];
+  *temp_val = (temp_data[0] << 8) | temp_data[1];
+}
+
+// read temperature values only.
+float HDC1010_get_temp(void)
+{
+  uint16_t temp_val;
+  HDC1010_get_temp_raw(&temp_val);
 
   // temperature (in C)
-  temp = ((temp_val / pow_16) * 165 - 40);
+  float temp = ((temp_val / pow_16) * 165 - 40);
   return temp;
 }
 
-// read humidity values only.
-float HDC1010_get_humid(void)
+
+// read humidity values only (RAW values)
+void HDC1010_get_humid_raw(uint16_t* humid_val)
 {
   ret_code_t err_code;
   uint8_t tx_buffer = HUMIDITY_REG;
   uint8_t humid_data[2];
-  uint16_t humid_val;
-  float humid;
   // trigger measurement.
   err_code = nrf_drv_twi_tx(&p_twi_sensors, HDC1010_ADDR, &tx_buffer, 1, false);
   APP_ERROR_CHECK(err_code);
@@ -132,43 +136,16 @@ float HDC1010_get_humid(void)
   err_code = nrf_drv_twi_rx(&p_twi_sensors, HDC1010_ADDR, humid_data, sizeof(humid_data));
   APP_ERROR_CHECK(err_code);
 
-  humid_val = (humid_data[0] << 8) | humid_data[1];
+  *humid_val = (humid_data[0] << 8) | humid_data[1];
+}
+
+// read humidity values only.
+float HDC1010_get_humid(void)
+{
+  uint16_t humid_val;
+  HDC1010_get_humid_raw(&humid_val);
 
   // temperature (in C)
-  humid = ((humid_val / pow_16) * 100);
+  float humid = ((humid_val / pow_16) * 100);
   return humid;
-}
-
-// read temperature and humidity values (raw)
-void HDC1010_get_temp_humid_raw(uint16_t* temp_val, uint16_t* humid_val)
-{
-  ret_code_t err_code;
-  uint8_t tx_buffer = TEMP_REG;
-
-  uint8_t data[4];
-
-  // trigger measurement.
-  err_code = nrf_drv_twi_tx(&p_twi_sensors, HDC1010_ADDR, &tx_buffer, 1, false);
-  APP_ERROR_CHECK(err_code);
-  // wait for measurement to complete
-  nrf_delay_ms(8);
-  // read temperature and humidity values.
-  err_code = nrf_drv_twi_rx(&p_twi_sensors, HDC1010_ADDR, data, sizeof(data));
-  APP_ERROR_CHECK(err_code);
-
-  // sensor sends MSB first, followed by LSB.
-  *temp_val = (data[0] << 8) | data[1];
-  *humid_val = (data[2] << 8) | data[3];
-}
-
-// read temperature and humidity values.
-void HDC1010_get_temp_humid(float *temperature, float *humidity)
-{
-  uint16_t temp_val, humid_val;
-  HDC1010_get_temp_humid_raw(&temp_val, &humid_val);
-
-  // temperature (in C)
-  *temperature = ((temp_val / pow_16) * 165 - 40);
-  // relative humidity (in %)
-  *humidity = ((humid_val / pow_16) * 100);
 }

@@ -13,28 +13,6 @@ electronut.in
 
 static struct APDS9301_settings settings;
 
-/*
- * function to initialize and power up the sensor.
-*/
-void APDS9301_init(void)
-{
-  ret_code_t err_code;
-  uint8_t tx_data[2];
-  settings.APDS9301_enable            = 1;      // enable = 1, disable = 0.
-  settings.APDS9301_gain              = 0;      // low gain = 0, high gain = 1.
-  settings.APDS9301_manual_time       = 0;      // start integration cycle = 1, stop integration cycle = 0.
-                                                // applicable only if APDS9301_integratation_time = 3.
-  settings.APDS9301_integration_time = 2;      // 13.7 ms = 0, 101 ms = 1, 402 ms = 2, custom integration time = 3.
-  settings.APDS9301_level_interrupt   = 0;      // level interrupt enable = 1, leven interrupt disable = 0.
-  settings.APDS9301_persistence_value = 0;
-
-  if (settings.APDS9301_enable == 1) {
-    tx_data[0] = (CMD | CTRL_REG);
-    tx_data[1] = 0x03;
-    err_code = nrf_drv_twi_tx(&p_twi_sensors, APDS9301_ADDR, tx_data, sizeof(tx_data), false);
-    APP_ERROR_CHECK(err_code);
-  }
-}
 
 /*
  * function to configure sensor parameters.
@@ -94,17 +72,44 @@ void APDS9301_config(void)
   }
 }
 
+/*
+ * function to initialize and power up the sensor.
+*/
+void APDS9301_init(void)
+{
+  ret_code_t err_code;
+  uint8_t tx_data[2];
+  settings.APDS9301_enable            = 1;      // enable = 1, disable = 0.
+  settings.APDS9301_gain              = 0;      // low gain = 0, high gain = 1.
+  settings.APDS9301_manual_time       = 0;      // start integration cycle = 1, stop integration cycle = 0.
+                                                // applicable only if APDS9301_integratation_time = 3.
+  settings.APDS9301_integration_time = 2;      // 13.7 ms = 0, 101 ms = 1, 402 ms = 2, custom integration time = 3.
+  settings.APDS9301_level_interrupt   = 0;      // level interrupt enable = 1, leven interrupt disable = 0.
+  settings.APDS9301_persistence_value = 0;
+
+  if (settings.APDS9301_enable == 1) {
+    tx_data[0] = (CMD | CTRL_REG);
+    tx_data[1] = 0x03;
+    err_code = nrf_drv_twi_tx(&p_twi_sensors, APDS9301_ADDR, tx_data, sizeof(tx_data), false);
+    APP_ERROR_CHECK(err_code);
+  }
+
+  APDS9301_config();
+}
+
 
 /*
  * function to check if device is ON or OFF.
 */
-void APDS9301_get_power_status(void)
+uint8_t APDS9301_get_power_status(void)
 {
   ret_code_t err_code;
   uint8_t status = 99;
   uint8_t reg = CMD | CTRL_REG;
   err_code = read_register(p_twi_sensors, APDS9301_ADDR, reg, &status, sizeof(status), true);
   APP_ERROR_CHECK(err_code);
+
+  return status;
 }
 
 /*

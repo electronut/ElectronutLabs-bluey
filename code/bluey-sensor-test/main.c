@@ -29,10 +29,12 @@
 #include "nrf_delay.h"
 #include "nrf_drv_gpiote.h"
 #include "nrf_drv_twi.h"
+#include "led-and-button.h"
 #include "LSM6DS3.h"
 #include "HDC1010.h"
 #include "APDS9301.h"
 #include "nfc-sensor-data.h"
+#include "sd-card.h"
 #include "bluey-twi.h"
 
 
@@ -550,7 +552,7 @@ static void advertising_init(void)
 }
 
 
-const nrf_drv_twi_t p_twi_sensors = NRF_DRV_TWI_INSTANCE(0);
+const nrf_drv_twi_t p_twi_sensors = NRF_DRV_TWI_INSTANCE(1);
 
 /**
  * @brief TWI initialization.
@@ -644,7 +646,6 @@ ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_
   static void LSM6DS3_gpiote_init(void)
   {
     ret_code_t err_code;
-    //uint32_t pin = 15;
 
     if(!nrf_drv_gpiote_is_init())
      {
@@ -659,6 +660,97 @@ ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_
     APP_ERROR_CHECK(err_code);
 
     nrf_drv_gpiote_in_event_enable(INT2, true);
+  }
+#endif
+
+//#define BUTTON_SDCARD_TEST                                        // Uncomment to enable button and sd-card test
+#ifdef BUTTON_SDCARD_TEST
+
+  float temperature = 0;
+  float humidity = 0;
+
+  uint16_t adc_ch0, adc_ch1;
+  float lux;
+
+  int16_t accX, accY, accZ;
+  int16_t gyroX, gyroY, gyroZ;
+  float accel_X, accel_Y, accel_Z;
+  float gyro_X, gyro_Y, gyro_Z;
+
+  void sensors_config(void)
+  {
+    // initialize HDC1010 for temperature and humidity data.
+    HDC1010_init(TEMP_OR_HUMID);
+    // initialize APDS9301 for ambient light data.
+    APDS9301_init();
+    APDS9301_config();
+    // initialize LSM6DS3 for IMU data.
+    LSM6DS3_init();
+    LSM6DS3_config();
+  }
+
+  void get_sensor_data(void)
+  {
+    // get temperature and humidity data
+    temperature = HDC1010_get_temp();
+    humidity = HDC1010_get_humid();
+    // get ambient light data
+    APDS9301_read_adc_data(&adc_ch0, &adc_ch1);
+    lux = getlux(adc_ch0, adc_ch1);
+    // get IMU data
+    LSM6DS3_read_accl_data(&accX, &accY, &accZ);
+    LSM6DS3_read_gyro_data(&gyroX, &gyroY, &gyroZ);
+
+    accel_X = LSM6DS3_accelData_in_g(accX);
+    accel_Y = LSM6DS3_accelData_in_g(accY);
+    accel_Z = LSM6DS3_accelData_in_g(accZ);
+
+    gyro_X = LSM6DS3_gyroData_in_dps(gyroX);
+    gyro_Y = LSM6DS3_gyroData_in_dps(gyroY);
+    gyro_Z = LSM6DS3_gyroData_in_dps(gyroZ);
+  }
+  /*
+    * function to toggle led on button_press
+  */
+  void led_toggle(void)
+  {
+  nrf_gpio_pin_clear(18);
+  nrf_delay_ms(500);
+  nrf_gpio_pin_set(18);
+  nrf_delay_ms(500);
+  }
+
+  static volatile bool button_state = false;
+
+  /*
+   * interrupt handler for button press
+  */
+  void button_press_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
+  {
+    led_toggle();
+    button_state = true;
+  }
+
+  /*
+   * function to enable button test.
+  */
+  static void button_config(void)
+  {
+    ret_code_t err_code;
+
+    if(!nrf_drv_gpiote_is_init())
+     {
+       err_code = nrf_drv_gpiote_init();
+       APP_ERROR_CHECK(err_code);
+     }
+
+    nrf_drv_gpiote_in_config_t button_config = GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
+    button_config.pull = NRF_GPIO_PIN_PULLUP;
+
+    err_code = nrf_drv_gpiote_in_init(button_sw3, &button_config, button_press_handler);
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_gpiote_in_event_enable(button_sw3, true);
   }
 #endif
 
@@ -681,6 +773,17 @@ int main(void)
   err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
   APP_ERROR_CHECK(err_code);
 
+//#define RGB_LED                                             // Uncomment to enable RGB LED.
+#ifdef RGB_LED
+  rgb_led_config();
+#endif
+
+#ifdef BUTTON_SDCARD_TEST
+  rgb_led_config();
+  sensors_config();
+  button_config();
+#endif
+
   twi_init();
 
 // temperature & humidty sensor initialization
@@ -693,17 +796,16 @@ int main(void)
 #endif
 
 // ambient light sensor initialization
-#define AMBIENT_LIGHT_DATA                                  // Uncomment to enable APDS9300.
+//#define AMBIENT_LIGHT_DATA                                  // Uncomment to enable APDS9300.
 #ifdef AMBIENT_LIGHT_DATA
   uint16_t adc_ch0, adc_ch1;
   float lux;
   unsigned char str_al[10];
   APDS9301_init();
-  APDS9301_config();
 #endif
 
 // IMU initialization
-#define IMU_DATA                                            // Uncomment to enable LSM6DS3.
+//#define IMU_DATA                                            // Uncomment to enable LSM6DS3.
 #ifdef IMU_DATA
 #ifndef LSM6DS3_TAP_DETECT
   int16_t accX, accY, accZ;
@@ -713,7 +815,6 @@ int main(void)
   unsigned char str_imu[30];
 #endif
   LSM6DS3_init();
-  LSM6DS3_config();
 #endif
 
 #ifdef LSM6DS3_TAP_DETECT
@@ -759,6 +860,47 @@ int main(void)
 #endif
 
   for(;;) {
+
+#ifdef RGB_LED
+    rgb_led_set_red();
+    nrf_delay_ms(500);
+    rgb_led_off();
+    nrf_delay_ms(500);
+    rgb_led_set_green();
+    nrf_delay_ms(500);
+    rgb_led_off();
+    nrf_delay_ms(500);
+    rgb_led_set_blue();
+    nrf_delay_ms(500);
+    rgb_led_off();
+    nrf_delay_ms(500);
+    rgb_led_set_yellow();
+    nrf_delay_ms(500);
+    rgb_led_off();
+    nrf_delay_ms(500);
+    rgb_led_set_cyan();
+    nrf_delay_ms(500);
+    rgb_led_off();
+    nrf_delay_ms(500);
+    rgb_led_set_magenta();
+    nrf_delay_ms(500);
+    rgb_led_off();
+    nrf_delay_ms(500);
+    rgb_led_set_white();
+    nrf_delay_ms(500);
+    rgb_led_off();
+    nrf_delay_ms(500);
+#endif
+
+#ifdef BUTTON_SDCARD_TEST
+    if(button_state) {
+      button_state = false;
+      get_sensor_data();
+      sdcard_sensor_data_update(temperature, humidity, lux, accel_X, accel_Y, accel_Z, gyro_X, gyro_Y, gyro_Z);
+
+      nrf_delay_ms(500);
+    }
+#endif
 
 #ifdef TEMP_HUMID_DATA
     temperature = HDC1010_get_temp();
@@ -831,7 +973,7 @@ int main(void)
 #endif
 
 #ifndef LSM6DS3_TAP_DETECT
-    nrf_delay_ms(500);
+    //nrf_delay_ms(500);
 #endif
   }
 }

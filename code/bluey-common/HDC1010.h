@@ -38,7 +38,7 @@
 ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_t register_addr, uint8_t *p_data, uint8_t bytes, bool no_stop);
 
 // read Device ID register.
-uint16_t HDC1010_dev_id(void);
+uint16_t HDC1010_get_dev_id(void);
 
 // read Manufacturer ID register.
 uint16_t HDC1010_get_manuf_id(void);
@@ -55,8 +55,8 @@ float HDC1010_get_temp(void);
 // read humidity values only.
 float HDC1010_get_humid(void);
 
-// read temperature and humidity values (raw)
-void HDC1010_get_temp_humid_raw(uint16_t* temp_val, uint16_t* humid_val);
+// read humidity values only (RAW values)
+void HDC1010_get_humid_raw(uint16_t* humid_val);
 
-// read temperature and humidity values.
-void HDC1010_get_temp_humid(float *temperature, float *humidity);
+// read temperature values only. (raw)
+void HDC1010_get_temp_raw(uint16_t* temp_val);

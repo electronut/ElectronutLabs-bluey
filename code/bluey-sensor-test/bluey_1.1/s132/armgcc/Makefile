@@ -36,14 +36,21 @@ SRC_FILES += \
 	$(SDK_ROOT)/components/libraries/timer/app_timer.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_nfc.c \
   $(PROJ_DIR)/main.c \
+	$(PROJ_DIR)/../bluey-common/led-and-button.c \
 	$(PROJ_DIR)/../bluey-common/HDC1010.c \
 	$(PROJ_DIR)/../bluey-common/LSM6DS3.c \
 	$(PROJ_DIR)/../bluey-common/APDS9301.c \
 	$(PROJ_DIR)/../bluey-common/nfc-sensor-data.c \
+	$(PROJ_DIR)/../bluey-common/sd-card.c \
 	$(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t/hal_nfc_t2t.c \
 	$(SDK_ROOT)/components/nfc/ndef/generic/message/nfc_ndef_msg.c \
 	$(SDK_ROOT)/components/nfc/ndef/generic/record/nfc_ndef_record.c \
 	$(SDK_ROOT)/components/nfc/ndef/text/nfc_text_rec.c \
+	$(SDK_ROOT)/components/drivers_nrf/spi_master/nrf_drv_spi.c \
+  $(SDK_ROOT)/external/fatfs/src/ff.c \
+  $(SDK_ROOT)/components/libraries/sdcard/app_sdcard.c \
+	$(SDK_ROOT)/external/fatfs/port/diskio_blkdev.c \
+	$(SDK_ROOT)/components/libraries/block_dev/sdc/nrf_block_dev_sdc.c \
   $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
@@ -123,6 +130,14 @@ INC_FOLDERS += \
 	$(SDK_ROOT)/components/nfc/ndef/text \
 	$(SDK_ROOT)/components/nfc/ndef/generic/message \
   $(SDK_ROOT)/components/nfc/t2t_lib \
+	$(SDK_ROOT)/external/fatfs/port \
+  $(SDK_ROOT)/external/fatfs/src \
+	$(SDK_ROOT)/components/libraries/sdcard \
+	$(SDK_ROOT)/components/libraries/block_dev/sdc \
+  $(SDK_ROOT)/components/libraries/block_dev \
+	$(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
+	$(SDK_ROOT)/external/protothreads \
+  $(SDK_ROOT)/external/protothreads/pt-1.4 \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc \
   $(SDK_ROOT)/components/libraries/csense \
   $(SDK_ROOT)/components/drivers_nrf/rng \

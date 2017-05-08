@@ -25,6 +25,7 @@ void LSM6DS3_who_am_i(void)
   APP_ERROR_CHECK(err_code);
 }
 
+
 /*
  * init function
 */
@@ -63,6 +64,8 @@ void LSM6DS3_init(void)
   tx_data[1] = 0x04;
   err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
   APP_ERROR_CHECK(err_code);
+
+  LSM6DS3_config();
 }
 
 /*

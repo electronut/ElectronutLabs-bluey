@@ -139,12 +139,6 @@ void APDS9301_id(void);
 void APDS9301_init(void);
 
 /*
- * function to configure sensor parameters.
-*/
-void APDS9301_config(void);
-
-
-/*
 * function to set time and gain parameters
 */
 void APDS9301_set_params(void);
@@ -152,7 +146,7 @@ void APDS9301_set_params(void);
 /*
 * function to check if device is ON or OFF.
 */
-void APDS9301_get_power_status(void);
+uint8_t APDS9301_get_power_status(void);
 
 /*
 * function to read ADC value
