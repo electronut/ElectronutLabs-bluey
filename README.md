@@ -47,6 +47,21 @@ using a phone. [Click here](ota-prog.md) to read about this option.
    2. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to learn
   about this option.
 
+### Powering Bluey
+
+You can power **bluey** in several ways:
+
+1. Using the 5V micro USB connector (which also gives you the
+  option to print debug messages via UART).
+2. The + / -  power supply pins which can take regular 2.54 mm header pins,
+a JST connector for a 3.7 V LiPo battery, or a 3.5 mm terminal block.
+3. A CR2032 coin cell for low power applications.
+
+The sensors on bluey require a minimum of 2.7 Volts to function properly.
+Please note that the *maximum power supply to bluey is 6 Volts*. Do not
+exceed it! We also have reverse polarity protection on all power supplies,
+but better not to tempt fate. :-)
+
 ## What can you do with Bluey?
 
 You can use **bluey** for a wide range of projects. The BLE part is ideal for IoT
