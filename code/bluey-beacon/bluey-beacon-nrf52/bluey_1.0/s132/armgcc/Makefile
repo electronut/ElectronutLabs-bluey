@@ -2,7 +2,7 @@ PROJECT_NAME     := ble_app_beacon_pca10040_s132
 TARGETS          := nrf52832_xxaa
 OUTPUT_DIRECTORY := _build
 
-SDK_ROOT := ../../../../../..
+SDK_ROOT := ../../../../../../..
 PROJ_DIR := ../../..
 
 $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
@@ -32,9 +32,9 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/bsp/bsp.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_nfc.c \
   $(PROJ_DIR)/main.c \
-	$(PROJ_DIR)/../bluey-common/HDC1010.c \
-	$(PROJ_DIR)/../bluey-common/LSM6DS3.c \
-	$(PROJ_DIR)/../bluey-common/APDS9301.c \
+	$(PROJ_DIR)/../../bluey-common/HDC1010.c \
+	$(PROJ_DIR)/../../bluey-common/LSM6DS3.c \
+	$(PROJ_DIR)/../../bluey-common/APDS9301.c \
   $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
@@ -105,7 +105,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/pwm \
 	$(SDK_ROOT)/components/drivers_nrf/uart \
 	$(SDK_ROOT)/components/libraries/fifo \
-	$(PROJ_DIR)/../bluey-common \
+	$(PROJ_DIR)/../../bluey-common \
   ../config \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc \
   $(SDK_ROOT)/components/libraries/csense \

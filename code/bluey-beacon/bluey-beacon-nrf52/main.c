@@ -27,7 +27,7 @@
 #include "nrf_drv_twi.h"
 #include "HDC1010.h"
 #include "APDS9301.h"
-#include "bluey-twi.h"
+#include "bluey_twi.h"
 
 #define CENTRAL_LINK_COUNT              0                                 /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
 #define PERIPHERAL_LINK_COUNT           0                                 /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/

@@ -8,7 +8,8 @@ electronut.in
 
 */
 
-#include "led-and-button.h"
+#include "bluey_gpio.h"
+#include "nrf_delay.h"
 
 /*
  * function to configure RGB LED
@@ -100,4 +101,30 @@ void rgb_led_set_magenta(void)
   nrf_gpio_pin_clear(led_R);
   nrf_gpio_pin_set(led_G);
   nrf_gpio_pin_clear(led_B);
+}
+
+/*
+ * function to test on-board gpio pins
+*/
+void cycle_gpio(void)
+{
+  uint8_t gpio[] = {26, 2, 27, 3, 28, 4, 29, 22, 30, 23, 31, 24, 25};       // gpio pins
+  uint8_t i;
+  static bool gpio_config = false;
+
+  // configure gpio pins as output
+  if(gpio_config == false) {
+    for(i = 0; i < 13; i++) {
+      nrf_gpio_pin_dir_set(gpio[i], NRF_GPIO_PIN_DIR_OUTPUT);
+    }
+    gpio_config = true;
+  }
+
+  // toggle gpio pins
+  for(i = 0; i < 13; i++) {
+    nrf_gpio_pin_set(gpio[i]);
+    nrf_delay_ms(200);
+    nrf_gpio_pin_clear(gpio[i]);
+    nrf_delay_ms(200);
+  }
 }

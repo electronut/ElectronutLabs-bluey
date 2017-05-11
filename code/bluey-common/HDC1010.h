@@ -13,7 +13,7 @@
 #include "app_util_platform.h"
 #include "app_error.h"
 #include "boards.h"
-#include "bluey-twi.h"
+#include "bluey_twi.h"
 
 // pins
 #define DRDY_PIN                 12
@@ -49,14 +49,20 @@ void HDC1010_init(uint16_t value);
 // read sensor configuration
 void HDC1010_read_config(uint16_t* data);
 
+// read temperature values only. (raw)
+void HDC1010_get_temp_raw(uint16_t* temp_val);
+
 // read temperature values only.
 float HDC1010_get_temp(void);
-
-// read humidity values only.
-float HDC1010_get_humid(void);
 
 // read humidity values only (RAW values)
 void HDC1010_get_humid_raw(uint16_t* humid_val);
 
-// read temperature values only. (raw)
-void HDC1010_get_temp_raw(uint16_t* temp_val);
+// read humidity values only.
+float HDC1010_get_humid(void);
+
+// read temperature and humidity values (raw)
+void HDC1010_get_temp_humid_raw(uint16_t* temp_val, uint16_t* humid_val);
+
+// read temperature and humidity values.
+void HDC1010_get_temp_humid(float *temperature, float *humidity);

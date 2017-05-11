@@ -15,7 +15,7 @@
  #include "app_error.h"
  #include "boards.h"
  #include "nrf_drv_twi.h"
- #include "bluey-twi.h"
+ #include "bluey_twi.h"
 
  #define APDS_INT_PIN            14
 

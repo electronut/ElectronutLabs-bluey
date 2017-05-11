@@ -17,8 +17,6 @@
 #define TEST_STRING "Sensor Data Logger Example.\r\n\n"
 
 /*
- * function to demonstrate FATFS usage.
+ * function to log data in SD card.
 */
-void fatfs_example();
-
-void sdcard_sensor_data_update(float temperature, float humidity, float lux, float accel_X, float accel_Y, float accel_Z, float gyro_X, float gyro_Y, float gyro_Z);
+void sdcard_sensor_update_data(float temperature, float humidity, float lux, float accel_X, float accel_Y, float accel_Z, float gyro_X, float gyro_Y, float gyro_Z);

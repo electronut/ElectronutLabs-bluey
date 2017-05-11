@@ -8,7 +8,7 @@ electronut.in
 
 */
 
-#include "nfc-sensor-data.h"
+#include "bluey_nfc.h"
 #include "HDC1010.h"
 
 uint8_t m_ndef_msg_buf[256];

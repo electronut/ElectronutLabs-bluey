@@ -27,15 +27,27 @@
 #include "nrf.h"
 #include "bsp.h"
 #include "nrf_delay.h"
+#include "nrf_drv_timer.h"
 #include "nrf_drv_gpiote.h"
 #include "nrf_drv_twi.h"
-#include "led-and-button.h"
 #include "LSM6DS3.h"
 #include "HDC1010.h"
 #include "APDS9301.h"
-#include "nfc-sensor-data.h"
-#include "sd-card.h"
-#include "bluey-twi.h"
+#include "bluey_gpio.h"
+#include "bluey_nfc.h"
+#include "bluey_sdcard.h"
+#include "bluey_twi.h"
+
+
+#define RGB_LED                                           // Uncomment to enable RGB LED
+#define TEMP_HUMID_DATA                                 // Uncomment to obtain temperature and humidity data
+#define AMBIENT_LIGHT_DATA                              // Uncomment to obtain ambient light data
+#define IMU_DATA                                        // Uncomment to obtain IMU data
+//#define ACCEL_PITCH_ROLL_DATA                           // Uncomment to obtain pitch and roll value
+// #define LSM6DS3_TAP_DETECT                              // Uncomment to enable IMU tap detect test
+#define SDCARD_NFC_TEST                                 // Uncomment to test SD-card and NFC
+
+
 
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                           /**< Include the service_changed characteristic. If not enabled, the server's database cannot be changed for the lifetime of the device. */
@@ -449,6 +461,9 @@ void bsp_event_handler(bsp_event_t event)
     }
 }
 
+// flag to check if UART is enabled or disabled.
+static volatile bool uart_enabled = false;
+
 /**@brief   Function for handling app_uart events.
  *
  * @details This function will receive a single character from the app_uart module and append it to
@@ -482,7 +497,11 @@ void uart_event_handle(app_uart_evt_t * p_event)
             break;
 
         case APP_UART_COMMUNICATION_ERROR:
-            APP_ERROR_HANDLER(p_event->data.error_communication);
+          // Close UART module in case of communication error
+        	app_uart_close();
+          // set UART flag as false to indicate disabled UART
+          uart_enabled = false;
+            //APP_ERROR_HANDLER(p_event->data.error_communication);
             break;
 
         case APP_UART_FIFO_ERROR:
@@ -520,8 +539,12 @@ static void uart_init(void)
                        APP_IRQ_PRIORITY_LOWEST,
                        err_code);
     APP_ERROR_CHECK(err_code);
+
+    // UART enabled
+    uart_enabled = true;
 }
 /**@snippet [UART Initialization] */
+
 
 /**@brief Function for initializing the Advertising functionality.
  */
@@ -593,167 +616,212 @@ ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_
 }
 
 
-//#define APDS9300_interrupt                                      // Uncomment to enable interrupt for APDS9300
-#ifdef APDS9300_interrupt
-  void APDS9300_interrupt_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
-  {
-    nrf_gpio_pin_set(17);
-    nrf_delay_ms(500);
-    nrf_gpio_pin_clear(17);
-    nrf_delay_ms(500);
-
-    // clear interrupt
-    clearInterrupt();
-  }
-
-  /*
-   * function to enable interrupts on pins connected to APDS9300 interrupt line.
-  */
-  static void APDS9300_gpiote_init(void)
-  {
-    ret_code_t err_code;
-
-    if(!nrf_drv_gpiote_is_init())
-    {
-      err_code = nrf_drv_gpiote_init();
-      APP_ERROR_CHECK(err_code);
-    }
-
-    nrf_drv_gpiote_in_config_t apds_int = GPIOTE_CONFIG_IN_SENSE_LOTOHI(true);
-    apds_int.pull = NRF_GPIO_PIN_NOPULL;
-
-    err_code = nrf_drv_gpiote_in_init(APDS_INT_PIN, &apds_int, APDS9300_interrupt_handler);
-    APP_ERROR_CHECK(err_code);
-
-    nrf_drv_gpiote_in_event_enable(APDS_INT_PIN, true);
-  }
-#endif
-
-//#define LSM6DS3_TAP_DETECT                                      // Uncomment to enable interrupt for tap detect
+// routine to test interrupts in LSM6DS3 using tap detect functionality.
 #ifdef LSM6DS3_TAP_DETECT
-  uint8_t tap_count = 0;
-  /*
-   * interrupt handler for tap detect
-  */
-  void get_tap_count(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
-  {
-    tap_count++;
-  }
 
-  /*
-   * function to enable interrupts on pins connected to LSM6DS3 interrupt lines.
-  */
-  static void LSM6DS3_gpiote_init(void)
-  {
-    ret_code_t err_code;
+uint8_t tap_count = 0;
+/*
+ * interrupt handler for tap detect
+*/
+void get_tap_count(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
+{
+  tap_count++;
+}
 
-    if(!nrf_drv_gpiote_is_init())
-     {
-       err_code = nrf_drv_gpiote_init();
-       APP_ERROR_CHECK(err_code);
-     }
+/*
+ * function to enable interrupts on pins connected to LSM6DS3 interrupt lines.
+*/
+static void LSM6DS3_gpiote_init(void)
+{
+  ret_code_t err_code;
 
-    nrf_drv_gpiote_in_config_t int1 = GPIOTE_CONFIG_IN_SENSE_LOTOHI(true);
-    int1.pull = NRF_GPIO_PIN_NOPULL;
+  if(!nrf_drv_gpiote_is_init())
+   {
+     err_code = nrf_drv_gpiote_init();
+     APP_ERROR_CHECK(err_code);
+   }
 
-    err_code = nrf_drv_gpiote_in_init(INT2, &int1, get_tap_count);
-    APP_ERROR_CHECK(err_code);
+  nrf_drv_gpiote_in_config_t int1 = GPIOTE_CONFIG_IN_SENSE_LOTOHI(true);
+  int1.pull = NRF_GPIO_PIN_NOPULL;
 
-    nrf_drv_gpiote_in_event_enable(INT2, true);
-  }
+  err_code = nrf_drv_gpiote_in_init(INT2, &int1, get_tap_count);
+  APP_ERROR_CHECK(err_code);
+
+  nrf_drv_gpiote_in_event_enable(INT2, true);
+}
+
 #endif
 
-//#define BUTTON_SDCARD_TEST                                        // Uncomment to enable button and sd-card test
-#ifdef BUTTON_SDCARD_TEST
+// routine to test SD-card (enabled using button press) and NFC
+#ifdef SDCARD_NFC_TEST
 
-  float temperature = 0;
-  float humidity = 0;
+float temperature = 0;
+float humidity = 0;
 
-  uint16_t adc_ch0, adc_ch1;
-  float lux;
+uint16_t adc_ch0, adc_ch1;
+float lux;
 
-  int16_t accX, accY, accZ;
-  int16_t gyroX, gyroY, gyroZ;
-  float accel_X, accel_Y, accel_Z;
-  float gyro_X, gyro_Y, gyro_Z;
+int16_t accX, accY, accZ;
+int16_t gyroX, gyroY, gyroZ;
+float accel_X, accel_Y, accel_Z;
+float gyro_X, gyro_Y, gyro_Z;
 
-  void sensors_config(void)
-  {
-    // initialize HDC1010 for temperature and humidity data.
-    HDC1010_init(TEMP_OR_HUMID);
-    // initialize APDS9301 for ambient light data.
-    APDS9301_init();
-    APDS9301_config();
-    // initialize LSM6DS3 for IMU data.
-    LSM6DS3_init();
-    LSM6DS3_config();
-  }
+void sensors_config(void)
+{
+  // initialize HDC1010 for temperature and humidity data.
+  HDC1010_init(TEMP_OR_HUMID);
+  // initialize APDS9301 for ambient light data.
+  APDS9301_init();
+  // initialize LSM6DS3 for IMU data.
+  LSM6DS3_init();
+}
 
-  void get_sensor_data(void)
-  {
-    // get temperature and humidity data
-    temperature = HDC1010_get_temp();
-    humidity = HDC1010_get_humid();
-    // get ambient light data
-    APDS9301_read_adc_data(&adc_ch0, &adc_ch1);
-    lux = getlux(adc_ch0, adc_ch1);
-    // get IMU data
-    LSM6DS3_read_accl_data(&accX, &accY, &accZ);
-    LSM6DS3_read_gyro_data(&gyroX, &gyroY, &gyroZ);
+void get_sensor_data(void)
+{
+  // get temperature and humidity data
+  temperature = HDC1010_get_temp();
+  humidity = HDC1010_get_humid();
+  // get ambient light data
+  APDS9301_read_adc_data(&adc_ch0, &adc_ch1);
+  lux = getlux(adc_ch0, adc_ch1);
+  // get IMU data
+  LSM6DS3_read_accl_data(&accX, &accY, &accZ);
+  LSM6DS3_read_gyro_data(&gyroX, &gyroY, &gyroZ);
 
-    accel_X = LSM6DS3_accelData_in_g(accX);
-    accel_Y = LSM6DS3_accelData_in_g(accY);
-    accel_Z = LSM6DS3_accelData_in_g(accZ);
+  accel_X = LSM6DS3_accelData_in_g(accX);
+  accel_Y = LSM6DS3_accelData_in_g(accY);
+  accel_Z = LSM6DS3_accelData_in_g(accZ);
 
-    gyro_X = LSM6DS3_gyroData_in_dps(gyroX);
-    gyro_Y = LSM6DS3_gyroData_in_dps(gyroY);
-    gyro_Z = LSM6DS3_gyroData_in_dps(gyroZ);
-  }
-  /*
-    * function to toggle led on button_press
-  */
-  void led_toggle(void)
-  {
-  nrf_gpio_pin_clear(18);
-  nrf_delay_ms(500);
-  nrf_gpio_pin_set(18);
-  nrf_delay_ms(500);
-  }
+  gyro_X = LSM6DS3_gyroData_in_dps(gyroX);
+  gyro_Y = LSM6DS3_gyroData_in_dps(gyroY);
+  gyro_Z = LSM6DS3_gyroData_in_dps(gyroZ);
+}
+/*
+  * function to toggle led on button_press
+*/
+void led_toggle(void)
+{
+nrf_gpio_pin_clear(18);
+nrf_delay_ms(500);
+nrf_gpio_pin_set(18);
+nrf_delay_ms(500);
+}
 
-  static volatile bool button_state = false;
+static volatile bool button_state = false;
 
-  /*
-   * interrupt handler for button press
-  */
-  void button_press_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
-  {
-    led_toggle();
-    button_state = true;
-  }
+/*
+ * interrupt handler for button press
+*/
+void button_press_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
+{
+  rgb_led_off();
+  led_toggle();
+  button_state = true;
+}
 
-  /*
-   * function to enable button test.
-  */
-  static void button_config(void)
-  {
-    ret_code_t err_code;
+/*
+ * function to enable button test.
+*/
+static void button_config(void)
+{
+  ret_code_t err_code;
 
-    if(!nrf_drv_gpiote_is_init())
-     {
-       err_code = nrf_drv_gpiote_init();
-       APP_ERROR_CHECK(err_code);
-     }
+  if(!nrf_drv_gpiote_is_init())
+   {
+     err_code = nrf_drv_gpiote_init();
+     APP_ERROR_CHECK(err_code);
+   }
 
-    nrf_drv_gpiote_in_config_t button_config = GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
-    button_config.pull = NRF_GPIO_PIN_PULLUP;
+  nrf_drv_gpiote_in_config_t button_config = GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
+  button_config.pull = NRF_GPIO_PIN_PULLUP;
 
-    err_code = nrf_drv_gpiote_in_init(button_sw3, &button_config, button_press_handler);
-    APP_ERROR_CHECK(err_code);
+  err_code = nrf_drv_gpiote_in_init(button_sw3, &button_config, button_press_handler);
+  APP_ERROR_CHECK(err_code);
 
-    nrf_drv_gpiote_in_event_enable(button_sw3, true);
-  }
+  nrf_drv_gpiote_in_event_enable(button_sw3, true);
+}
+
 #endif
 
+// routine to test RGB LED using timer.
+#ifdef RGB_LED
+
+const nrf_drv_timer_t TIMER_LED = NRF_DRV_TIMER_INSTANCE(1);
+
+static volatile bool led_state = true;
+
+uint8_t led_index = 0;
+
+/*
+ * function to cycle through LED colour combinations
+*/
+void led_func()
+{
+  switch(led_index) {
+    case 0:
+      rgb_led_set_yellow();
+      led_state = false;
+      break;
+
+    case 1:
+      rgb_led_set_cyan();
+      led_state = false;
+      break;
+
+    case 2:
+      rgb_led_set_magenta();
+      led_state = false;
+      break;
+  }
+}
+
+/*
+ * timer event handler
+*/
+void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
+{
+    switch (event_type)
+    {
+      case NRF_TIMER_EVENT_COMPARE0:
+        if(led_state) {
+         led_index = (led_index) % 3;
+         led_func();
+         led_index++;
+        }
+        else {
+         rgb_led_off();
+         led_state = true;
+        }
+
+        default:
+        //Do nothing.
+        break;
+    }
+}
+
+/*
+ * timer initialization
+*/
+void led_timer_init(void)
+{
+  uint32_t time_ms = 200; //Time(in miliseconds) between consecutive compare events.
+  uint32_t time_ticks;
+  uint32_t err_code = NRF_SUCCESS;
+
+  //Configure TIMER_LED for generating simple light effect - leds on board will invert his state one after the other.
+  nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
+  err_code = nrf_drv_timer_init(&TIMER_LED, &timer_cfg, timer_led_event_handler);
+  APP_ERROR_CHECK(err_code);
+
+  time_ticks = nrf_drv_timer_ms_to_ticks(&TIMER_LED, time_ms);
+
+  nrf_drv_timer_extended_compare(
+   &TIMER_LED, NRF_TIMER_CC_CHANNEL0, time_ticks, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, true);
+
+  nrf_drv_timer_enable(&TIMER_LED);
+}
+
+#endif
 /**
  * @brief Function for main application entry.
  */
@@ -762,6 +830,7 @@ int main(void)
   uint32_t err_code;
 
   APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+
   uart_init();
 
   ble_stack_init();
@@ -773,64 +842,22 @@ int main(void)
   err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
   APP_ERROR_CHECK(err_code);
 
-//#define RGB_LED                                             // Uncomment to enable RGB LED.
+  twi_init();
+
+// RGB LED initialization
 #ifdef RGB_LED
   rgb_led_config();
+  led_timer_init();
 #endif
 
-#ifdef BUTTON_SDCARD_TEST
+// SD-card and NFC initialization
+#ifdef SDCARD_NFC_TEST
+  // configuration to test SD-card
   rgb_led_config();
   sensors_config();
   button_config();
-#endif
 
-  twi_init();
-
-// temperature & humidty sensor initialization
-//#define TEMP_HUMID_DATA                                     // Uncomment to enable HDC1010.
-#ifdef TEMP_HUMID_DATA
-  float temperature = 0;
-  float humidity = 0;
-  unsigned char str_th[20];
-  HDC1010_init(TEMP_OR_HUMID);
-#endif
-
-// ambient light sensor initialization
-//#define AMBIENT_LIGHT_DATA                                  // Uncomment to enable APDS9300.
-#ifdef AMBIENT_LIGHT_DATA
-  uint16_t adc_ch0, adc_ch1;
-  float lux;
-  unsigned char str_al[10];
-  APDS9301_init();
-#endif
-
-// IMU initialization
-//#define IMU_DATA                                            // Uncomment to enable LSM6DS3.
-#ifdef IMU_DATA
-#ifndef LSM6DS3_TAP_DETECT
-  int16_t accX, accY, accZ;
-  int16_t gyroX, gyroY, gyroZ;
-  float accel_X, accel_Y, accel_Z;
-  float gyro_X, gyro_Y, gyro_Z;
-  unsigned char str_imu[30];
-#endif
-  LSM6DS3_init();
-#endif
-
-#ifdef LSM6DS3_TAP_DETECT
-  LSM6DS3_gpiote_init();
-  LSM6DS3_tap_detect_config();
-  printf("Tap Detect test\n");
-#endif
-
-#ifdef APDS9301_interrupt
-  APDS9300_gpiote_init();
-  APDS9300_interrupt_config();
-  APDS9300_set_low_threshold(500);
-#endif
-
-//#define NFC_UPDATE                                              // Uncomment to enable NFC
-#ifdef NFC_UPDATE
+  // configuration to test NFC
   HDC1010_init(TEMP_OR_HUMID);
 
   uint8_t m_ndef_msg_buf[256];
@@ -859,45 +886,48 @@ int main(void)
   APP_ERROR_CHECK(err_code);
 #endif
 
-  for(;;) {
-
-#ifdef RGB_LED
-    rgb_led_set_red();
-    nrf_delay_ms(500);
-    rgb_led_off();
-    nrf_delay_ms(500);
-    rgb_led_set_green();
-    nrf_delay_ms(500);
-    rgb_led_off();
-    nrf_delay_ms(500);
-    rgb_led_set_blue();
-    nrf_delay_ms(500);
-    rgb_led_off();
-    nrf_delay_ms(500);
-    rgb_led_set_yellow();
-    nrf_delay_ms(500);
-    rgb_led_off();
-    nrf_delay_ms(500);
-    rgb_led_set_cyan();
-    nrf_delay_ms(500);
-    rgb_led_off();
-    nrf_delay_ms(500);
-    rgb_led_set_magenta();
-    nrf_delay_ms(500);
-    rgb_led_off();
-    nrf_delay_ms(500);
-    rgb_led_set_white();
-    nrf_delay_ms(500);
-    rgb_led_off();
-    nrf_delay_ms(500);
+// temperature & humidty sensor initialization
+#ifdef TEMP_HUMID_DATA
+  float temperature = 0;
+  float humidity = 0;
+  unsigned char str_th[20];
+  HDC1010_init(TEMP_OR_HUMID);
 #endif
 
-#ifdef BUTTON_SDCARD_TEST
+// ambient light sensor initialization
+#ifdef AMBIENT_LIGHT_DATA
+  uint16_t adc_ch0, adc_ch1;
+  float lux;
+  unsigned char str_al[10];
+  APDS9301_init();
+#endif
+
+// IMU initialization
+#ifdef IMU_DATA
+#ifndef LSM6DS3_TAP_DETECT
+  int16_t accX, accY, accZ;
+  int16_t gyroX, gyroY, gyroZ;
+  float accel_X, accel_Y, accel_Z;
+  float gyro_X, gyro_Y, gyro_Z;
+  unsigned char str_imu[30];
+#endif
+  LSM6DS3_init();
+#endif
+
+#ifdef LSM6DS3_TAP_DETECT
+  LSM6DS3_gpiote_init();
+  LSM6DS3_tap_detect_config();
+  printf("Tap Detect test\n");
+#endif
+
+
+  for(;;) {
+#ifdef SDCARD_NFC_TEST
     if(button_state) {
       button_state = false;
       get_sensor_data();
-      sdcard_sensor_data_update(temperature, humidity, lux, accel_X, accel_Y, accel_Z, gyro_X, gyro_Y, gyro_Z);
-
+      sdcard_sensor_update_data(temperature, humidity, lux, accel_X, accel_Y, accel_Z, gyro_X, gyro_Y, gyro_Z);
+      cycle_gpio();
       nrf_delay_ms(500);
     }
 #endif
@@ -905,7 +935,9 @@ int main(void)
 #ifdef TEMP_HUMID_DATA
     temperature = HDC1010_get_temp();
     humidity = HDC1010_get_humid();
-    printf("Temperature: %f C, Humidity: %f %%\n\n", temperature, humidity);
+    if(uart_enabled) {
+      printf("Temperature: %f C, Humidity: %f %%\n\n", temperature, humidity);
+    }
     nrf_delay_ms(1000);
     sprintf((char *)str_th, "%.2f C, %.2f %%\n", (float)temperature, (float)humidity);
     ble_nus_string_send(&m_nus, str_th, strlen((char *)str_th));
@@ -914,7 +946,9 @@ int main(void)
 #ifdef AMBIENT_LIGHT_DATA
     APDS9301_read_adc_data(&adc_ch0, &adc_ch1);
     lux = getlux(adc_ch0, adc_ch1);
-    printf("LUX: %f lx\n\n", lux);
+    if(uart_enabled) {
+      printf("LUX: %f lx\n\n", lux);
+    }
     nrf_delay_ms(1000);
     sprintf((char *)str_al, "%.2f lux\n", (float)lux);
     ble_nus_string_send(&m_nus, str_al, strlen((char *)str_al));
@@ -933,24 +967,30 @@ int main(void)
     gyro_Y = LSM6DS3_gyroData_in_dps(gyroY);
     gyro_Z = LSM6DS3_gyroData_in_dps(gyroZ);
 
-    printf("Acceleration:\n");
-    printf("X = %.2f g, Y = %.2f g, Z = %.2f g\n\n", accel_X, accel_Y, accel_Z);
+    if(uart_enabled) {
+      printf("Acceleration:\n");
+      printf("X = %.2f g, Y = %.2f g, Z = %.2f g\n\n", accel_X, accel_Y, accel_Z);
+    }
     nrf_delay_ms(1000);
     sprintf((char *)str_imu, "%.1fg, %.1fg, %.fg\n", (float)accel_X, (float)accel_Y, (float)accel_Z);
     ble_nus_string_send(&m_nus, str_imu, strlen((char *)str_imu));
 
-    printf("Gyroscope:\n");
-    printf("X = %.2f dps, Y = %.2f dps, Z = %.2f dps\n", gyro_X, gyro_Y, gyro_Z);
+    if(uart_enabled) {
+      printf("Gyroscope:\n");
+      printf("X = %.1f dps, Y = %.1f dps, Z = %.1f dps\n\n\n", gyro_X, gyro_Y, gyro_Z);
+    }
     nrf_delay_ms(1000);
     // cannot accomodate "dps" due to NUS limitation of sending float data.
     sprintf((char *)str_imu, "%.2f, %.2f, %.2f\n", (float)gyro_X, (float)gyro_Y, (float)gyro_Z);
     ble_nus_string_send(&m_nus, str_imu, strlen((char *)str_imu));
-//#define ACCEL_PITCH_ROLL_DATA                           // Uncomment to obtain pitch and roll from accelerometer.
+
 #ifdef ACCEL_PITCH_ROLL_DATA
     float pitch, roll;
     pitch = (atan2(accY, sqrt((accX * accX) + (accZ * accZ))) * 180) / 3.1416;
     roll = (atan2(accX, sqrt((accY * accY) + (accZ * accZ))) * 180) / 3.1416;
-    printf("Pitch: %f, Roll: %f\n\n", pitch, roll);
+    if(uart_enabled) {
+      printf("Pitch: %f, Roll: %f\n\n", pitch, roll);
+    }
 #endif
 #endif
 #endif
@@ -959,17 +999,17 @@ int main(void)
     if(tap_count > 0) {
       nrf_delay_ms(300);
     if(tap_count == 1) {
-      printf("Single tap\n");
+      if(uart_enabled) {
+        printf("Single tap\n");
+      }
     }
     else {
-      printf("Double tap\n");
+      if(uart_enabled) {
+        printf("Double tap\n");
+      }
     }
     tap_count = 0;
   }
-#endif
-
-#ifdef NFC_UPDATE
-    __WFE();
 #endif
 
 #ifndef LSM6DS3_TAP_DETECT

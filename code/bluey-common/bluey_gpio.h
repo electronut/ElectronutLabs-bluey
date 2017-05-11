@@ -60,3 +60,8 @@ void rgb_led_set_cyan(void);
  * function to turn LED on - MAGENTA
 */
 void rgb_led_set_magenta(void);
+
+/*
+ * function to test on-board gpio pins
+*/
+void cycle_gpio(void);

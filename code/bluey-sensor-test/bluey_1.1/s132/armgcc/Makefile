@@ -36,12 +36,12 @@ SRC_FILES += \
 	$(SDK_ROOT)/components/libraries/timer/app_timer.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_nfc.c \
   $(PROJ_DIR)/main.c \
-	$(PROJ_DIR)/../bluey-common/led-and-button.c \
 	$(PROJ_DIR)/../bluey-common/HDC1010.c \
 	$(PROJ_DIR)/../bluey-common/LSM6DS3.c \
 	$(PROJ_DIR)/../bluey-common/APDS9301.c \
-	$(PROJ_DIR)/../bluey-common/nfc-sensor-data.c \
-	$(PROJ_DIR)/../bluey-common/sd-card.c \
+	$(PROJ_DIR)/../bluey-common/bluey_gpio.c \
+	$(PROJ_DIR)/../bluey-common/bluey_nfc.c \
+	$(PROJ_DIR)/../bluey-common/bluey_sdcard.c \
 	$(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t/hal_nfc_t2t.c \
 	$(SDK_ROOT)/components/nfc/ndef/generic/message/nfc_ndef_msg.c \
 	$(SDK_ROOT)/components/nfc/ndef/generic/record/nfc_ndef_record.c \
