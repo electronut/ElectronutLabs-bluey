@@ -15,7 +15,7 @@
 
 #define FILE_NAME   "BLUEY.TXT"
 #define TEST_STRING "Sensor Data Logger Example.\r\n\n"
-
+#define TEST_STRING_2 "TEST.\r\n\n"
 /*
  * function to log data in SD card.
 */

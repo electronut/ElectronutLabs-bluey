@@ -672,6 +672,7 @@ void sensors_config(void)
   HDC1010_init(TEMP_OR_HUMID);
   // initialize APDS9301 for ambient light data.
   APDS9301_init();
+
   // initialize LSM6DS3 for IMU data.
   LSM6DS3_init();
 }
@@ -684,6 +685,7 @@ void get_sensor_data(void)
   // get ambient light data
   APDS9301_read_adc_data(&adc_ch0, &adc_ch1);
   lux = getlux(adc_ch0, adc_ch1);
+
   // get IMU data
   LSM6DS3_read_accl_data(&accX, &accY, &accZ);
   LSM6DS3_read_gyro_data(&gyroX, &gyroY, &gyroZ);
@@ -922,16 +924,6 @@ int main(void)
 
 
   for(;;) {
-#ifdef SDCARD_NFC_TEST
-    if(button_state) {
-      button_state = false;
-      get_sensor_data();
-      sdcard_sensor_update_data(temperature, humidity, lux, accel_X, accel_Y, accel_Z, gyro_X, gyro_Y, gyro_Z);
-      cycle_gpio();
-      nrf_delay_ms(500);
-    }
-#endif
-
 #ifdef TEMP_HUMID_DATA
     temperature = HDC1010_get_temp();
     humidity = HDC1010_get_humid();
@@ -993,6 +985,16 @@ int main(void)
     }
 #endif
 #endif
+#endif
+
+#ifdef SDCARD_NFC_TEST
+    if(button_state) {
+      button_state = false;
+      nrf_delay_ms(200);
+      get_sensor_data();
+      sdcard_sensor_update_data(temperature, humidity, lux, accel_X, accel_Y, accel_Z, gyro_X, gyro_Y, gyro_Z);
+      //cycle_gpio();
+    }
 #endif
 
 #ifdef LSM6DS3_TAP_DETECT

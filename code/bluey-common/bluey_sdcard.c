@@ -108,7 +108,7 @@ void sdcard_sensor_update_data(float temperature, float humidity, float lux, flo
     }
 
 
-    sprintf((char *)str, "Temperature = %.2f C\nHumidity = %.2f %%\nAmbient Light = %.2f lux\n\n",
+    sprintf((char *)str, "Temperature = %.2f C\nHumidity = %.2f %%\nAmbient Light = %.2f lux\n\r\n",
                           (float)temperature, (float)humidity, (float)lux);
 
     ff_result = f_write(&file, str, sizeof(str) - 1, (UINT *) &bytes_written);
@@ -122,10 +122,11 @@ void sdcard_sensor_update_data(float temperature, float humidity, float lux, flo
         NRF_LOG_INFO("%d bytes written.\r\n", bytes_written);
     }
 
-    sprintf((char *)str, "Accelerometer:\nX-axis = %.2f g, Y-axis = %.2f g, Z-axis = %.2f g\n\n",
+    sprintf((char *)str, "Accelerometer: X-axis = %.2f g, Y-axis = %.2f g, Z-axis = %.2f g\n\r\n",
                           (float)accel_X, (float)accel_Y, (float)accel_Z);
 
     ff_result = f_write(&file, str, sizeof(str) - 1, (UINT *) &bytes_written);
+
 
     if (ff_result != FR_OK)
     {
@@ -136,11 +137,10 @@ void sdcard_sensor_update_data(float temperature, float humidity, float lux, flo
         NRF_LOG_INFO("%d bytes written.\r\n", bytes_written);
     }
 
-    sprintf((char *)str, "Gyroscope:\nX-axis = %.2f dps, Y-axis = %.2f dps, Z-axis = %.2f dps\n\n\n",
+    sprintf((char *)str, "Gyroscope: X-axis = %.2f dps, Y-axis = %.2f dps, Z-axis = %.2f dps\n\r\n",
                           (float)gyro_X, (float)gyro_Y, (float)gyro_Z);
 
     ff_result = f_write(&file, str, sizeof(str) - 1, (UINT *) &bytes_written);
-
     if (ff_result != FR_OK)
     {
         NRF_LOG_INFO("Write failed\r\n.");
