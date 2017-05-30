@@ -1,5 +1,7 @@
 ## Uploading code using DFU OTA
 
+(These instructions are for Windows. OS X and Linux users can use *nrfutil* similarly.)
+
 DFU stands for "Device Firmware Update" and OTA stands for "Over The Air". Bluey
 comes with a bootloader which allows you to upload code over BLE.
 
