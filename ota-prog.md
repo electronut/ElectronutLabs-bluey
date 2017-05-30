@@ -1,4 +1,17 @@
-## Uploading code using DFU-OTA
+## Uploading code using DFU OTA
+
+DFU stands for "Device Firmware Update" and OTA stands for "Over The Air". Bluey
+comes with a bootloader which allows you to upload code over BLE.
+
+Nordic now mandates using a secure bootloader which uses a private key to upload
+firmware. In a real scenario, you would need to create and install a bootloader
+in your nRF52 device that uses a private key known to you only, so that only you
+can update your device. But since we are supplying you with a bootloader, we have
+made this private key available to everyone. Please do not use this bootloader
+in any device where you consider security to be a priority - create your own by
+[following instructions][1] from Nordic Semiconductor.
+
+Here are the steps involved in uploading your code using DFU OTA and our private key.
 
 * Download latest release of [Python 2](https://www.python.org/downloads/)
 
@@ -77,3 +90,7 @@ _Note!: --sd-req = 0x8C for s132_nrf52_3.0.0 and --sd-req = 0x98 for s132_nrf52_
 * The device resets once the upload is complete and should advertise as ***Nordic_HRM***
 
 ![](images/dfu-app-updated.png)
+
+Congratulations! You have successfully uploaded code to Bluey via DFU OTA.
+
+[1]: https://devzone.nordicsemi.com/blogs/1085/getting-started-with-nordics-secure-dfu-bootloader/
