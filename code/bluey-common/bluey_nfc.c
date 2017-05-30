@@ -1,12 +1,11 @@
-/*
-nfc-temperature.c
-
-nRF52 NFC interface to obtain temperature data.
-
-Electronut Labs
-electronut.in
-
-*/
+/**
+ * bluey_nfc.c
+ *
+ * nRF52 NFC interface to obtain temperature data.
+ *
+ * Electronut Labs
+ * electronut.in
+ */
 
 #include "bluey_nfc.h"
 #include "HDC1010.h"
@@ -35,7 +34,7 @@ void nfc_callback(void * p_context, nfc_t2t_event_t event, const uint8_t * p_dat
 
 
 /**
- * function to add temperature record.
+ * @brief function to add temperature record.
  */
 void add_temperature_record(nfc_ndef_msg_desc_t * p_ndef_msg_desc)
 {
@@ -64,7 +63,7 @@ void add_temperature_record(nfc_ndef_msg_desc_t * p_ndef_msg_desc)
 }
 
 /**
- * function to add humidity record.
+ * @brief function to add humidity record.
  */
 void add_humidity_record(nfc_ndef_msg_desc_t * p_ndef_msg_desc)
 {
@@ -94,7 +93,7 @@ void add_humidity_record(nfc_ndef_msg_desc_t * p_ndef_msg_desc)
 
 /**
  * @brief Function for encoding the welcome message.
-*/
+ */
 void encode_data(uint8_t * p_buffer, uint32_t * p_len)
 {
     NFC_NDEF_MSG_DEF(data, MAX_REC_COUNT);

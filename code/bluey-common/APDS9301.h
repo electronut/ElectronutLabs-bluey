@@ -1,10 +1,11 @@
-/*
-  APDS9301.h
-
-  nRF52 TWI interface for APDS9301 ambient light sensor.
-
-  Electronut Labs
-  electronut.in
+/**
+ * APDS9301.h
+ *
+ * nRF52 TWI interface for APDS9301 ambient light sensor.
+ *
+ * Electronut Labs
+ * electronut.in
+ *
  */
 
  #include <stdint.h>
@@ -123,57 +124,53 @@ struct APDS9301_settings {
     uint8_t APDS9301_persistence_value;
 };
 
-/*
- * function to read sensor registers.
-*/
+/**
+ * @brief function to read sensor registers.
+ */
 ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_t register_addr, uint8_t *p_data, uint8_t bytes, bool no_stop);
 
-/*
-* function to test sensor id
-*/
+/**
+ * @brief function to test sensor id
+ */
 void APDS9301_id(void);
 
-/*
- * function to enable APDS9301
-*/
+/**
+ * @brief function to turn the device ON
+ *
+ * Bit[1:0] is Power control bit. Set Bit[1:0] to power up.
+ */
+void APDS9301_power_up(void);
+
+/**
+ * @brief function to turn the device OFF
+ *
+ * Bit[1:0] is Power control bit. Reset Bit[1:0] to power down.
+ */
+void APDS9301_power_down(void);
+
+/**
+ * @brief function to initialize and power up the sensor.
+ */
 void APDS9301_init(void);
 
-/*
-* function to set time and gain parameters
-*/
-void APDS9301_set_params(void);
-
-/*
-* function to check if device is ON or OFF.
-*/
+/**
+ * @brief function to check if device is ON or OFF.
+ *
+ * Read Bit[1:0] to get current power status
+ */
 uint8_t APDS9301_get_power_status(void);
 
-/*
-* function to read ADC value
-*/
+/**
+ * @brief function to read ADC value
+ *
+ * Data is present in two channels, namely, DATA0 and DATA1, where each includes two 8 bit registers.
+ * So each channel provides a 16-bit ADC data.
+ */
 void APDS9301_read_adc_data(uint16_t *adc_ch0, uint16_t *adc_ch1);
 
-/*
- * function to compute brightness (lux) bases on ADC values
-*/
+/**
+ * @brief function to compute brightness (lux) bases on ADC values
+ *
+ * The equations and parameters are from APDS9301 datasheet - page 4.
+ */
 float getlux(uint16_t adc_ch0, uint16_t adc_ch1);
-
-/*
- * function to configure Interrupt Control register
-*/
-void APDS9301_interrupt_config(void);
-
-/*
- * function to clear interrupt by setting CLEAR bit in COMMAND register.
-*/
-void clearInterrupt(void);
-
-/*
- * function to set lower interrupt threshold
-*/
-void APDS9301_set_low_threshold(uint16_t value);
-
-/*
- * function to set higher interrupt threshold
-*/
-void APDS9301_set_high_threshold(uint16_t value);

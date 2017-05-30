@@ -1,11 +1,10 @@
-/*
-HDC1010.c
-
-nRF52 TWI interface for HDC1010 Temperature/Humidity sensor.
-
-Electronut Labs
-electronut.in
-
+/**
+ * HDC1010.c
+ *
+ * nRF52 TWI interface for HDC1010 Temperature/Humidity sensor.
+ *
+ * Electronut Labs
+ * electronut.in
 */
 
 #include "HDC1010.h"
@@ -15,7 +14,9 @@ const float pow_16 = 65536.0f;
 // uncomment for printf traces
 // #define ENABLE_PRINTF_TRACES
 
-// write 16-bit value to the sensor.
+/**
+ * @brief write 16-bit value to the sensor.
+ */
 void HDC1010_write_word(uint8_t device_addr, uint8_t register_addr, uint16_t *data)
 {
   ret_code_t err_code;
@@ -28,14 +29,18 @@ void HDC1010_write_word(uint8_t device_addr, uint8_t register_addr, uint16_t *da
   APP_ERROR_CHECK(err_code);
 }
 
-// initialize the sensor.
+/**
+ * @brief initialize the sensor.
+ */
 void HDC1010_init(uint16_t reg_data)
 {
   // configure sensor to measure temperature and humidity with 14 bit resolution each.
   HDC1010_write_word(HDC1010_ADDR, CONFIG_REG, &reg_data);
 }
 
-// read sensor configuration
+/**
+ * @brief read sensor configuration
+ */
 void HDC1010_read_config(uint16_t* data)
 {
   uint32_t err_code;
@@ -55,7 +60,9 @@ void HDC1010_read_config(uint16_t* data)
   #endif
 }
 
-// read Device ID register.
+/**
+ * @brief read Device ID register.
+ */
 uint16_t HDC1010_get_dev_id(void)
 {
   ret_code_t err_code;
@@ -73,7 +80,9 @@ uint16_t HDC1010_get_dev_id(void)
   return dev_id;
 }
 
-// read Manufacturer ID register.
+/**
+ * @brief read Manufacturer ID register.
+ */
 uint16_t HDC1010_get_manuf_id(void)
 {
   ret_code_t err_code;
@@ -91,7 +100,9 @@ uint16_t HDC1010_get_manuf_id(void)
   return manuf_id;
 }
 
-// read temperature values only. (raw)
+/**
+ * @brief read temperature values only. (raw)
+ */
 void HDC1010_get_temp_raw(uint16_t* temp_val)
 {
   ret_code_t err_code;
@@ -109,7 +120,9 @@ void HDC1010_get_temp_raw(uint16_t* temp_val)
   *temp_val = (temp_data[0] << 8) | temp_data[1];
 }
 
-// read temperature values only.
+/**
+ * @brief read temperature values only.
+ */
 float HDC1010_get_temp(void)
 {
   uint16_t temp_val;
@@ -120,8 +133,9 @@ float HDC1010_get_temp(void)
   return temp;
 }
 
-
-// read humidity values only (RAW values)
+/**
+ * @brief read humidity values only (RAW values)
+ */
 void HDC1010_get_humid_raw(uint16_t* humid_val)
 {
   ret_code_t err_code;
@@ -139,7 +153,9 @@ void HDC1010_get_humid_raw(uint16_t* humid_val)
   *humid_val = (humid_data[0] << 8) | humid_data[1];
 }
 
-// read humidity values only.
+/**
+ * @brief  read humidity values only.
+ */
 float HDC1010_get_humid(void)
 {
   uint16_t humid_val;

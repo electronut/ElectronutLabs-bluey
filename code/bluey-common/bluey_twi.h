@@ -1,3 +1,11 @@
+/**
+ * twi pin and instance declaration.
+ *
+ * Electronut Labs
+ * electronut.in
+ *
+ */
+
 #include "nrf_drv_twi.h"
 
 #define TWI_SCL_PIN             11

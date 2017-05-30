@@ -1,9 +1,18 @@
+/**
+ * bluey-sdcard.c
+ *
+ * nRF52 SD card interface to log data.
+ *
+ * Electronut Labs
+ * electronut.in
+ */
+
 #include <stdio.h>
 #include "bluey_sdcard.h"
 
-/*
- * SDC block device definition
-*/
+/**
+ * @brief SDC block device definition
+ */
 NRF_BLOCK_DEV_SDC_DEFINE(
         m_block_dev_sdc,
         NRF_BLOCK_DEV_SDC_CONFIG(
@@ -14,12 +23,13 @@ NRF_BLOCK_DEV_SDC_DEFINE(
 );
 
 
-/*
- * function to log data in SD card.
-*/
+
 static volatile bool heading = true;
 unsigned char str[100];
 
+/**
+ * @brief function to log data in SD card.
+ */
 void sdcard_sensor_update_data(float temperature, float humidity, float lux, float accel_X, float accel_Y, float accel_Z, float gyro_X, float gyro_Y, float gyro_Z)
 {
     static FATFS fs;
@@ -122,11 +132,13 @@ void sdcard_sensor_update_data(float temperature, float humidity, float lux, flo
         NRF_LOG_INFO("%d bytes written.\r\n", bytes_written);
     }
 
+    // flush cached information
+    ff_result = f_sync(&file);
+
     sprintf((char *)str, "Accelerometer: X-axis = %.2f g, Y-axis = %.2f g, Z-axis = %.2f g\n\r\n",
                           (float)accel_X, (float)accel_Y, (float)accel_Z);
 
     ff_result = f_write(&file, str, sizeof(str) - 1, (UINT *) &bytes_written);
-
 
     if (ff_result != FR_OK)
     {
@@ -136,6 +148,9 @@ void sdcard_sensor_update_data(float temperature, float humidity, float lux, flo
     {
         NRF_LOG_INFO("%d bytes written.\r\n", bytes_written);
     }
+
+    // flush cached information
+    ff_result = f_sync(&file);
 
     sprintf((char *)str, "Gyroscope: X-axis = %.2f dps, Y-axis = %.2f dps, Z-axis = %.2f dps\n\r\n",
                           (float)gyro_X, (float)gyro_Y, (float)gyro_Z);
@@ -149,6 +164,9 @@ void sdcard_sensor_update_data(float temperature, float humidity, float lux, flo
     {
         NRF_LOG_INFO("%d bytes written.\r\n", bytes_written);
     }
+
+    // flush cached information
+    ff_result = f_sync(&file);
 
     (void) f_close(&file);
     return;

@@ -1,11 +1,10 @@
-/*
-nfc-temperature.c
-
-nRF52 NFC interface to obtain temperature data.
-
-Electronut Labs
-electronut.in
-
+/**
+ * bluey_nfc.h
+ *
+ * nRF52 NFC interface to obtain temperature data.
+ *
+ * Electronut Labs
+ * electronut.in
 */
 
 #include <stdint.h>

@@ -1,11 +1,10 @@
-/*
-	LSM6DS3.h
-
-  nRF52 TWI interface for LSM6DS3 IMU.
-
-  Electronut Labs
-  electronut.in
-
+/**
+ * LSM6DS3.h
+ *
+ * nRF52 TWI interface for LSM6DS3 IMU.
+ *
+ * Electronut Labs
+ * electronut.in
  */
 
 #include <stdint.h>
@@ -441,7 +440,6 @@ typedef enum {
 	LSM6DS3_IMU_ODR_XL_1660Hz 		    = 0x80,
 	LSM6DS3_IMU_ODR_XL_3330Hz 		    = 0x90,
 	LSM6DS3_IMU_ODR_XL_6660Hz 		    = 0xA0,
-	LSM6DS3_IMU_ODR_XL_13330Hz 		    = 0xB0,
 } LSM6DS3_IMU_ODR_XL_t;
 
 /*******************************************************************************
@@ -1724,7 +1722,6 @@ typedef enum {
 struct IMU_settings {
     // Accelerometer settings
     uint8_t accel_enable;
-    uint8_t accel_ODR;
     uint16_t accel_range;
     uint16_t accel_samplerate;
     uint16_t accel_bandwidth;
@@ -1733,7 +1730,7 @@ struct IMU_settings {
     uint8_t accel_FIFO_decimation;
 
     // Gyroscope settings
-    uint16_t gyro_enable;
+    uint8_t gyro_enable;
     uint16_t gyro_range;
     uint16_t gyro_samplerate;
     uint16_t gyro_bandwidth;
@@ -1750,68 +1747,140 @@ struct IMU_settings {
     uint8_t FIFO_mode;
 };
 
-/*
- * function to initialize IMU sensor.
-*/
+/**
+ * @brief function to initialize IMU sensor.
+ */
 void LSM6DS3_init(void);
 
-/*
- * function to read sensor registers.
-*/
+/**
+ * @brief function to read sensor registers.
+ */
 ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_t register_addr, uint8_t *p_data, uint8_t bytes, bool no_stop);
 
-/*
- * function to test availablility of accelerometer
-*/
+/**
+ * @brief function to test availablility of IMU by reading WHO_AM_I register.
+ */
 void LSM6DS3_who_am_i(void);
 
-/*
- * function to configure IMU parameters
-*/
+/**
+ * @brief function to configure IMU parameters.
+ *
+ * Accelerometer parameters are configured using CTRL1_XL register.
+ * Bit[1:0] are reserved for filter bandwidth selection. Values can be 400 Hz, 200 Hz, 100 Hz and 50 Hz
+ * Bit[3:2] are reserved for full scale range selection. Values can be (+/-)2g, (+/-)4g, (+/-)8g and (+/-)16g
+ * Bit[7:4] are reserved for output data rate and power mode selection.
+ *
+ * Gyroscope parameters are configured using CTRL2_G registers.
+ * Bit[1] is reserved for full scale range selection at 125 dps.
+ * Bit[3:2] are reserved for full scale range sselection from 245 dps, 500 dps, 1000 dps and 2000 dps
+ * Bit[7:4] are reserved for output data rate selection.
+ */
 void LSM6DS3_config();
 
-/*
- * function to read raw accelerometer data
-*/
+/**
+ * @brief function to enable power down mode in accelerometer
+ *
+ * setting ODR_XL[3:0] in CTRL1_XL register to 0 enables power-down mode.
+ */
+void LSM6DS3_set_accel_power_down_mode();
+
+/**
+ * @brief function to enable low power mode in accelerometer
+ *
+ * Low power mode is enabled by setting one of the following ODR values: 13 Hz, 26Hz and 52 Hz
+ */
+void LSM6DS3_set_accel_low_power_mode(uint16_t value);
+
+/**
+ * @brief function to enable normal mode in accelerometer
+ *
+ * Normal mode is enabled by setting one of the following ODR values: 104 Hz and 208 Hz
+ */
+void LSM6DS3_set_accel_normal_mode(uint16_t value);
+
+/**
+ * @brief function to enable high performance mode in accelerometer
+ *
+ * High performance mode is enabled by setting one of the following ODR values: 416 Hz, 833 Hz, 1.66 kHz, 3.33 kHz and 6.66 kHz
+ */
+void LSM6DS3_set_accel_high_performance_mode(uint16_t value);
+
+/**
+ * @brief function to read accelerometer data
+ */
 void LSM6DS3_read_accl_data(int16_t *x_axis, int16_t *y_axis, int16_t *z_axis);
 
 
-/*
- * function to compute raw accelerometer data in g
-*/
+/**
+ * @brief function to compute raw accelerometer data in g.
+ *
+ * Multiply linear acceleration sensitivity with raw_data. Divide the product by 1000 to obtain value in g.
+ * Refer table 4.1 on page 19 of LSM6DS3 datasheet.
+ */
 float LSM6DS3_accelData_in_g(int16_t raw_data);
 
-/*
- * function to read raw gyroscope data
-*/
+/**
+ * @brief function to enable power down mode in gyroscope
+ *
+ * setting ODR_G[3:0] in CTRL2_G register to 0 enables power-down mode.
+ */
+void LSM6DS3_set_gyro_power_down_mode();
+
+/**
+ * @brief function to enable low power mode in gyroscope
+ *
+ * Low power mode is enabled by setting one of the following ODR values: 13 Hz, 26Hz and 52 Hz
+ */
+void LSM6DS3_set_gyro_low_power_mode(uint16_t value);
+
+/**
+ * @brief function to enable normal mode in gyroscope
+ *
+ * Normal mode is enabled by setting one of the following ODR values: 104 Hz and 208 Hz
+ */
+void LSM6DS3_set_gyro_normal_mode(uint16_t value);
+
+/**
+ * @brief function to enable high performance mode in gyroscope
+ *
+ * High performance mode is enabled by setting one of the following ODR values: 416 Hz, 833 Hz and 1.66 kHz
+ */
+void LSM6DS3_set_gyro_high_performance_mode(uint16_t value);
+
+/**
+ * @brief functioon to read gyroscope data.
+ */
 void LSM6DS3_read_gyro_data(int16_t *gyro_x, int16_t *gyro_y, int16_t *gyro_z);
 
-/*
- * function to compute raw gyroscope data in degrees per second (dps)
-*/
+/**
+ * @brief function to compute raw gyroscope data in degrees per second (dps).
+ *
+ * Multiply raw data with angular rate sensitivity.
+ * Refer table 4.1 on page 19 of LSM6DS3 datasheet
+ */
 float LSM6DS3_gyroData_in_dps(int16_t raw_data);
 
-/*
- * function to configure FIFO
-*/
+/**
+ * @brief function to configure FIFO
+ */
 void LSM6DS3_FIFO_config(void);
 
-/*
- * function to empty FIFO buffer
-*/
+/**
+ * @brief function to empty FIFO buffer
+ */
 void LSM6DS3_clear_FIFO_buffer(void);
 
-/*
- * function to read FIFO status
-*/
+/**
+ * @brief function to read FIFO status
+ */
 uint16_t LSM6DS3_read_FIFO_status(void);
 
-/*
- * function to read FIFO buffer
-*/
+/**
+ * @brief function to read FIFO buffer
+ */
 int16_t LSM6DS3_read_FIFO_buffer(void);
 
-/*
- * function to configure tap functionality
-*/
+/**
+ * @brief function to configure tap functionality
+ */
 void LSM6DS3_tap_detect_config();

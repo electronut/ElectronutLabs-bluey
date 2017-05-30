@@ -1,12 +1,12 @@
-/*
-	LSM6DS3.h
-
-  nRF52 TWI interface for LSM6DS3 IMU.
-
-  Electronut Labs
-  electronut.in
-
+/**
+ * LSM6DS3.h
+ *
+ * nRF52 TWI interface for LSM6DS3 IMU.
+ *
+ * Electronut Labs
+ * electronut.in
  */
+
 
 #include "stdlib.h"
 #include "time.h"
@@ -14,9 +14,9 @@
 
 static struct IMU_settings settings;
 
-/*
- * function to test availablility of IMU
-*/
+/**
+ * @brief function to test availablility of IMU by reading WHO_AM_I register.
+ */
 void LSM6DS3_who_am_i(void)
 {
   uint32_t err_code;
@@ -26,16 +26,15 @@ void LSM6DS3_who_am_i(void)
 }
 
 
-/*
- * init function
-*/
+/**
+ * @brief function to initialize IMU sensor.
+ */
 void LSM6DS3_init(void)
 {
   ret_code_t err_code;
 
   settings.accel_enable           = 1;      // 0 - Disable. 1 - Enable
-  settings.accel_ODR              = 1;
-  settings.accel_range            = 2;     // Full Scale(FS) range (in g). Select from: 2, 4, 8, 16
+  settings.accel_range            = 2;      // Full Scale(FS) range (in g). Select from: 2, 4, 8, 16
   settings.accel_samplerate       = 416;    // Hz. Select from: 13, 26, 52, 104, 208, 416, 833, 1666
   settings.accel_bandwidth        = 200;    // Hz. Select from: 50, 100, 200, 400
   settings.accel_FIFO_enable      = 0;      // Set to include accelerometer data in FIFO buffer
@@ -68,9 +67,19 @@ void LSM6DS3_init(void)
   LSM6DS3_config();
 }
 
-/*
- * function to configure IMU parameters.
-*/
+/**
+ * @brief function to configure IMU parameters.
+ *
+ * Accelerometer parameters are configured using CTRL1_XL register.
+ * Bit[1:0] are reserved for filter bandwidth selection. Values can be 400 Hz, 200 Hz, 100 Hz and 50 Hz
+ * Bit[3:2] are reserved for full scale range selection. Values can be (+/-)2g, (+/-)4g, (+/-)8g and (+/-)16g
+ * Bit[7:4] are reserved for output data rate and power mode selection.
+ *
+ * Gyroscope parameters are configured using CTRL2_G registers.
+ * Bit[1] is reserved for full scale range selection at 125 dps.
+ * Bit[3:2] are reserved for full scale range sselection from 245 dps, 500 dps, 1000 dps and 2000 dps
+ * Bit[7:4] are reserved for output data rate selection.
+ */
 void LSM6DS3_config(void)
 {
   ret_code_t err_code;
@@ -122,6 +131,11 @@ void LSM6DS3_config(void)
 
     // ODR
     switch(settings.accel_samplerate) {
+
+      case 0:
+              tx_data[1] |= LSM6DS3_IMU_ODR_XL_POWER_DOWN;
+              break;
+
       case 13:
               tx_data[1] |= LSM6DS3_IMU_ODR_XL_13Hz;
               break;
@@ -161,10 +175,6 @@ void LSM6DS3_config(void)
 
       case 6660:
               tx_data[1] |= LSM6DS3_IMU_ODR_XL_6660Hz;
-              break;
-
-      case 13330:
-              tx_data[1] |= LSM6DS3_IMU_ODR_XL_13330Hz;
               break;
     }
   }
@@ -247,14 +257,148 @@ void LSM6DS3_config(void)
   APP_ERROR_CHECK(err_code);
 }
 
-/*
- * function to read accelerometer data
-*/
+/**
+ * @brief function to enable power down mode in accelerometer
+ *
+ * setting ODR_XL[3:0] in CTRL1_XL register to 0 enables power-down mode.
+ */
+void LSM6DS3_set_accel_power_down_mode()
+{
+  ret_code_t err_code;
+  uint8_t rx_data;
+  uint8_t tx_data[2] = {CTRL1_XL, 0};
+
+  // read CTRL1_XL register to obtain current parameters.
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL1_XL, &rx_data, sizeof(rx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // bit mask CTRL1_XL to avoid losing previously set parameters. Only change ODR_XL bits.
+  tx_data[1] |= (0x00 << 4) | (rx_data & 0x0F);
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+}
+
+/**
+ * @brief function to enable low power mode in accelerometer
+ *
+ * Low power mode is enabled by setting one of the following ODR values: 13 Hz, 26Hz and 52 Hz
+ */
+void LSM6DS3_set_accel_low_power_mode(uint16_t value)
+{
+  ret_code_t err_code;
+  uint8_t rx_data;
+  uint8_t tx_data[2] = {CTRL1_XL, 0};
+
+  // read CTRL1_XL register to obtain current parameters.
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL1_XL, &rx_data, sizeof(rx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // bit mask CTRL1_XL to avoid losing previously set parameters. Only change ODR_XL bits.
+  switch(value) {
+    case 13:
+      tx_data[1] |= (0x01 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 26:
+      tx_data[1] |= (0x02 << 4) | (rx_data & 0x0F);
+      break;
+
+    default:
+    case 52:
+      tx_data[1] |= (0x03 << 4) | (rx_data & 0x0F);
+      break;
+  }
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+}
+
+/**
+ * @brief function to enable normal mode in accelerometer
+ *
+ * Normal mode is enabled by setting one of the following ODR values: 104 Hz and 208 Hz
+ */
+void LSM6DS3_set_accel_normal_mode(uint16_t value)
+{
+  ret_code_t err_code;
+  uint8_t rx_data;
+  uint8_t tx_data[2] = {CTRL1_XL, 0};
+
+  // read CTRL1_XL register to obtain current parameters.
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL1_XL, &rx_data, sizeof(rx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // bit mask CTRL1_XL to avoid losing previously set parameters. Only change ODR_XL bits.
+  switch(value) {
+    default:
+    case 104:
+      tx_data[1] |= (0x04 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 208:
+      tx_data[1] |= (0x05 << 4) | (rx_data & 0x0F);
+      break;
+  }
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+}
+
+/**
+ * @brief function to enable high performance mode in accelerometer
+ *
+ * High performance mode is enabled by setting one of the following ODR values: 416 Hz, 833 Hz, 1.66 kHz, 3.33 kHz and 6.66 kHz
+ */
+void LSM6DS3_set_accel_high_performance_mode(uint16_t value)
+{
+  ret_code_t err_code;
+  uint8_t rx_data;
+  uint8_t tx_data[2] = {CTRL1_XL, 0};
+
+  // read CTRL1_XL register to obtain current parameters.
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL1_XL, &rx_data, sizeof(rx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // bit mask CTRL1_XL to avoid losing previously set parameters. Only change ODR_XL bits.
+  switch(value) {
+    case 416:
+      tx_data[1] |= (0x06 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 833:
+      tx_data[1] |= (0x07 << 4) | (rx_data & 0x0F);
+      break;
+
+    default:
+    case 1660:
+      tx_data[1] |= (0x08 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 3330:
+      tx_data[1] |= (0x09 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 6660:
+      tx_data[1] |= (0x0A << 4) | (rx_data & 0x0F);
+      break;
+  }
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+}
+
+
+/**
+ * @brief function to read accelerometer data
+ */
 void LSM6DS3_read_accl_data(int16_t *x_axis, int16_t *y_axis, int16_t *z_axis)
 {
   ret_code_t err_code;
   uint8_t status = 0;
   uint8_t data[6];
+
+  LSM6DS3_set_accel_high_performance_mode(settings.accel_samplerate);
 
   do {
     err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, STATUS_REG, &status, sizeof(status), false);
@@ -262,22 +406,179 @@ void LSM6DS3_read_accl_data(int16_t *x_axis, int16_t *y_axis, int16_t *z_axis)
 
   err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, OUTX_L_XL, data, sizeof(data), true);
   APP_ERROR_CHECK(err_code);
+
+  LSM6DS3_set_accel_power_down_mode();
+
   *x_axis = (data[1] << 8) | data[0];
   *y_axis = (data[3] << 8) | data[2];
   *z_axis = (data[5] << 8) | data[4];
 }
 
-/*
- * function to compute raw accelerometer data in g
-*/
+/**
+ * @brief function to compute raw accelerometer data in g.
+ *
+ * Multiply linear acceleration sensitivity with raw_data. Divide the product by 1000 to obtain value in g.
+ * Refer table 4.1 on page 19 of LSM6DS3 datasheet.
+ */
 float LSM6DS3_accelData_in_g(int16_t raw_data)
 {
-  return ((float) ((raw_data * 0.061 * (settings.accel_range >> 1)) / 1000 ));
+  return ((float)((raw_data * 0.061 * (settings.accel_range >> 1)) / 1000 ));
 }
 
-/*
- * function to compute raw gyroscope data in degrees per second (dps)
-*/
+/**
+ * @brief function to enable power down mode in gyroscope
+ *
+ * setting ODR_G[3:0] in CTRL2_G register to 0 enables power-down mode.
+ */
+void LSM6DS3_set_gyro_power_down_mode()
+{
+  ret_code_t err_code;
+  uint8_t rx_data;
+  uint8_t tx_data[2] = {CTRL2_G, 0};
+
+  // read CTRL2_G register to obtain current parameters.
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL2_G, &rx_data, sizeof(rx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // bit mask CTRL2_G to avoid losing previously set parameters. Only change ODR_G bits.
+  tx_data[1] |= (0x00 << 4) | (rx_data & 0x0F);
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+}
+
+/**
+ * @brief function to enable low power mode in gyroscope
+ *
+ * Low power mode is enabled by setting one of the following ODR values: 13 Hz, 26Hz and 52 Hz
+ */
+void LSM6DS3_set_gyro_low_power_mode(uint16_t value)
+{
+  ret_code_t err_code;
+  uint8_t rx_data;
+  uint8_t tx_data[2] = {CTRL2_G, 0};
+
+  // read CTRL2_G register to obtain current parameters.
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL2_G, &rx_data, sizeof(rx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // bit mask CTRL2_G to avoid losing previously set parameters. Only change ODR_G bits.
+  switch(value) {
+    case 13:
+      tx_data[1] |= (0x01 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 26:
+      tx_data[1] |= (0x02 << 4) | (rx_data & 0x0F);
+      break;
+
+    default:
+    case 52:
+      tx_data[1] |= (0x03 << 4) | (rx_data & 0x0F);
+      break;
+  }
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+}
+
+/**
+ * @brief function to enable normal mode in gyroscope
+ *
+ * Normal mode is enabled by setting one of the following ODR values: 104 Hz and 208 Hz
+ */
+void LSM6DS3_set_gyro_normal_mode(uint16_t value)
+{
+  ret_code_t err_code;
+  uint8_t rx_data;
+  uint8_t tx_data[2] = {CTRL2_G, 0};
+
+  // read CTRL2_G register to obtain current parameters.
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL2_G, &rx_data, sizeof(rx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // bit mask CTRL2_G to avoid losing previously set parameters. Only change ODR_G bits.
+  switch(value) {
+    default:
+    case 104:
+      tx_data[1] |= (0x04 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 208:
+      tx_data[1] |= (0x05 << 4) | (rx_data & 0x0F);
+      break;
+  }
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+}
+
+/**
+ * @brief function to enable high performance mode in gyroscope
+ *
+ * High performance mode is enabled by setting one of the following ODR values: 416 Hz, 833 Hz and 1.66 kHz
+ */
+void LSM6DS3_set_gyro_high_performance_mode(uint16_t value)
+{
+  ret_code_t err_code;
+  uint8_t rx_data;
+  uint8_t tx_data[2] = {CTRL2_G, 0};
+
+  // read CTRL2_G register to obtain current parameters.
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL2_G, &rx_data, sizeof(rx_data), false);
+  APP_ERROR_CHECK(err_code);
+
+  // bit mask CTRL2_G to avoid losing previously set parameters. Only change ODR_G bits.
+  switch(value) {
+    default:
+    case 416:
+      tx_data[1] |= (0x06 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 833:
+      tx_data[1] |= (0x07 << 4) | (rx_data & 0x0F);
+      break;
+
+    case 1660:
+      tx_data[1] |= (0x08 << 4) | (rx_data & 0x0F);
+      break;
+  }
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+}
+
+
+/**
+ * @brief functioon to read gyroscope data.
+ */
+void LSM6DS3_read_gyro_data(int16_t *gyro_x, int16_t *gyro_y, int16_t *gyro_z)
+{
+  ret_code_t err_code;
+  uint8_t status = 0;
+  uint8_t data[6];
+
+  LSM6DS3_set_gyro_normal_mode(settings.gyro_samplerate);
+  do {
+    err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, STATUS_REG, &status, sizeof(status), false);
+  } while(!(status & 0x02));
+
+  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, OUTX_L_G, data, sizeof(data), true);
+  APP_ERROR_CHECK(err_code);
+
+  LSM6DS3_set_gyro_power_down_mode();
+
+  *gyro_x = (data[1] << 8) | data[0];
+  *gyro_y = (data[3] << 8) | data[2];
+  *gyro_z = (data[5] << 8) | data[4];
+}
+
+/**
+ * @brief function to compute raw gyroscope data in degrees per second (dps).
+ *
+ * Multiply raw data with angular rate sensitivity.
+ * Refer table 4.1 on page 19 of LSM6DS3 datasheet
+ */
 float LSM6DS3_gyroData_in_dps(int16_t raw_data)
 {
   uint8_t gyro_range_divisor;
@@ -292,32 +593,9 @@ float LSM6DS3_gyroData_in_dps(int16_t raw_data)
   return ((float) ((raw_data * 4.375 * gyro_range_divisor) / 1000 ));
 }
 
-/*
- * functioon to read gyroscope data
-*/
-void LSM6DS3_read_gyro_data(int16_t *gyro_x, int16_t *gyro_y, int16_t *gyro_z)
-{
-  ret_code_t err_code;
-  uint8_t status = 0;
-  uint8_t data[6];
-
-  do {
-    //err_code = read_register(LSM6DS3_ADDR, STATUS_REG, &status, sizeof(status));
-    err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, STATUS_REG, &status, sizeof(status), false);
-  } while(!(status & 0x02));
-
-  //err_code = LSM6DS3_read_register(LSM6DS3_ADDR, OUTX_L_XL, data, sizeof(data));
-  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, OUTX_L_G, data, sizeof(data), true);
-  APP_ERROR_CHECK(err_code);
-  *gyro_x = (data[1] << 8) | data[0];
-  *gyro_y = (data[3] << 8) | data[2];
-  *gyro_z = (data[5] << 8) | data[4];
-}
-//#endif
-
-/*
- * function to configure FIFO
-*/
+/**
+ * @brief function to configure FIFO
+ */
 void LSM6DS3_FIFO_config(void)
 {
   ret_code_t err_code;
@@ -426,9 +704,9 @@ void LSM6DS3_FIFO_config(void)
   APP_ERROR_CHECK(err_code);
 }
 
-/*
- * function to read FIFO status
-*/
+/**
+ * @brief function to read FIFO status
+ */
 uint16_t LSM6DS3_read_FIFO_status(void)
 {
   ret_code_t err_code;
@@ -450,9 +728,9 @@ uint16_t LSM6DS3_read_FIFO_status(void)
   return status;
 }
 
-/*
- * function to read FIFO buffer
-*/
+/**
+ * @brief function to read FIFO buffer
+ */
 int16_t LSM6DS3_read_FIFO_buffer()
 {
   ret_code_t err_code;
@@ -467,9 +745,9 @@ int16_t LSM6DS3_read_FIFO_buffer()
   return data;
 }
 
-/*
- * function to empty FIFO buffer
-*/
+/**
+ * @brief function to empty FIFO buffer
+ */
 void LSM6DS3_clear_FIFO_buffer(void)
 {
   // Read FIFO data and dump it.
@@ -478,9 +756,9 @@ void LSM6DS3_clear_FIFO_buffer(void)
   }
 }
 
-/*
- * function to configure tap functionality
-*/
+/**
+ * @brief function to configure tap functionality
+ */
 void LSM6DS3_tap_detect_config()
 {
   ret_code_t err_code;

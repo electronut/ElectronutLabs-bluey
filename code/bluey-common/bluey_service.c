@@ -1,3 +1,10 @@
+/**
+ * Bluey custom service and characteristic
+ *
+ * Electronut Labs
+ * electronut.in
+ *
+ */
 
 #include <stdint.h>
 #include <string.h>
@@ -7,11 +14,12 @@
 #include "ble_srv_common.h"
 #include "app_error.h"
 
-
-// ALREADY_DONE_FOR_YOU: Declaration of a function that will take care of some housekeeping of ble connections related to our service and characteristic
+/**
+ * @brief Declaration of a function that will take care of some housekeeping of ble connections related to our service and characteristic
+ */
 void ble_our_service_on_ble_evt(ble_os_t * p_our_service, ble_evt_t * p_ble_evt)
 {
-  // OUR_JOB: Step 3.D Implement switch case handling BLE events related to our service.
+  // Implement switch case handling BLE events related to our service.
   switch (p_ble_evt->header.evt_id)
   {
     case BLE_GAP_EVT_CONNECTED:
@@ -27,12 +35,11 @@ void ble_our_service_on_ble_evt(ble_os_t * p_our_service, ble_evt_t * p_ble_evt)
 }
 
 
-/**@brief Function for adding our new characterstic to "Our service" that we initiated in the previous tutorial.
-*
-* @param[in]   p_our_service        Our Service structure.
-*
-*/
-
+/**@brief Function for adding IMU characterstic to our service
+ *
+ * @param[in]   p_our_service        Our Service structure.
+ *
+ */
 static uint32_t imu_char_add(ble_os_t * p_our_service)
 {
    // Add a custom characteristic UUID
@@ -90,6 +97,11 @@ static uint32_t imu_char_add(ble_os_t * p_our_service)
    return NRF_SUCCESS;
 }
 
+/**@brief Function for adding temperature and humidity characterstic to our service
+ *
+ * @param[in]   p_our_service        Our Service structure.
+ *
+ */
 static uint32_t temp_humid_char_add(ble_os_t * p_our_service)
 {
    // Add a custom characteristic UUID
@@ -147,6 +159,11 @@ static uint32_t temp_humid_char_add(ble_os_t * p_our_service)
    return NRF_SUCCESS;
 }
 
+/**@brief Function for adding lux characterstic to our service
+ *
+ * @param[in]   p_our_service        Our Service structure.
+ *
+ */
 /*
 static uint32_t lux_char_add(ble_os_t * p_our_service)
 {
@@ -205,6 +222,8 @@ static uint32_t lux_char_add(ble_os_t * p_our_service)
    return NRF_SUCCESS;
 }
 */
+
+
 /**@brief Function for initiating our new service.
  *
  * @param[in]   p_our_service        Our Service structure.
@@ -212,16 +231,16 @@ static uint32_t lux_char_add(ble_os_t * p_our_service)
  */
 void our_service_init(ble_os_t * p_our_service)
 {
-  uint32_t   err_code; // Variable to hold return codes from library and softdevice functions
+  uint32_t   err_code;
 
-  // FROM_SERVICE_TUTORIAL: Declare 16-bit service and 128-bit base UUIDs and add them to the BLE stack
+  // Declare 16-bit service and 128-bit base UUIDs and add them to the BLE stack
   ble_uuid_t        service_uuid;
   ble_uuid128_t     base_uuid = BLE_UUID_OUR_BASE_UUID;
   service_uuid.uuid = BLE_UUID_OUR_SERVICE_UUID;
   err_code = sd_ble_uuid_vs_add(&base_uuid, &service_uuid.type);
   APP_ERROR_CHECK(err_code);
 
-  // OUR_JOB: Step 3.B, Set our service connection handle to default value. I.e. an invalid handle since we are not yet in a connection.
+  // Set our service connection handle to default value i.e. an invalid handle since we are not yet in a connection.
   p_our_service->conn_handle = BLE_CONN_HANDLE_INVALID;
 
   // FROM_SERVICE_TUTORIAL: Add our service
@@ -231,13 +250,16 @@ void our_service_init(ble_os_t * p_our_service)
 
   APP_ERROR_CHECK(err_code);
 
-  // OUR_JOB: Call the function our_char_add() to add our new characteristic to the service.
+  // Call the function our_char_add() to add our new characteristic to the service.
   imu_char_add(p_our_service);
   temp_humid_char_add(p_our_service);
   //lux_char_add(p_our_service);
 }
 
 
+/**
+ * @brief Function to update IMU characterisstic.
+ */
 void characteristic_imu_update(ble_os_t *p_our_service, int16_t *value)
 {
   if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID)
@@ -256,6 +278,9 @@ void characteristic_imu_update(ble_os_t *p_our_service, int16_t *value)
   }
 }
 
+/**
+ * @brief Function to update temperature and humidity characterisstic.
+ */
 void characteristic_temp_humid_update(ble_os_t *p_our_service, uint16_t *value)
 {
   if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID)
@@ -274,6 +299,9 @@ void characteristic_temp_humid_update(ble_os_t *p_our_service, uint16_t *value)
   }
 }
 
+/**
+ * @brief Function to update lux characterisstic.
+ */
 void characteristic_lux_update(ble_os_t *p_our_service, uint16_t *value)
 {
   if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID)

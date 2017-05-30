@@ -1,9 +1,8 @@
-/*
-  Bluey Sensor Test Code
-
-  Electronut Labs
-  electronut.in
-
+/**
+ * Bluey Sensor Test Code
+ *
+ * Electronut Labs
+ * electronut.in
  */
 
 #include <stdbool.h>
@@ -39,15 +38,12 @@
 #include "bluey_twi.h"
 
 
-#define RGB_LED                                           // Uncomment to enable RGB LED
+#define RGB_LED                                         // Uncomment to enable RGB LED
 #define TEMP_HUMID_DATA                                 // Uncomment to obtain temperature and humidity data
 #define AMBIENT_LIGHT_DATA                              // Uncomment to obtain ambient light data
 #define IMU_DATA                                        // Uncomment to obtain IMU data
-//#define ACCEL_PITCH_ROLL_DATA                           // Uncomment to obtain pitch and roll value
-// #define LSM6DS3_TAP_DETECT                              // Uncomment to enable IMU tap detect test
+//#define LSM6DS3_TAP_DETECT                              // Uncomment to enable tap detect functionality
 #define SDCARD_NFC_TEST                                 // Uncomment to test SD-card and NFC
-
-
 
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                           /**< Include the service_changed characteristic. If not enabled, the server's database cannot be changed for the lifetime of the device. */
@@ -597,9 +593,9 @@ void twi_init (void)
     nrf_drv_twi_enable(&p_twi_sensors);
 }
 
-/*
- * function to read sensor registers.
-*/
+/**
+ * @brief function to read sensor registers.
+ */
 ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_t register_addr, uint8_t *p_data, uint8_t bytes, bool no_stop)
 {
   ret_code_t err_code;
@@ -620,17 +616,17 @@ ret_code_t read_register(nrf_drv_twi_t twi_instance, uint8_t device_addr, uint8_
 #ifdef LSM6DS3_TAP_DETECT
 
 uint8_t tap_count = 0;
-/*
- * interrupt handler for tap detect
-*/
+/**
+ * @brief interrupt handler for tap detect
+ */
 void get_tap_count(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
 {
   tap_count++;
 }
 
-/*
- * function to enable interrupts on pins connected to LSM6DS3 interrupt lines.
-*/
+/**
+ * @brief function to enable interrupts on pins connected to LSM6DS3 interrupt lines.
+ */
 static void LSM6DS3_gpiote_init(void)
 {
   ret_code_t err_code;
@@ -649,7 +645,6 @@ static void LSM6DS3_gpiote_init(void)
 
   nrf_drv_gpiote_in_event_enable(INT2, true);
 }
-
 #endif
 
 // routine to test SD-card (enabled using button press) and NFC
@@ -666,17 +661,22 @@ int16_t gyroX, gyroY, gyroZ;
 float accel_X, accel_Y, accel_Z;
 float gyro_X, gyro_Y, gyro_Z;
 
+/**
+ * @brief function to configure sensors for data logging.
+ */
 void sensors_config(void)
 {
   // initialize HDC1010 for temperature and humidity data.
   HDC1010_init(TEMP_OR_HUMID);
   // initialize APDS9301 for ambient light data.
   APDS9301_init();
-
   // initialize LSM6DS3 for IMU data.
   LSM6DS3_init();
 }
 
+/**
+ * @brief function to obtain data for logging.
+ */
 void get_sensor_data(void)
 {
   // get temperature and humidity data
@@ -698,9 +698,10 @@ void get_sensor_data(void)
   gyro_Y = LSM6DS3_gyroData_in_dps(gyroY);
   gyro_Z = LSM6DS3_gyroData_in_dps(gyroZ);
 }
-/*
-  * function to toggle led on button_press
-*/
+
+/**
+  * @brief function to toggle led on button_press
+ */
 void led_toggle(void)
 {
 nrf_gpio_pin_clear(18);
@@ -711,19 +712,19 @@ nrf_delay_ms(500);
 
 static volatile bool button_state = false;
 
-/*
- * interrupt handler for button press
-*/
+/**
+ * @brief interrupt handler for button press
+ */
 void button_press_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
 {
-  rgb_led_off();
-  led_toggle();
+ rgb_led_off();
+ led_toggle();
   button_state = true;
 }
 
-/*
- * function to enable button test.
-*/
+/**
+ * @brief function to enable button test.
+ */
 static void button_config(void)
 {
   ret_code_t err_code;
@@ -734,7 +735,7 @@ static void button_config(void)
      APP_ERROR_CHECK(err_code);
    }
 
-  nrf_drv_gpiote_in_config_t button_config = GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
+  nrf_drv_gpiote_in_config_t button_config = GPIOTE_CONFIG_IN_SENSE_LOTOHI(true);
   button_config.pull = NRF_GPIO_PIN_PULLUP;
 
   err_code = nrf_drv_gpiote_in_init(button_sw3, &button_config, button_press_handler);
@@ -754,9 +755,9 @@ static volatile bool led_state = true;
 
 uint8_t led_index = 0;
 
-/*
- * function to cycle through LED colour combinations
-*/
+/**
+ * @brief function to cycle through LED colour combinations
+ */
 void led_func()
 {
   switch(led_index) {
@@ -777,9 +778,9 @@ void led_func()
   }
 }
 
-/*
- * timer event handler
-*/
+/**
+ * @brief timer event handler
+ */
 void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
 {
     switch (event_type)
@@ -801,9 +802,9 @@ void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
     }
 }
 
-/*
- * timer initialization
-*/
+/**
+ * @brief timer initialization
+ */
 void led_timer_init(void)
 {
   uint32_t time_ms = 200; //Time(in miliseconds) between consecutive compare events.
@@ -822,8 +823,8 @@ void led_timer_init(void)
 
   nrf_drv_timer_enable(&TIMER_LED);
 }
-
 #endif
+
 /**
  * @brief Function for main application entry.
  */
@@ -924,6 +925,17 @@ int main(void)
 
 
   for(;;) {
+
+#ifdef SDCARD_NFC_TEST
+    if(button_state) {
+      button_state = false;
+      get_sensor_data();
+      sdcard_sensor_update_data(temperature, humidity, lux, accel_X, accel_Y, accel_Z, gyro_X, gyro_Y, gyro_Z);
+      cycle_gpio();
+      // nrf_delay_ms(200);
+    }
+#endif
+
 #ifdef TEMP_HUMID_DATA
     temperature = HDC1010_get_temp();
     humidity = HDC1010_get_humid();
@@ -942,8 +954,8 @@ int main(void)
       printf("LUX: %f lx\n\n", lux);
     }
     nrf_delay_ms(1000);
-    sprintf((char *)str_al, "%.2f lux\n", (float)lux);
-    ble_nus_string_send(&m_nus, str_al, strlen((char *)str_al));
+   sprintf((char *)str_al, "%.2f lux\n", (float)lux);
+   ble_nus_string_send(&m_nus, str_al, strlen((char *)str_al));
 #endif
 
 #ifdef IMU_DATA
@@ -973,28 +985,9 @@ int main(void)
     }
     nrf_delay_ms(1000);
     // cannot accomodate "dps" due to NUS limitation of sending float data.
-    sprintf((char *)str_imu, "%.2f, %.2f, %.2f\n", (float)gyro_X, (float)gyro_Y, (float)gyro_Z);
-    ble_nus_string_send(&m_nus, str_imu, strlen((char *)str_imu));
-
-#ifdef ACCEL_PITCH_ROLL_DATA
-    float pitch, roll;
-    pitch = (atan2(accY, sqrt((accX * accX) + (accZ * accZ))) * 180) / 3.1416;
-    roll = (atan2(accX, sqrt((accY * accY) + (accZ * accZ))) * 180) / 3.1416;
-    if(uart_enabled) {
-      printf("Pitch: %f, Roll: %f\n\n", pitch, roll);
-    }
+      sprintf((char *)str_imu, "%.2f, %.2f, %.2f\n", (float)gyro_X, (float)gyro_Y, (float)gyro_Z);
+      ble_nus_string_send(&m_nus, str_imu, strlen((char *)str_imu));
 #endif
-#endif
-#endif
-
-#ifdef SDCARD_NFC_TEST
-    if(button_state) {
-      button_state = false;
-      nrf_delay_ms(200);
-      get_sensor_data();
-      sdcard_sensor_update_data(temperature, humidity, lux, accel_X, accel_Y, accel_Z, gyro_X, gyro_Y, gyro_Z);
-      //cycle_gpio();
-    }
 #endif
 
 #ifdef LSM6DS3_TAP_DETECT

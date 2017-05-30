@@ -1,3 +1,12 @@
+/**
+ * bluey-sdcard.h
+ *
+ * nRF52 SD card interface to log data.
+ *
+ * Electronut Labs
+ * electronut.in
+ */
+
 #include "nrf.h"
 #include "bsp.h"
 #include "ff.h"
@@ -16,7 +25,8 @@
 #define FILE_NAME   "BLUEY.TXT"
 #define TEST_STRING "Sensor Data Logger Example.\r\n\n"
 #define TEST_STRING_2 "TEST.\r\n\n"
-/*
- * function to log data in SD card.
-*/
+
+/**
+ * @brief function to log data in SD card.
+ */
 void sdcard_sensor_update_data(float temperature, float humidity, float lux, float accel_X, float accel_Y, float accel_Z, float gyro_X, float gyro_Y, float gyro_Z);

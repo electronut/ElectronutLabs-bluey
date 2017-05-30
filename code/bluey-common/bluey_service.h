@@ -1,4 +1,11 @@
-
+/**
+ * Bluey custom service and characteristic
+ *
+ * Electronut Labs
+ * electronut.in
+ *
+ */
+ 
 #ifndef OUR_SERVICE_H__
 #define OUR_SERVICE_H__
 
@@ -53,17 +60,19 @@ void ble_our_service_on_ble_evt(ble_os_t * p_our_service, ble_evt_t * p_ble_evt)
  */
 void our_service_init(ble_os_t * p_our_service);
 
-/**@brief Function for updating and sending new characteristic values
- *
- * @details The application calls this function whenever our timer_timeout_handler triggers
- *
- * @param[in]   p_our_service                     Our Service structure.
- * @param[in]   characteristic_value     New characteristic value.
+/**
+ * @brief Function to update IMU characterisstic.
  */
 void characteristic_imu_update(ble_os_t *p_our_service, int16_t *value);
 
+/**
+ * @brief Function to update temperature and humidity characterisstic.
+ */
 void characteristic_temp_humid_update(ble_os_t *p_our_service, uint16_t *value);
 
+/**
+ * @brief Function to update lux characterisstic.
+ */
 void characteristic_lux_update(ble_os_t *p_our_service, uint16_t *value);
 
 #endif  /* _ OUR_SERVICE_H__ */
