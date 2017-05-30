@@ -78,8 +78,9 @@ in this repository has a bunch of interesting demo projects that we have built u
 
 ## Buy a Bluey!
 
-Bluey is available for purchase from our [Tindie store][1].
+Bluey is available for purchase for international customers from our [Tindie store][1]. Customers in India can purchase Bluey from our [Instamojo store][2]. We also provide discounts for bulk purchases. Do email us at **info@electronut.in** if you have any questions.
 
 <a href="https://www.tindie.com/stores/ElectronutLabs/?ref=offsite_badges&utm_source=sellers_ElectronutLabs&utm_medium=badges&utm_campaign=badge_large"><img src="https://d2ss6ovg47m0r5.cloudfront.net/badges/tindie-larges.png" alt="I sell on Tindie" width="200" height="104"></a>
 
 [1]: https://www.tindie.com/stores/ElectronutLabs/
+[2]: https://www.instamojo.com/ElectronutLabs/bluey-nrf52832-ble-development-board-with-se/
