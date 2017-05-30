@@ -43,11 +43,10 @@ Here are the steps involved in uploading your code using DFU OTA and our private
 
 ![](images/make-hrs.png)
 
-* Copy ***private.key*** file provided in the repository.
+* Copy ***private.key*** file provided in the top level of this repository into the SDK
+example *_build* directory. This will be similar to:  *nRF5_SDK_12.2.0_f012efa\examples\ble_peripheral\ble_app_hrs\pca10040\s132\armgcc\_build*
 
-* Paste ***private.key*** file in `nRF5_SDK_12.2.0_f012efa\examples\ble_peripheral\ble_app_hrs\pca10040\s132\armgcc\_build`
-
-* In command prompt, Run: `cd _build` to access the directory where hex file is stored.
+* In command prompt, `cd _build` to access the directory where hex file is stored.
 
 * Run: `nrfutil pkg generate --hw-version 52 --application-version 1 --application nrf52832_xxaa.hex --sd-req 0x8C --key-file private.key app_dfu_hrs_package.zip`
 
