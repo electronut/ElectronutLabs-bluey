@@ -1,4 +1,4 @@
-<img src="images/bluey1.1.jpg" alt="Bluey 1.1" width= "600"/>
+<img src="images/bluey1.2-sm.jpg" alt="Bluey 1.1" />
 
 ## What is Bluey?
 
@@ -43,9 +43,8 @@ There are two main ways of uploading code into **bluey**:
 using a phone. [Click here](ota-prog.md) to read about this option.
 
 2. Use an external programmer to upload the code. Here are a few ways of doing this:
-   1. Using the Nordic nRF52-DK. [Click here](nRF52-DK-prog.md) to explore this option.
-   2. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to learn
-  about this option.
+   1. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to learn about this option.
+   2. Using the Nordic nRF52-DK. [Click here](nRF52-DK-prog.md) to explore this option.
 
 ### Powering Bluey
 
