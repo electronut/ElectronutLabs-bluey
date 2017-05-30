@@ -57,9 +57,9 @@ Find complete list [here](https://github.com/NordicSemiconductor/pc-nrfutil)
 
 * Once the zip package has been created, transfer the file to your mobile or save it to Google Drive. The file should be accessible from the smartphone.
 
-* Connect **bluey** to the PC.
+* Power **bluey** up.
 
-* Enter bootloader mode: Press SW3 switch followed by RST switch. Release RST switch. Once LED is red, release SW3 switch.
+* Enter bootloader mode: Press SW3 switch followed by RST switch. (Hold both down.) Now, release RST switch followed by the SW3 switch.
 
 * Scan for bluey using nRF Connect or nRF Toolbox. The device should advertise as ***DfuTarg***
 
