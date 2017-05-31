@@ -2,12 +2,6 @@
 
 This is an introductory example including all the interface of temperature and humidity sensor **(HDC1010)**, ambient light sensor **(APDS9301)** and 6-axis IMU **(LSM6DS3)**. The data can be viewed on a serial monitor at **115200** baud rate and via nRF Connect or nRF Toolbox using Nordic UART Service (NUS).
 
-
-Uploading code:
-
-*bluey_ST_dfu_package.zip* is a pre-built zip package that can be used to get started on uploading code to bluey. The steps to uploading firmware can be found [here](../../ota-prog.md)
-
-
 Testing:
 
 1. Using serial monitor;
@@ -45,11 +39,10 @@ Testing:
   * Hold until RGB LED turns **blue**.
   * Data should be available on your screen.
 
-*Note:* The functionalities are selected by defining certain parameters in the main.c file to enable them.
-
-|Functionality   |         definition|
-|--------------- | ------------------
-|HDC1010         |         #define TEMP_HUMID_DATA|
-|APDS9301        |         #define AMBIENT_LIGHT_DATA|
-|IMU_DATA        |         #define IMU_DATA|
-|NFC_UPDATE      |         #define NFC_UPDATE|
+_Note! - The functionalities are selected by defining certain parameters in the main.c file to enable them.__
+Functionality   |         definition
+--------------- | ------------------
+HDC1010         |         #define TEMP_HUMID_DATA
+APDS9301        |         #define AMBIENT_LIGHT_DATA
+IMU_DATA        |         #define IMU_DATA
+NFC_UPDATE      |         #define NFC_UPDATE

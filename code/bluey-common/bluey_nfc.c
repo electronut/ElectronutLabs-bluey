@@ -44,7 +44,7 @@ void add_temperature_record(nfc_ndef_msg_desc_t * p_ndef_msg_desc)
 
     temperature = HDC1010_get_temp();
 
-    sprintf((char *)str, "Temperature: %f C", temperature);
+    sprintf((char *)str, "Temperature: %.2f C", temperature);
 
     static const uint8_t en_code[] = {'t'};
 
@@ -54,7 +54,6 @@ void add_temperature_record(nfc_ndef_msg_desc_t * p_ndef_msg_desc)
                                   sizeof(en_code),
                                   str,
                                   sizeof(str));
-   /** @snippet [NFC text usage_1] */
 
     err_code = nfc_ndef_msg_record_add(p_ndef_msg_desc,
                                        &NFC_NDEF_TEXT_RECORD_DESC(temp_text_rec));
@@ -73,7 +72,7 @@ void add_humidity_record(nfc_ndef_msg_desc_t * p_ndef_msg_desc)
 
     humidity = HDC1010_get_humid();
 
-    sprintf((char *)str, "Humidity: %f %%", humidity);
+    sprintf((char *)str, "Humidity: %.2f %%", humidity);
 
     static const uint8_t en_code[] = {'h'};
 
@@ -83,7 +82,6 @@ void add_humidity_record(nfc_ndef_msg_desc_t * p_ndef_msg_desc)
                                   sizeof(en_code),
                                   str,
                                   sizeof(str));
-   /** @snippet [NFC text usage_1] */
 
     err_code = nfc_ndef_msg_record_add(p_ndef_msg_desc,
                                        &NFC_NDEF_TEXT_RECORD_DESC(humid_text_rec));
@@ -98,12 +96,13 @@ void encode_data(uint8_t * p_buffer, uint32_t * p_len)
 {
     NFC_NDEF_MSG_DEF(data, MAX_REC_COUNT);
 
+    nfc_ndef_msg_clear(&NFC_NDEF_MSG(data));
+
     add_temperature_record(&NFC_NDEF_MSG(data));
     add_humidity_record(&NFC_NDEF_MSG(data));
-    /** @snippet [NFC text usage_2] */
+
     uint32_t err_code = nfc_ndef_msg_encode(&NFC_NDEF_MSG(data),
                                             p_buffer,
                                             p_len);
     APP_ERROR_CHECK(err_code);
-    /** @snippet [NFC text usage_2] */
 }
