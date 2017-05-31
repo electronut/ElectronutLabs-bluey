@@ -57,7 +57,7 @@ example *_build* directory. This will be similar to:  *nRF5_SDK_12.2.0_f012efa\e
 *Note:* Use *--sd-req = 0x8C* for s132_nrf52_3.0.0 and *--sd-req = 0x98* for s132_nrf52_4.0.2.
 Find complete list [here](https://github.com/NordicSemiconductor/pc-nrfutil)
 
-* Once the zip package has been created, transfer the file to your mobile or save it to Google Drive. The file should be accessible from the smartphone.
+* Once the zip package has been created, transfer the file to your mobile or save it to Google Drive. If transferred via Google Drive, ensure that you download the file from Drive to your mobile device.
 
 * Power **bluey** up.
 
