@@ -43,7 +43,7 @@ void LSM6DS3_init(void)
   settings.gyro_enable            = 1;      // 0 - Disable. 1 - Enable
   settings.gyro_range             = 2000;   // Angular Rate range (in deg/s).  Can be: 125, 245, 500, 1000, 2000
 	settings.gyro_samplerate        = 104;    // Hz. Select from: 13, 26, 52, 104, 208, 416, 833, 1666
-	settings.gyro_bandwidth         = 400;    // Hz. Select from: 50, 100, 200, 400;
+	settings.gyro_bandwidth         = 200;    // Hz. Select from: 50, 100, 200, 400;
 	settings.gyro_FIFO_enable       = 0;      // Set to include gyroscope data in FIFO buffer
 	settings.gyro_FIFO_decimation   = 0;      // Set to activate.
 
@@ -288,12 +288,22 @@ void LSM6DS3_set_accel_low_power_mode(uint16_t value)
 {
   ret_code_t err_code;
   uint8_t rx_data;
-  uint8_t tx_data[2] = {CTRL1_XL, 0};
+  // uint8_t tx_data[2] = {CTRL1_XL, 0};
+  uint8_t tx_data[2];
+
+  // set XL_HM_MODE bit to 1 in CTRL6_C to enable high performance mode.
+  tx_data[0] = CTRL6_C;
+  tx_data[1] = 0x10;
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
+
 
   // read CTRL1_XL register to obtain current parameters.
   err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL1_XL, &rx_data, sizeof(rx_data), false);
   APP_ERROR_CHECK(err_code);
 
+  tx_data[0] = CTRL1_XL;
   // bit mask CTRL1_XL to avoid losing previously set parameters. Only change ODR_XL bits.
   switch(value) {
     case 13:
@@ -323,12 +333,21 @@ void LSM6DS3_set_accel_normal_mode(uint16_t value)
 {
   ret_code_t err_code;
   uint8_t rx_data;
-  uint8_t tx_data[2] = {CTRL1_XL, 0};
+  // uint8_t tx_data[2] = {CTRL1_XL, 0};
+  uint8_t tx_data[2];
+
+  // set XL_HM_MODE bit to 1 in CTRL6_C to enable high performance mode.
+  tx_data[0] = CTRL6_C;
+  tx_data[1] = 0x10;
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
 
   // read CTRL1_XL register to obtain current parameters.
   err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL1_XL, &rx_data, sizeof(rx_data), false);
   APP_ERROR_CHECK(err_code);
 
+  tx_data[0] = CTRL1_XL;
   // bit mask CTRL1_XL to avoid losing previously set parameters. Only change ODR_XL bits.
   switch(value) {
     default:
@@ -354,12 +373,21 @@ void LSM6DS3_set_accel_high_performance_mode(uint16_t value)
 {
   ret_code_t err_code;
   uint8_t rx_data;
-  uint8_t tx_data[2] = {CTRL1_XL, 0};
+  // uint8_t tx_data[2] = {CTRL1_XL, 0};
+  uint8_t tx_data[2];
+
+  // set XL_HM_MODE bit to 1 in CTRL6_C to enable high performance mode.
+  tx_data[0] = CTRL6_C;
+  tx_data[1] = 0x00;
+
+  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
+  APP_ERROR_CHECK(err_code);
 
   // read CTRL1_XL register to obtain current parameters.
   err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL1_XL, &rx_data, sizeof(rx_data), false);
   APP_ERROR_CHECK(err_code);
 
+  tx_data[0] = CTRL1_XL;
   // bit mask CTRL1_XL to avoid losing previously set parameters. Only change ODR_XL bits.
   switch(value) {
     case 416:
@@ -425,129 +453,34 @@ float LSM6DS3_accelData_in_g(int16_t raw_data)
   return ((float)((raw_data * 0.061 * (settings.accel_range >> 1)) / 1000 ));
 }
 
+
 /**
- * @brief function to enable power down mode in gyroscope
- *
- * setting ODR_G[3:0] in CTRL2_G register to 0 enables power-down mode.
+ * @brief function to enable sleep mode in gyroscope
  */
-void LSM6DS3_set_gyro_power_down_mode()
+void LSM6DS3_set_gyro_sleep_mode()
 {
   ret_code_t err_code;
-  uint8_t rx_data;
-  uint8_t tx_data[2] = {CTRL2_G, 0};
 
-  // read CTRL2_G register to obtain current parameters.
-  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL2_G, &rx_data, sizeof(rx_data), false);
-  APP_ERROR_CHECK(err_code);
-
-  // bit mask CTRL2_G to avoid losing previously set parameters. Only change ODR_G bits.
-  tx_data[1] |= (0x00 << 4) | (rx_data & 0x0F);
+  // set SLEEP_G bit in CTRL4_C register to enable sleep mode
+  uint8_t tx_data[2] = {CTRL4_C, LSM6DS3_IMU_SLEEP_G_ENABLED};
 
   err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
   APP_ERROR_CHECK(err_code);
 }
 
 /**
- * @brief function to enable low power mode in gyroscope
- *
- * Low power mode is enabled by setting one of the following ODR values: 13 Hz, 26Hz and 52 Hz
+ * @brief function to disable sleep mode in gyroscope
  */
-void LSM6DS3_set_gyro_low_power_mode(uint16_t value)
+void LSM6DS3_set_gyro_active_mode()
 {
   ret_code_t err_code;
-  uint8_t rx_data;
-  uint8_t tx_data[2] = {CTRL2_G, 0};
 
-  // read CTRL2_G register to obtain current parameters.
-  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL2_G, &rx_data, sizeof(rx_data), false);
-  APP_ERROR_CHECK(err_code);
-
-  // bit mask CTRL2_G to avoid losing previously set parameters. Only change ODR_G bits.
-  switch(value) {
-    case 13:
-      tx_data[1] |= (0x01 << 4) | (rx_data & 0x0F);
-      break;
-
-    case 26:
-      tx_data[1] |= (0x02 << 4) | (rx_data & 0x0F);
-      break;
-
-    default:
-    case 52:
-      tx_data[1] |= (0x03 << 4) | (rx_data & 0x0F);
-      break;
-  }
+  // reset SLEEP_G bit in CTRL4_C register to disable sleep mode
+  uint8_t tx_data[2] = {CTRL4_C, LSM6DS3_IMU_SLEEP_G_DISABLED};
 
   err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
   APP_ERROR_CHECK(err_code);
 }
-
-/**
- * @brief function to enable normal mode in gyroscope
- *
- * Normal mode is enabled by setting one of the following ODR values: 104 Hz and 208 Hz
- */
-void LSM6DS3_set_gyro_normal_mode(uint16_t value)
-{
-  ret_code_t err_code;
-  uint8_t rx_data;
-  uint8_t tx_data[2] = {CTRL2_G, 0};
-
-  // read CTRL2_G register to obtain current parameters.
-  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL2_G, &rx_data, sizeof(rx_data), false);
-  APP_ERROR_CHECK(err_code);
-
-  // bit mask CTRL2_G to avoid losing previously set parameters. Only change ODR_G bits.
-  switch(value) {
-    default:
-    case 104:
-      tx_data[1] |= (0x04 << 4) | (rx_data & 0x0F);
-      break;
-
-    case 208:
-      tx_data[1] |= (0x05 << 4) | (rx_data & 0x0F);
-      break;
-  }
-
-  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
-  APP_ERROR_CHECK(err_code);
-}
-
-/**
- * @brief function to enable high performance mode in gyroscope
- *
- * High performance mode is enabled by setting one of the following ODR values: 416 Hz, 833 Hz and 1.66 kHz
- */
-void LSM6DS3_set_gyro_high_performance_mode(uint16_t value)
-{
-  ret_code_t err_code;
-  uint8_t rx_data;
-  uint8_t tx_data[2] = {CTRL2_G, 0};
-
-  // read CTRL2_G register to obtain current parameters.
-  err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, CTRL2_G, &rx_data, sizeof(rx_data), false);
-  APP_ERROR_CHECK(err_code);
-
-  // bit mask CTRL2_G to avoid losing previously set parameters. Only change ODR_G bits.
-  switch(value) {
-    default:
-    case 416:
-      tx_data[1] |= (0x06 << 4) | (rx_data & 0x0F);
-      break;
-
-    case 833:
-      tx_data[1] |= (0x07 << 4) | (rx_data & 0x0F);
-      break;
-
-    case 1660:
-      tx_data[1] |= (0x08 << 4) | (rx_data & 0x0F);
-      break;
-  }
-
-  err_code = nrf_drv_twi_tx(&p_twi_sensors, LSM6DS3_ADDR, tx_data, sizeof(tx_data), false);
-  APP_ERROR_CHECK(err_code);
-}
-
 
 /**
  * @brief functioon to read gyroscope data.
@@ -558,7 +491,8 @@ void LSM6DS3_read_gyro_data(int16_t *gyro_x, int16_t *gyro_y, int16_t *gyro_z)
   uint8_t status = 0;
   uint8_t data[6];
 
-  LSM6DS3_set_gyro_normal_mode(settings.gyro_samplerate);
+  LSM6DS3_set_gyro_active_mode();
+
   do {
     err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, STATUS_REG, &status, sizeof(status), false);
   } while(!(status & 0x02));
@@ -566,7 +500,7 @@ void LSM6DS3_read_gyro_data(int16_t *gyro_x, int16_t *gyro_y, int16_t *gyro_z)
   err_code = read_register(p_twi_sensors, LSM6DS3_ADDR, OUTX_L_G, data, sizeof(data), true);
   APP_ERROR_CHECK(err_code);
 
-  LSM6DS3_set_gyro_power_down_mode();
+  LSM6DS3_set_gyro_sleep_mode();
 
   *gyro_x = (data[1] << 8) | data[0];
   *gyro_y = (data[3] << 8) | data[2];

@@ -1848,6 +1848,16 @@ void LSM6DS3_set_gyro_normal_mode(uint16_t value);
 void LSM6DS3_set_gyro_high_performance_mode(uint16_t value);
 
 /**
+ * @brief function to disable sleep mode in gyroscope
+ */
+void LSM6DS3_set_gyro_active_mode();
+
+/**
+ * @brief function to enable sleep mode in gyroscope
+ */
+void LSM6DS3_set_gyro_active_mode();
+
+/**
  * @brief functioon to read gyroscope data.
  */
 void LSM6DS3_read_gyro_data(int16_t *gyro_x, int16_t *gyro_y, int16_t *gyro_z);
