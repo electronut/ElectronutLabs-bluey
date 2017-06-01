@@ -994,7 +994,7 @@ int main(void)
     }
     nrf_delay_ms(1000);
     // cannot accomodate "dps" due to NUS limitation of sending float data.
-      sprintf((char *)str_imu, "%.2f, %.2f, %.2f\n", (float)gyro_X, (float)gyro_Y, (float)gyro_Z);
+      sprintf((char *)str_imu, "%.1f, %.1f, %.1f\n", (float)gyro_X, (float)gyro_Y, (float)gyro_Z);
       ble_nus_string_send(&m_nus, str_imu, strlen((char *)str_imu));
 #endif
 #endif
