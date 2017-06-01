@@ -39,11 +39,10 @@ Testing:
   * Hold until RGB LED turns **blue**.
   * Data should be available on your screen.
 
-*Note:* The functionalities are selected by defining certain parameters in the main.c file to enable them.
-
-|Functionality   |         definition|
-|--------------- | ------------------
-|HDC1010         |         #define TEMP_HUMID_DATA|
-|APDS9301        |         #define AMBIENT_LIGHT_DATA|
-|IMU_DATA        |         #define IMU_DATA|
-|NFC_UPDATE      |         #define NFC_UPDATE|
+_Note! - The functionalities are selected by defining certain parameters in the main.c file to enable them.__
+Functionality   |         definition
+--------------- | ------------------
+HDC1010         |         #define TEMP_HUMID_DATA
+APDS9301        |         #define AMBIENT_LIGHT_DATA
+IMU_DATA        |         #define IMU_DATA
+NFC_UPDATE      |         #define NFC_UPDATE

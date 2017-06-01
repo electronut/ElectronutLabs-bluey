@@ -46,7 +46,7 @@ Here are the steps involved in uploading your code using DFU OTA and our private
 ![](images/make-hrs.png)
 
 * Copy ***private.key*** file provided in the top level of this repository into the SDK
-example *_build* directory. This will be similar to:  *nRF5_SDK_12.2.0_f012efa\examples\ble_peripheral\ble_app_hrs\pca10040\s132\armgcc\_build*
+example *_build* directory. This will be similar to:  *nRF5_SDK_12.2.0_f012efa\examples\ble_peripheral\ble_app_hrs\pca10040\s132\armgcc\\_build*
 
 * In command prompt, `cd _build` to access the directory where hex file is stored.
 
@@ -57,7 +57,7 @@ example *_build* directory. This will be similar to:  *nRF5_SDK_12.2.0_f012efa\e
 *Note:* Use *--sd-req = 0x8C* for s132_nrf52_3.0.0 and *--sd-req = 0x98* for s132_nrf52_4.0.2.
 Find complete list [here](https://github.com/NordicSemiconductor/pc-nrfutil)
 
-* Once the zip package has been created, transfer the file to your mobile or save it to Google Drive. The file should be accessible from the smartphone.
+* Once the zip package has been created, transfer the file to your mobile or save it to Google Drive. If transferred via Google Drive, ensure that you download the file from Drive to your mobile device.
 
 * Power **bluey** up.
 

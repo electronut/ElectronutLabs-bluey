@@ -719,7 +719,7 @@ void button_press_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action
 {
  rgb_led_off();
  led_toggle();
-  button_state = true;
+ button_state = true;
 }
 
 /**
@@ -931,16 +931,25 @@ int main(void)
       button_state = false;
       get_sensor_data();
       sdcard_sensor_update_data(temperature, humidity, lux, accel_X, accel_Y, accel_Z, gyro_X, gyro_Y, gyro_Z);
-      cycle_gpio();
-      // nrf_delay_ms(200);
     }
+    err_code = nfc_t2t_emulation_stop();
+    APP_ERROR_CHECK(err_code);
+
+    encode_data(m_ndef_msg_buf, &len);
+    err_code = nfc_t2t_payload_set(m_ndef_msg_buf, len);
+    APP_ERROR_CHECK(err_code);
+    err_code = nfc_t2t_emulation_start();
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_FLUSH();
+    nrf_delay_ms(200);
 #endif
 
 #ifdef TEMP_HUMID_DATA
     temperature = HDC1010_get_temp();
     humidity = HDC1010_get_humid();
     if(uart_enabled) {
-      printf("Temperature: %f C, Humidity: %f %%\n\n", temperature, humidity);
+      printf("T: %.2f C, H: %.2f %%\n\n", temperature, humidity);
     }
     nrf_delay_ms(1000);
     sprintf((char *)str_th, "%.2f C, %.2f %%\n", (float)temperature, (float)humidity);
@@ -951,7 +960,7 @@ int main(void)
     APDS9301_read_adc_data(&adc_ch0, &adc_ch1);
     lux = getlux(adc_ch0, adc_ch1);
     if(uart_enabled) {
-      printf("LUX: %f lx\n\n", lux);
+      printf("L: %.2f lx\n\n", lux);
     }
     nrf_delay_ms(1000);
    sprintf((char *)str_al, "%.2f lux\n", (float)lux);
@@ -1005,10 +1014,6 @@ int main(void)
     }
     tap_count = 0;
   }
-#endif
-
-#ifndef LSM6DS3_TAP_DETECT
-    //nrf_delay_ms(500);
 #endif
   }
 }
