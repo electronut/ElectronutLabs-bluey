@@ -2,7 +2,7 @@
 
 ## What is Bluey?
 
-**Bluey** is a BLE (Bluetooth Low Energy) development board with Temperature, Humidity, Ambient Light and
+**Bluey** is an Open Source BLE (Bluetooth Low Energy) development board with Temperature, Humidity, Ambient Light and
 Accelerometer sensors.
 
 Bluey uses the Nordic nRF52832 BLE
