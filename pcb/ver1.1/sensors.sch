@@ -1,0 +1,536 @@
+EESchema Schematic File Version 2
+LIBS:bluey-rescue
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:bluey-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 2
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L C_Small C21
+U 1 1 58A1D843
+P 1895 2135
+F 0 "C21" H 1740 2225 50  0000 L CNN
+F 1 "0.1uF" H 1670 2055 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 1895 2135 50  0001 C CNN
+F 3 "" H 1895 2135 50  0000 C CNN
+	1    1895 2135
+	1    0    0    -1  
+$EndComp
+Text GLabel 2300 2055 0    39   Input ~ 0
+SCL
+Text GLabel 2300 2155 0    39   Input ~ 0
+SDA
+Text GLabel 2300 2255 0    39   Input ~ 0
+DRDYn
+$Comp
+L GND #PWR030
+U 1 1 58A1DA52
+P 2400 2755
+F 0 "#PWR030" H 2400 2505 50  0001 C CNN
+F 1 "GND" H 2400 2605 50  0000 C CNN
+F 2 "" H 2400 2755 50  0000 C CNN
+F 3 "" H 2400 2755 50  0000 C CNN
+	1    2400 2755
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1595 1955 2500 1955
+Wire Wire Line
+	1895 1955 1895 2035
+$Comp
+L GND #PWR031
+U 1 1 58A1DC85
+P 1895 2385
+F 0 "#PWR031" H 1895 2135 50  0001 C CNN
+F 1 "GND" H 1895 2235 50  0000 C CNN
+F 2 "" H 1895 2385 50  0000 C CNN
+F 3 "" H 1895 2385 50  0000 C CNN
+	1    1895 2385
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1895 2385 1895 2235
+Wire Wire Line
+	2500 2560 2400 2560
+Wire Wire Line
+	2400 2460 2400 2755
+Wire Wire Line
+	2500 2460 2400 2460
+Connection ~ 2400 2560
+Wire Wire Line
+	2500 2055 2300 2055
+Wire Wire Line
+	2500 2155 2300 2155
+Wire Wire Line
+	2500 2255 2300 2255
+$Comp
+L GND #PWR032
+U 1 1 58A178FD
+P 3630 2755
+F 0 "#PWR032" H 3630 2505 50  0001 C CNN
+F 1 "GND" H 3630 2605 50  0000 C CNN
+F 2 "" H 3630 2755 50  0000 C CNN
+F 3 "" H 3630 2755 50  0000 C CNN
+	1    3630 2755
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3505 2560 3630 2560
+Wire Wire Line
+	3630 2560 3630 2755
+NoConn ~ 3505 2365
+$Comp
+L C_Small C26
+U 1 1 58A17C8E
+P 7300 2120
+F 0 "C26" H 7140 2205 50  0000 L CNN
+F 1 "0.1uF" H 7075 2040 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 7300 2120 50  0001 C CNN
+F 3 "" H 7300 2120 50  0000 C CNN
+	1    7300 2120
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR033
+U 1 1 58A17F4A
+P 7300 2470
+F 0 "#PWR033" H 7300 2220 50  0001 C CNN
+F 1 "GND" H 7300 2320 50  0000 C CNN
+F 2 "" H 7300 2470 50  0000 C CNN
+F 3 "" H 7300 2470 50  0000 C CNN
+	1    7300 2470
+	1    0    0    -1  
+$EndComp
+Text GLabel 7105 1930 0    39   Input ~ 0
+VDD
+Text GLabel 8650 2250 2    39   Input ~ 0
+SCL
+Text GLabel 8650 2150 2    39   Input ~ 0
+SDA
+Text GLabel 8650 2050 2    39   Input ~ 0
+INT
+Text Notes 1745 1500 0    118  ~ 0
+Humidity & temperature Sensor\n
+Text Notes 7110 1610 0    118  ~ 0
+Ambient light Sensor\n
+Text Notes 2145 3860 0    118  ~ 0
+Accelerometer Sensor\n
+$Comp
+L HDC1010 U4
+U 1 1 58A22990
+P 3020 2350
+F 0 "U4" H 2995 1790 60  0000 C CNN
+F 1 "HDC1010" H 3020 2945 60  0000 C CNN
+F 2 "bluey:HDC1010" H 3020 2350 60  0001 C CNN
+F 3 "" H 3020 2350 60  0000 C CNN
+	1    3020 2350
+	1    0    0    -1  
+$EndComp
+Text GLabel 1595 1955 0    39   Input ~ 0
+VDD
+Connection ~ 1895 1955
+$Comp
+L APDS9301-020 U5
+U 1 1 58AC176D
+P 7985 2305
+F 0 "U5" H 8120 2205 60  0000 C CNN
+F 1 "APDS9300-020" H 8030 2800 60  0000 C CNN
+F 2 "bluey:APDS9301" H 7985 2305 60  0001 C CNN
+F 3 "" H 7985 2305 60  0000 C CNN
+	1    7985 2305
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7510 2030 7470 2030
+Wire Wire Line
+	7470 2030 7470 1930
+Wire Wire Line
+	7470 1930 7105 1930
+Wire Wire Line
+	7300 1930 7300 2020
+Connection ~ 7300 1930
+Wire Wire Line
+	7510 2220 7470 2220
+Wire Wire Line
+	7470 2220 7470 2320
+Wire Wire Line
+	7470 2320 7300 2320
+Wire Wire Line
+	7300 2220 7300 2470
+Connection ~ 7300 2320
+Wire Wire Line
+	8650 2250 8470 2250
+Wire Wire Line
+	8650 2150 8470 2150
+$Comp
+L R_Small R12
+U 1 1 58AC298F
+P 8180 2665
+F 0 "R12" V 8255 2630 50  0000 L CNN
+F 1 "0R" V 8115 2630 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" H 8180 2665 50  0001 C CNN
+F 3 "" H 8180 2665 50  0000 C CNN
+	1    8180 2665
+	0    1    1    0   
+$EndComp
+$Comp
+L R_Small R11
+U 1 1 58AC2CBB
+P 7790 2665
+F 0 "R11" V 7865 2630 50  0000 L CNN
+F 1 "0R" V 7725 2630 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" H 7790 2665 50  0001 C CNN
+F 3 "" H 7790 2665 50  0000 C CNN
+	1    7790 2665
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7985 2540 7985 2665
+Wire Wire Line
+	7890 2665 8080 2665
+Connection ~ 7985 2665
+Wire Wire Line
+	8280 2665 8405 2665
+Text GLabel 8405 2665 2    39   Input ~ 0
+VDD
+$Comp
+L GND #PWR034
+U 1 1 58AC3290
+P 7575 2800
+F 0 "#PWR034" H 7575 2550 50  0001 C CNN
+F 1 "GND" H 7575 2650 50  0000 C CNN
+F 2 "" H 7575 2800 50  0000 C CNN
+F 3 "" H 7575 2800 50  0000 C CNN
+	1    7575 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7690 2665 7575 2665
+Wire Wire Line
+	7575 2665 7575 2800
+Text Notes 7660 3860 0    118  ~ 0
+MicroSD\n
+Text GLabel 6900 4375 0    39   Input ~ 0
+P0.22
+Text GLabel 6900 4475 0    39   Input ~ 0
+P0.23
+Text GLabel 6900 4575 0    39   Input ~ 0
+VDD
+Text GLabel 6900 4675 0    39   Input ~ 0
+P0.25
+Text GLabel 6895 4875 0    39   Input ~ 0
+P0.24
+$Comp
+L GND #PWR035
+U 1 1 58C68675
+P 7510 5285
+F 0 "#PWR035" H 7510 5035 50  0001 C CNN
+F 1 "GND" H 7510 5135 50  0000 C CNN
+F 2 "" H 7510 5285 50  0000 C CNN
+F 3 "" H 7510 5285 50  0000 C CNN
+	1    7510 5285
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6895 4875 7680 4875
+Wire Wire Line
+	6900 4675 7680 4675
+Wire Wire Line
+	6900 4575 7680 4575
+Wire Wire Line
+	6900 4475 7680 4475
+Wire Wire Line
+	6900 4375 7680 4375
+$Comp
+L MicroSD U9
+U 1 1 58C6A128
+P 7950 4755
+F 0 "U9" H 8135 4205 60  0000 C CNN
+F 1 "MicroSD" H 8160 5400 60  0000 C CNN
+F 2 "bluey:MicroSD_CardHolder" H 7950 4755 60  0001 C CNN
+F 3 "" H 7950 4755 60  0000 C CNN
+	1    7950 4755
+	1    0    0    -1  
+$EndComp
+NoConn ~ 7680 4975
+NoConn ~ 7680 4275
+Text Notes 9045 2095 0    60   ~ 0
+I2C Address\n\n
+Text Notes 3810 2235 0    60   ~ 0
+GND - 1000000
+Text Notes 3880 2165 0    60   ~ 0
+I2C Address\n\n
+Text Notes 8905 2180 0    60   ~ 0
+Floating   \n
+Text Notes 9340 2180 0    60   ~ 0
+- 0111001\n
+$Comp
+L LSM6DS3 U6
+U 1 1 58D3E145
+P 2805 5120
+F 0 "U6" H 2605 4630 60  0000 C CNN
+F 1 "LSM6DS3" H 2530 5575 60  0000 C CNN
+F 2 "bluey:LSM6DS3" H 2760 5120 60  0001 C CNN
+F 3 "" H 2760 5120 60  0000 C CNN
+	1    2805 5120
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C23
+U 1 1 58A1D24A
+P 3820 5470
+F 0 "C23" H 3645 5540 50  0000 L CNN
+F 1 "0.1uF" H 3845 5535 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 3820 5470 50  0001 C CNN
+F 3 "" H 3820 5470 50  0000 C CNN
+	1    3820 5470
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C22
+U 1 1 58A19770
+P 2590 5935
+F 0 "C22" H 2600 6005 50  0000 L CNN
+F 1 "0.1uF" H 2610 5855 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2590 5935 50  0001 C CNN
+F 3 "" H 2590 5935 50  0000 C CNN
+	1    2590 5935
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2835 5935 2690 5935
+Wire Wire Line
+	2490 5935 2310 5935
+Wire Wire Line
+	2310 5935 2310 6175
+$Comp
+L GND #PWR036
+U 1 1 58D8F4E8
+P 2310 6175
+F 0 "#PWR036" H 2310 5925 50  0001 C CNN
+F 1 "GND" H 2310 6025 50  0000 C CNN
+F 2 "" H 2310 6175 50  0000 C CNN
+F 3 "" H 2310 6175 50  0000 C CNN
+	1    2310 6175
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3580 5270 4120 5270
+Wire Wire Line
+	3820 5270 3820 5370
+Connection ~ 3820 5270
+Wire Wire Line
+	2835 5735 2835 6245
+$Comp
+L GND #PWR037
+U 1 1 58D909FB
+P 3820 5675
+F 0 "#PWR037" H 3820 5425 50  0001 C CNN
+F 1 "GND" H 3820 5525 50  0000 C CNN
+F 2 "" H 3820 5675 50  0000 C CNN
+F 3 "" H 3820 5675 50  0000 C CNN
+	1    3820 5675
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3820 5675 3820 5570
+Text GLabel 4120 5270 2    39   Input ~ 0
+VDD
+Wire Wire Line
+	1525 5070 2125 5070
+Wire Wire Line
+	1525 5170 2125 5170
+$Comp
+L GND #PWR038
+U 1 1 58D91AAE
+P 1525 5365
+F 0 "#PWR038" H 1525 5115 50  0001 C CNN
+F 1 "GND" H 1525 5215 50  0000 C CNN
+F 2 "" H 1525 5365 50  0000 C CNN
+F 3 "" H 1525 5365 50  0000 C CNN
+	1    1525 5365
+	1    0    0    -1  
+$EndComp
+Text GLabel 2655 4385 0    39   Input ~ 0
+SDA
+Wire Wire Line
+	2830 4510 2830 4385
+Wire Wire Line
+	2830 4385 2655 4385
+Text GLabel 2655 4285 0    39   Input ~ 0
+SCL
+Wire Wire Line
+	2655 4285 2930 4285
+Wire Wire Line
+	2930 4285 2930 4510
+Text GLabel 1965 5270 0    39   Input ~ 0
+INT1
+Wire Wire Line
+	1965 5270 2125 5270
+Text GLabel 3725 5170 2    39   Input ~ 0
+INT2
+Wire Wire Line
+	3725 5170 3580 5170
+NoConn ~ 3580 5070
+NoConn ~ 3580 4970
+Wire Wire Line
+	1525 4970 1525 5365
+Connection ~ 1525 5170
+Wire Wire Line
+	2935 5735 2935 5935
+Wire Wire Line
+	2935 5935 3310 5935
+Wire Wire Line
+	3310 5935 3310 6160
+Wire Wire Line
+	3035 5735 3035 5935
+Connection ~ 3035 5935
+$Comp
+L GND #PWR039
+U 1 1 58D94BC7
+P 3310 6160
+F 0 "#PWR039" H 3310 5910 50  0001 C CNN
+F 1 "GND" H 3310 6010 50  0000 C CNN
+F 2 "" H 3310 6160 50  0000 C CNN
+F 3 "" H 3310 6160 50  0000 C CNN
+	1    3310 6160
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1525 4970 2125 4970
+$Comp
+L R_Small R13
+U 1 1 58D98BE0
+P 3325 4285
+F 0 "R13" V 3255 4220 50  0000 L CNN
+F 1 "10K" V 3405 4220 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" H 3325 4285 50  0001 C CNN
+F 3 "" H 3325 4285 50  0000 C CNN
+	1    3325 4285
+	0    1    1    0   
+$EndComp
+Connection ~ 1525 5070
+Text GLabel 3585 4285 2    39   Input ~ 0
+VDD
+Text GLabel 2705 6245 0    39   Input ~ 0
+VDD
+Wire Wire Line
+	2835 6245 2705 6245
+Connection ~ 2835 5935
+Text Notes 4005 4560 0    60   ~ 0
+GND  -  1101010
+Text Notes 4085 4470 0    60   ~ 0
+I2C Address\n\n
+Wire Wire Line
+	3225 4285 3030 4285
+Wire Wire Line
+	3030 4285 3030 4510
+Wire Wire Line
+	3585 4285 3425 4285
+Wire Wire Line
+	7680 4775 7510 4775
+Wire Wire Line
+	7510 4775 7510 5285
+Wire Wire Line
+	7680 5175 7510 5175
+Connection ~ 7510 5175
+$Comp
+L R_Small R16
+U 1 1 58DD0D52
+P 7305 5270
+F 0 "R16" V 7235 5205 50  0000 L CNN
+F 1 "10K" V 7385 5205 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" H 7305 5270 50  0001 C CNN
+F 3 "" H 7305 5270 50  0000 C CNN
+	1    7305 5270
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_Small R14
+U 1 1 58DD0F46
+P 7060 5270
+F 0 "R14" V 6990 5205 50  0000 L CNN
+F 1 "10K" V 7140 5205 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" H 7060 5270 50  0001 C CNN
+F 3 "" H 7060 5270 50  0000 C CNN
+	1    7060 5270
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7060 5170 7060 5075
+Wire Wire Line
+	7305 5170 7305 4875
+Connection ~ 7305 4875
+Wire Wire Line
+	7305 5525 7305 5370
+Wire Wire Line
+	6935 5525 7305 5525
+Wire Wire Line
+	7060 5525 7060 5370
+Connection ~ 7060 5525
+Text GLabel 6935 5525 0    39   Input ~ 0
+VDD
+Wire Wire Line
+	7445 4475 7445 4175
+Wire Wire Line
+	7445 4175 7360 4175
+Connection ~ 7445 4475
+$Comp
+L R_Small R15
+U 1 1 58DD22BD
+P 7260 4175
+F 0 "R15" V 7190 4110 50  0000 L CNN
+F 1 "10K" V 7340 4110 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" H 7260 4175 50  0001 C CNN
+F 3 "" H 7260 4175 50  0000 C CNN
+	1    7260 4175
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7160 4175 7060 4175
+Text GLabel 7060 4175 0    39   Input ~ 0
+VDD
+Wire Wire Line
+	7060 5075 7680 5075
+Wire Wire Line
+	8470 2050 8650 2050
+$EndSCHEMATC

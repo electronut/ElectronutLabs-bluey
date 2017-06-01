@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AT2112K
+D 300 mA Low Dropout Voltage Regulator, Fixed Output 1.2V, SOT-23-5
+K 300mA LDO Regulator Fixed Positive
+F http://www.a-powerusa.com/docs/APE8865-3.pdf
+$ENDCMP
+#
+#End Doc Library

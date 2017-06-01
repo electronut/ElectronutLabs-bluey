@@ -1,0 +1,10 @@
+(module mount-holes (layer F.Cu) (tedit 58AEDA24)
+  (fp_text reference REF** (at -0.1 0.15) (layer F.SilkS) hide
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (fp_text value "mount holes" (at -6.55 3.4) (layer F.Fab)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (pad 1 thru_hole circle (at 0 0) (size 3.5 3.5) (drill 3) (layers *.Cu)
+    (zone_connect 2))
+)
