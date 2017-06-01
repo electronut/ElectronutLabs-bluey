@@ -1820,34 +1820,6 @@ void LSM6DS3_read_accl_data(int16_t *x_axis, int16_t *y_axis, int16_t *z_axis);
 float LSM6DS3_accelData_in_g(int16_t raw_data);
 
 /**
- * @brief function to enable power down mode in gyroscope
- *
- * setting ODR_G[3:0] in CTRL2_G register to 0 enables power-down mode.
- */
-void LSM6DS3_set_gyro_power_down_mode();
-
-/**
- * @brief function to enable low power mode in gyroscope
- *
- * Low power mode is enabled by setting one of the following ODR values: 13 Hz, 26Hz and 52 Hz
- */
-void LSM6DS3_set_gyro_low_power_mode(uint16_t value);
-
-/**
- * @brief function to enable normal mode in gyroscope
- *
- * Normal mode is enabled by setting one of the following ODR values: 104 Hz and 208 Hz
- */
-void LSM6DS3_set_gyro_normal_mode(uint16_t value);
-
-/**
- * @brief function to enable high performance mode in gyroscope
- *
- * High performance mode is enabled by setting one of the following ODR values: 416 Hz, 833 Hz and 1.66 kHz
- */
-void LSM6DS3_set_gyro_high_performance_mode(uint16_t value);
-
-/**
  * @brief function to disable sleep mode in gyroscope
  */
 void LSM6DS3_set_gyro_active_mode();
@@ -1855,7 +1827,7 @@ void LSM6DS3_set_gyro_active_mode();
 /**
  * @brief function to enable sleep mode in gyroscope
  */
-void LSM6DS3_set_gyro_active_mode();
+void LSM6DS3_set_gyro_sleep_mode();
 
 /**
  * @brief functioon to read gyroscope data.
