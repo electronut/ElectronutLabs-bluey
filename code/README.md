@@ -10,7 +10,6 @@ Some of the additional things that we are working on...
 
 - Data logging
 - HID on Raspberry Pi
-- Pedometer
 - Object Tracker
 - nRF IoT SDK 6LowPAN demo
 - Quadcopter
