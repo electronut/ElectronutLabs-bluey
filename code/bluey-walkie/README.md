@@ -11,10 +11,6 @@ The Bluey-Walkie is an instrument for estimating the distance travelled on foot 
 
 Download the files to add to the App inventor 2 and proceed with which works.
 
-**Reference**
-* http://appinventor.mit.edu/explore/blogs/karen/2016/08/heart.html
-* http://www.analog.com/en/analog-dialogue/articles/pedometer-design-3-axis-digital-acceler.html
-
 **Directions to make Bluey-Walkie**
 * Upload the code to bluey so that it transmits the step count via BLE.
 * Make an android app using the App inventor 2 with BLE extensions.
@@ -31,6 +27,7 @@ Download the files to add to the App inventor 2 and proceed with which works.
   The accelerometer value is stored in a variable at time n. Then at time n+1 the value is changed, hence now the previous value of the   accelerometer is averaged with the present value.   
 
   ![](photo/graph.PNG)
+   
   
   *Filtered result - Orange*
   
@@ -113,6 +110,13 @@ Now bluey transmits the step that you have taken which is visualised as shown
 Pressing the Reset button resets and disconnects the BLE device which your are connected too
 
 ![](photo/reset.jpeg)
+
+
+
+**Reference**
+* http://appinventor.mit.edu/explore/blogs/karen/2016/08/heart.html
+* http://www.analog.com/en/analog-dialogue/articles/pedometer-design-3-axis-digital-acceler.html
+
 
 
  
