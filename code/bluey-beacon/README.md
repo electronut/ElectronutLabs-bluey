@@ -1,8 +1,17 @@
 <img src="images/bluey-beacon.png" alt="Bluey Beacon" width= "600"/>
 
-# Bluey Beacon
+## Bluey Beacon
 
+In this project we will build an IoT (Internet Of Things) device that displays
+real-time Temperature, Humidity and Ambient Light level day on the internet.
+
+## Power Supply
+
+We're using a 3.7 V LiPo batter to power the beacon.
 
 ## Enclosure
+
+We have build a simple laser-cut acrylic enclosure for our beacon. The design
+files are available in the repository.
 
 <img src="images/bluey-beacon-enclosure.png" alt="Bluey Beacon" width= "600"/>
