@@ -31,6 +31,7 @@ Download the files to add to the App inventor 2 and proceed with which works.
   The accelerometer value is stored in a variable at time n. Then at time n+1 the value is changed, hence now the previous value of the   accelerometer is averaged with the present value.   
 
   ![](photo/graph.PNG)
+   
   
   *Filtered result - Orange*
   
