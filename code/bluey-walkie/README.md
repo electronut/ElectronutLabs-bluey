@@ -15,6 +15,11 @@ Download the files to add to the App inventor 2 and proceed with which works.
 * Upload the code to bluey so that it transmits the step count via BLE.
 * Make an android app using the App inventor 2 with BLE extensions.
 
+## Understanding the Model ##
+
+![](photo/swing.jpg)
+
+
 **Algorithm Used**
 * The bluey counts the step with the help of Accelerometer. The swinging of hand/leg while walking is sensed by the change in             accelerometer value. Considering the walking cycle whenever a leg/hand goes to one extreme it is considered that a foot step is taken.   Bluey-walkie works in the same principle. 
 
