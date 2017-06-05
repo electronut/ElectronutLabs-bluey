@@ -38,7 +38,7 @@
   Now the averaged data is collected for every 50 samples. These samples are then averaged and then compared with the two extremes of     the wrist movement, to determine the step count. The firmware also contains two registers which are set when there is a change in       wrist movement and they are cleared if the wrist is remained in the same position. These registers are used to avoid the unwanted       step counting. For example when the man who wears it, stretches his hand and remains it in the same position.
      
 
-**Steps to create an android app**
+## Steps to create an android app ## 
  
  STEP 1: Go to http://ai2.appinventor.mit.edu and login within your mail id
  
