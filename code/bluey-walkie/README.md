@@ -19,29 +19,24 @@
 
 ![](photo/swing.jpg)
 
-  While walking, the movement of the hand is similar to that of a pendulum, which goes to and fro as shown in fig. This movement makes     bluey to experience some acceleration along y axis, since the board is placed in such a way in the wrist. Thus when the wrist goes       to one extreme a count is made. Similarly the count is incremented whenever the wrist reaches the extremes during walking.
+  While walking, the movement of the hand is similar to that of a pendulum, which goes to and fro as shown in fig. This movement makes     bluey to experience some acceleration along y-axis, since the board is placed in such a way in the wrist. Thus when the wrist goes       to one extreme a count is made. Similarly the count is incremented whenever the wrist reaches the extremes during walking.
   
 ### Algorithm ###
   
   **Filtering:**
   
-  Since the device works on realtime it os subjected to noises which distrupts the calculation. Hence averaging filter is used
-   
-   **((n-1 + n) / 2)**
-  
-  The accelerometer value is stored in a variable at time n. Then at time n+1 the value is changed, hence now the previous value of the   accelerometer is averaged with the present value.   
+  Since the data from the accelerometer are subjected to noise filtering is essential. Filtering is needed to smooth the signals. Here,   AverageFilter is used which implements a low pass filter. The previous and current values obtained from the y-axis are averaged to       remove the noise. 
 
   ![](photo/graph.PNG)
    
-  
   *Filtered result - Orange*
-  
+ 
   *Unfiltered result - blue*
   
-**Threshold Precision:**
+  **Steps counting**
   
-  The threshold is fixed by taking a 50 samples of the filtered acceleromter data and then averaging it up to get a one sampled value.     which is then used to set the threshold. Since the count can be incresed if a hand is raised or folded too, Hence two variables are     used to check the status of the movement and provides accurate results.   
-
+  Now the averaged data is collected for every 50 samples. These samples are then averaged and then compared with the two extremes of     the wrist movement, to determine the step count. The firmware also contains two registers which are set when there is a change in       wrist movement and they are cleared if the wrist is remained in the same position. These registers are used to avoid the unwanted       step counting. For example when the man who wears it, stretches his hand and remains it in the same position.
+     
 
 **Steps to create an android app**
  
