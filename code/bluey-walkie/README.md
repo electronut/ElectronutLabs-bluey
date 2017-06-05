@@ -3,13 +3,13 @@
 
 ![](photo/pedo.png)
 
-The Bluey-Walkie is an instrument for estimating the distance travelled on foot by recording the number of steps taken. The accelerometer senses the change in limb movement and its value is filtered and then calculated to find the no of steps taken. The android app is made using App inventor 2. The bluey then updates the step count to App inventor 2 via BLE. 
+  The Bluey-Walkie is an instrument for estimating the distance travelled on foot by recording the number of steps taken. The             accelerometer senses the change in limb movement and its value is filtered and then calculated to find the no of steps taken. The       android app is made using App inventor 2. The bluey then updates the step count to App inventor 2 via BLE. 
 
 **BLE Extensions for App inventor-2** 
 * http://appinventor.mit.edu/extensions/ - This is an official extension but doesn't supports many users.
 * https://groups.google.com/forum/#!msg/mitappinventortest/xqzZuZcoZ8E/o-U1IWPuBgAJ - This is the modified of official and supports many    users
 
-Download the files to add to the App inventor 2 and proceed with which works.
+  Download the files to add to the App inventor 2 and proceed with which works.
 
 **Directions to make Bluey-Walkie**
 * Upload the code to bluey so that it transmits the step count via BLE.
@@ -19,9 +19,9 @@ Download the files to add to the App inventor 2 and proceed with which works.
 
 ![](photo/swing.jpg)
 
-  While walking, the movement of the hand is similar to that of a pendulum, which goes to and fro as shown in fig. This movement makes     bluey to experience some acceleration along y axis, since the board is placed in such a way in the wrist. Thus whenever the wrist goes   to one extreme a count is made. Similarly the count is incremented when the wrist reaches any one of the extremes during walking.
+  While walking, the movement of the hand is similar to that of a pendulum, which goes to and fro as shown in fig. This movement makes     bluey to experience some acceleration along y axis, since the board is placed in such a way in the wrist. Thus when the wrist goes       to one extreme a count is made. Similarly the count is incremented whenever the wrist reaches the extremes during walking.
   
-## Algorithm ##
+### Algorithm ###
   
   **Filtering:**
   
