@@ -19,11 +19,11 @@ Download the files to add to the App inventor 2 and proceed with which works.
 
 ![](photo/swing.jpg)
 
-
-**Algorithm Used**
-* The bluey counts the step with the help of Accelerometer. The swinging of hand/leg while walking is sensed by the change in             accelerometer value. Considering the walking cycle whenever a leg/hand goes to one extreme it is considered that a foot step is taken.   Bluey-walkie works in the same principle. 
-
-**Filtering:**
+  While walking, the movement of the hand is similar to that of a pendulum, which goes to and fro as shown in fig. This movement makes     bluey to experience some acceleration along y axis, since the board is placed in such a way in the wrist. Thus whenever the wrist goes   to one extreme a count is made. Similarly the count is incremented when the wrist reaches any one of the extremes during walking.
+  
+## Algorithm ##
+  
+  **Filtering:**
   
   Since the device works on realtime it os subjected to noises which distrupts the calculation. Hence averaging filter is used
    
