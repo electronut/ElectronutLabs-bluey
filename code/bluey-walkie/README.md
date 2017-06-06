@@ -3,45 +3,42 @@
 
 ![](photo/pedo.png)
 
-The Bluey-Walkie is an instrument for estimating the distance travelled on foot by recording the number of steps taken. The accelerometer senses the change in limb movement and its value is filtered and then calculated to find the no of steps taken. The android app is made using App inventor 2. The bluey then updates the step count to App inventor 2 via BLE. 
+  The Bluey-Walkie is an instrument for estimating the distance travelled on foot by recording the number of steps taken. The             accelerometer senses the change in limb movement and its value is filtered and then calculated to find the no of steps taken. The       android app is made using App inventor 2. The bluey then updates the step count to App inventor 2 via BLE. 
 
 **BLE Extensions for App inventor-2** 
 * http://appinventor.mit.edu/extensions/ - This is an official extension but doesn't supports many users.
 * https://groups.google.com/forum/#!msg/mitappinventortest/xqzZuZcoZ8E/o-U1IWPuBgAJ - This is the modified of official and supports many    users
 
-Download the files to add to the App inventor 2 and proceed with which works.
-
-**Reference**
-* http://appinventor.mit.edu/explore/blogs/karen/2016/08/heart.html
-* http://www.analog.com/en/analog-dialogue/articles/pedometer-design-3-axis-digital-acceler.html
+  Download the files to add to the App inventor 2 and proceed with which works.
 
 **Directions to make Bluey-Walkie**
 * Upload the code to bluey so that it transmits the step count via BLE.
 * Make an android app using the App inventor 2 with BLE extensions.
 
-**Algorithm Used**
-* The bluey counts the step with the help of Accelerometer. The swinging of hand/leg while walking is sensed by the change in             accelerometer value. Considering the walking cycle whenever a leg/hand goes to one extreme it is considered that a foot step is taken.   Bluey-walkie works in the same principle. 
+## Understanding the Model ##
 
-**Filtering:**
+![](photo/swing.jpg)
+
+  While walking, the movement of the hand is similar to that of a pendulum, which goes to and fro as shown in fig. This movement makes     bluey to experience some acceleration along y-axis, since the board is placed in such a way in the wrist. Thus when the wrist goes       to one extreme a count is made. Similarly the count is incremented whenever the wrist reaches the extremes during walking.
   
-  Since the device works on realtime it os subjected to noises which distrupts the calculation. Hence averaging filter is used
-   
-   **((n-1 + n) / 2)**
+### Algorithm ###
   
-  The accelerometer value is stored in a variable at time n. Then at time n+1 the value is changed, hence now the previous value of the   accelerometer is averaged with the present value.   
+  **Filtering:**
+  
+  Since the data from the accelerometer are subjected to noise filtering is essential. Filtering is needed to smooth the signals. Here,   AverageFilter is used which implements a low pass filter. The previous and current values obtained from the y-axis are averaged to       remove the noise. 
 
   ![](photo/graph.PNG)
-  
+   
   *Filtered result - Orange*
-  
+ 
   *Unfiltered result - blue*
   
-**Threshold Precision:**
+  **Steps counting**
   
-  The threshold is fixed by taking a 50 samples of the filtered acceleromter data and then averaging it up to get a one sampled value.     which is then used to set the threshold. Since the count can be incresed if a hand is raised or folded too, Hence two variables are     used to check the status of the movement and provides accurate results.   
+  Now the averaged data is collected for every 50 samples. These samples are then averaged and then compared with the two extremes of     the wrist movement, to determine the step count. The firmware also contains two registers which are set when there is a change in       wrist movement and they are cleared if the wrist is remained in the same position. These registers are used to avoid the unwanted       step counting. For example when the man who wears it, stretches his hand and remains it in the same position.
+     
 
-
-**Steps to create an android app**
+## Steps to create an android app ## 
  
  STEP 1: Go to http://ai2.appinventor.mit.edu and login within your mail id
  
@@ -113,6 +110,13 @@ Now bluey transmits the step that you have taken which is visualised as shown
 Pressing the Reset button resets and disconnects the BLE device which your are connected too
 
 ![](photo/reset.jpeg)
+
+
+
+**Reference**
+* http://appinventor.mit.edu/explore/blogs/karen/2016/08/heart.html
+* http://www.analog.com/en/analog-dialogue/articles/pedometer-design-3-axis-digital-acceler.html
+
 
 
  
