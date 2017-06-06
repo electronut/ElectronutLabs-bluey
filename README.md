@@ -12,7 +12,7 @@ NFC, and in fact the board comes with a built-in NFC PCB antenna.
 
 ### Specifications
 
-- Nordic nRF52832 QFAA BLE SoC (512k RAM / 64k Flash)
+- Nordic nRF52832 QFAA BLE SoC (512k Flash/ 64k RAM)
 - TI HDC1010 Temperature/Humidity sensor
 - APDS-9300-020 ambient light sensor
 - ST Micro LSM6DS3 accelerometer
