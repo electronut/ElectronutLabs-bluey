@@ -2,13 +2,13 @@
 
 Jump To:
 
-### [Installation on Windows](#installation-on-windows)
+<h3><a href="#windows">Installation on Windows</a><h3/>
 
-### [Installation on Linux](#installation-on-linux)
+<h3><a href="#linux">Installation on Linux</a><h3/>
 
 <hr />
 
-## Installation on Windows
+<h2 name="windows"> Installation on Windows </h2>
 
 This guide covers installation on Windows.
 
@@ -93,6 +93,6 @@ and
 
 <hr />
 
-## Installation on Linux
+<h2 name="linux"> Installation on Linux </h2>
 
 This guide covers installation on Linux.
