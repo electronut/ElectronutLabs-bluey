@@ -95,4 +95,4 @@ and
 
 ## Installation on Linux
 
-...
+This guide covers installation on Linux.
