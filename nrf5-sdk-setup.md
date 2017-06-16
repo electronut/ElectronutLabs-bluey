@@ -1,5 +1,13 @@
 # Getting Started with Nordic nRF5 SDK
 
+Jump To:
+
+### [Installation on Windows](#installation-on-windows)
+
+### [Installation on Linux]#installation-on-linux)
+
+<hr />
+
 ## Installation on Windows
 
 This guide covers installation on Windows.
@@ -82,3 +90,9 @@ and
 * Add `SHELL=C:/Windows/System32/cmd.exe` in Makefile.Windows if following error occurs.
 
 ![](images/shell.png)
+
+<hr />
+
+## Installation on Linux
+
+...
