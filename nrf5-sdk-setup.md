@@ -96,3 +96,5 @@ and
 <h2 name="linux"> Installation on Linux </h2>
 
 This guide covers installation on Linux.
+
+Most of what's needed is covered in the Nordic tutorial - [Development with GCC and Eclipse](https://devzone.nordicsemi.com/tutorials/7/).
