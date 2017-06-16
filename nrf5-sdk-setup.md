@@ -4,7 +4,7 @@ Jump To:
 
 ### [Installation on Windows](#installation-on-windows)
 
-### [Installation on Linux]#installation-on-linux)
+### [Installation on Linux](#installation-on-linux)
 
 <hr />
 
