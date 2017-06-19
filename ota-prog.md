@@ -61,6 +61,8 @@ dfupkg:
 	nrfutil pkg generate --hw-version 52 --application-version 1 --application $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex --sd-req 0x8C --key-file ../../../private.key forcesensor_dfu_package.zip
 ```
 
+Then all you need to do is  `make dufpkg` and the zip file will be generated.
+
 ![](images/generate-package.png)
 
 *Note:* Use *--sd-req = 0x8C* for s132_nrf52_3.0.0 and *--sd-req = 0x98* for s132_nrf52_4.0.2.
