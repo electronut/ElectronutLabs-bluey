@@ -37,7 +37,7 @@ read our *Getting Started with nRF5 SDK* guide.
 
 ### Uploading code to Bluey
 
-<img src="images/bluey-bumpy-sm.jpg" alt="Bluey Bumpy" />
+<img src="images/bumpy-bluey-sm.jpg" alt="Bluey Bumpy" />
 
 There are two main ways of uploading code into **bluey**:
 
