@@ -22,7 +22,7 @@
           "checksum":"SHA-256:7560733bcff57277c45c0d585fe8948eb13adc1f0e2842e80b0ec2e1dc4bf421",
           "size": "763133",
           "boards":[ 
-                {"name": "Bluey"},
+                {"name": "Bluey"}
           ],
           "toolsDependencies": [
             {
