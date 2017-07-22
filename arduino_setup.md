@@ -1,24 +1,24 @@
 # Using arduino IDE with bluey
 
-#### Tools installation
+## Installation
 
-* Download a newer release of Arduino IDE (tested with arduino 1.8.3, but at least v1.6.12) from https://www.arduino.cc/en/Main/Software
+Please follow instructions from [ntavish/arduino-bluey](https://github.com/ntavish/arduino-bluey).
 
-* We are still awaiting our pull request to add bluey to be merged into [sandeepmistry/arduino-nRF5](https://github.com/sandeepmistry/arduino-nRF5) repository. Once that is done, bluey will be in the supported boards section on the README at [https://github.com/sandeepmistry/arduino-nRF5]. At this point there is no special step apart from installing this
+## Usage
 
-* For now, please follow installation instructions on [sandeepmistry/arduino-nRF5](https://github.com/sandeepmistry/arduino-nRF5) for installion. Once installed, please open your file manager and navigate to arduino boards boards installtion directory, which is `~/.arduino15/packages/` on Linux, and `C:\Users\(username)\AppData\Local\Arduino15\packages\` on Windows
-    - if `arduino-nRF5` board was installed correctly, you can see navigate to `sandeepmistry/hardware/nRF5/0.3.0/` in this directory
-    - download [arduino-nRF5_0.3.0_with_bluey.zip](arduino/arduino-nRF5_0.3.0_with_bluey.zip) and extract into this folder, replacing all current files
+* After tools installation, you can now select "Electronut labs bluey" from the tools menu, and other related options. 
 
-#### Usage
+* Bluey comes preprogrammed with [serial DFU bootloader], which Nordic's nrfjprog utility can program using serial connection. To trigger bootloader, press and hold button1, press the Reset button and then release button1.
 
-* After tools installation, you can now select "Electronut labs bluey" from the tools menu, and other related options. Currently (from arduino IDE), only 'ST-link v2', 'CMSIS-DAP', and 'Jlink' are the supported programmers.
+* Bluey's blue LED will start blinking in a 'timebomb' pattern, indicating that it is in DFU bootloader mode. Now you can press upload button in arduino IDE to program your code.
 
-* As mentioned in [sandeepmistry/arduino-nRF5](https://github.com/sandeepmistry/arduino-nRF5) `README`, you may need to program softdevice once before programming any sketches that use BLE capabilities (i.e. depend on softdevice eing programmed).
+* If your bluey does not have a bootloader preinstalled, it can be programmed via the 'Tools->Burn bootloader' menu (you need one of the supported programmers). The source for the bootloader is [here](https://github.com/electronut/bluey_serial_dfu_bootloader).
 
-* _NOTE_: You can use [bumpy](https://www.tindie.com/products/ElectronutLabs/bumpy-blackmagic-probe-compatible-swd-debugger/), or Blackmagicprobe compatible programmer/debugger (or others) still with arduino's `.elf` output file (or hex)
+* As mentioned in [ntavish/arduino-bluey](https://github.com/ntavish/arduino-bluey) `README`, you may need to program softdevice once before programming any sketches that use BLE capabilities (i.e. depend on softdevice being programmed).
 
-#### Pin mapping
+* _NOTE_: You can use [bumpy](https://www.tindie.com/products/ElectronutLabs/bumpy-blackmagic-probe-compatible-swd-debugger/), or Blackmagicprobe compatible programmer/debugger (or others) to program the bootloader .hex file, or with arduino IDE's .hex output file too. (We're working on adding bumpy/BMP support to it).
+
+## Pin mapping
 
 ```
                     Connector P3 on bluey
@@ -52,7 +52,7 @@
 
 * LED and button pins can be referenced by `PIN_LEDR`, `PIN_LEDG`, `PIN_LEDB` ,`LED_BUILTIN` (red one), `PIN_BUTTON` in arduino code.
 
-#### BLEPeriphial Arduino Library
+## BLEPeriphial Arduino Library
 
 * [arduino-BLEPeripheral](https://github.com/sandeepmistry/arduino-BLEPeripheral) library can be used creating BLE applications with bluey. Follow installation steps on it's `README`. See the library's [API](https://github.com/sandeepmistry/arduino-BLEPeripheral/blob/master/API.md) for more details on usage.
 
