@@ -247,5 +247,10 @@ flash_softdevice:
 	nrfjprog --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_3.0.0_softdevice.hex -f nrf52 --sectorerase
 	nrfjprog --reset -f nrf52
 
+# make DFU package
+dfupkg:
+	@echo Generating DFU package...
+	nrfutil pkg generate --hw-version 52 --application-version 1 --application $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex --sd-req 0x8C --key-file ../../../private.key ../../../bluey_MeArm_dfu_package.zip
+
 erase:
 	nrfjprog --eraseall -f nrf52

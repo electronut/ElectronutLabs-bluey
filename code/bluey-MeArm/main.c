@@ -35,7 +35,7 @@
 #define CENTRAL_LINK_COUNT              0                                           /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
 #define PERIPHERAL_LINK_COUNT           1                                           /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
-#define DEVICE_NAME                     "Nordic_UART"                               /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                     "Bluey-MeArm"                               /**< Name of device. Will be included in the advertising data. */
 #define NUS_SERVICE_UUID_TYPE           BLE_UUID_TYPE_VENDOR_BEGIN                  /**< UUID type for the Nordic UART Service (vendor specific). */
 
 #define APP_ADV_INTERVAL                64                                          /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
@@ -61,9 +61,6 @@ static ble_nus_t                        m_nus;                                  
 static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;    /**< Handle of the current connection. */
 
 static ble_uuid_t                       m_adv_uuids[] = {{BLE_UUID_NUS_SERVICE, NUS_SERVICE_UUID_TYPE}};  /**< Universally unique service identifier. */
-
-// #define ENABLE_UART                      // Uncomment to enable UART
-
 
 #define BASE_SERVO_CW "baseCW"
 #define BASE_SERVO_CCW "baseCCW"
@@ -706,7 +703,6 @@ void uart_event_handle(app_uart_evt_t * p_event)
 /**@snippet [Handling the data received over UART] */
 
 
-#ifdef ENABLE_UART
 /**@brief  Function for initializing the UART module.
  */
 /**@snippet [UART Initialization] */
@@ -733,7 +729,7 @@ static void uart_init(void)
     APP_ERROR_CHECK(err_code);
 }
 /**@snippet [UART Initialization] */
-#endif
+
 
 /**@brief Function for initializing the Advertising functionality.
  */
@@ -793,10 +789,7 @@ int main(void)
 
   // Initialize.
   APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
-
-#ifdef ENABLE_UART
   uart_init();
-#endif
 
   buttons_leds_init(&erase_bonds);
   ble_stack_init();
@@ -813,11 +806,9 @@ int main(void)
 
   // Enter main loop.
   while(1) {
-
       if(bbEvent.pending) {
         handle_bbevent(&bbEvent);
-      }
-  }
+      }  }
 }
 /**
  * @}
