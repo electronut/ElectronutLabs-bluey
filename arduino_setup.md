@@ -2,7 +2,7 @@
 
 ## Installation
 
-Please follow instructions from [ntavish/arduino-bluey](https://github.com/ntavish/arduino-bluey).
+[More detailed instructions will be over at: [electronut/arduino-bluey](https://github.com/electronut/arduino-bluey)]
 
 ## Usage
 
@@ -14,7 +14,7 @@ Please follow instructions from [ntavish/arduino-bluey](https://github.com/ntavi
 
 * If your bluey does not have a bootloader preinstalled, it can be programmed via the 'Tools->Burn bootloader' menu (you need one of the supported programmers). The source for the bootloader is [here](https://github.com/electronut/bluey_serial_dfu_bootloader).
 
-* As mentioned in [ntavish/arduino-bluey](https://github.com/ntavish/arduino-bluey) `README`, you may need to program softdevice once before programming any sketches that use BLE capabilities (i.e. depend on softdevice being programmed).
+* As mentioned in [electronut/arduino-bluey](https://github.com/electronut/arduino-bluey) `README`, you may need to program softdevice once before programming any sketches that use BLE capabilities (i.e. depend on softdevice being programmed).
 
 * _NOTE_: You can use [bumpy](https://www.tindie.com/products/ElectronutLabs/bumpy-blackmagic-probe-compatible-swd-debugger/), or Blackmagicprobe compatible programmer/debugger (or others) to program the bootloader .hex file, or with arduino IDE's .hex output file too. (We're working on adding bumpy/BMP support to it).
 
