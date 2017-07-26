@@ -4,7 +4,7 @@ Jump To:
 
 <h3><a href="#windows">Installation on Windows</a><h3/>
 
-<h3><a href="#linux">Installation on Linux</a><h3/>
+<h3><a href="#linux">Installation on Linux & OS X</a><h3/>
 
 <hr />
 
@@ -93,8 +93,6 @@ and
 
 <hr />
 
-<h2 name="linux"> Installation on Linux </h2>
+<h2 name="linux"> Installation on Linux & OS X</h2>
 
-This guide covers installation on Linux.
-
-Most of what's needed is covered in the Nordic tutorial - [Development with GCC and Eclipse](https://devzone.nordicsemi.com/tutorials/7/).
+Linux and OS X already come with tooks luke *make*. You just need to install AERM GCC and, Nordic nRF5 SDK, and some Nordic utilities like *nrfutil*. This is all covered in the Nordic tutorial - [Development with GCC and Eclipse](https://devzone.nordicsemi.com/tutorials/7/).

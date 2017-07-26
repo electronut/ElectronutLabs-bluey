@@ -37,14 +37,19 @@ read our *Getting Started with nRF5 SDK* guide.
 
 ### Uploading code to Bluey
 
+<img src="images/bumpy-bluey-sm.jpg" alt="Bluey Bumpy" />
+
 There are two main ways of uploading code into **bluey**:
 
 1. Use the built-in OTA (over the air) bootloader which lets you upload code
 using a phone. [Click here](ota-prog.md) to read about this option.
 
-2. Use an external programmer to upload the code. Here are a few ways of doing this:
-   1. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to learn about this option.
-   2. Using the Nordic nRF52-DK. [Click here](nRF52-DK-prog.md) to explore this option.
+2. A much more powerful option is to use an external programmer that can both
+upload and debug your code. Here are a few ways of doing this:
+   1. Use our inexpensive *Black Magic Probe* compatible [Bumpy SWD programmer][1]
+   which was designed exactly for this purpose.
+   2. Using a cheap programmer loaded with *Black Magic Probe* firmware. [Click here](blackmagic-prog.md) to learn about this option.
+   3. Using the Nordic nRF52-DK. [Click here](nRF52-DK-prog.md) to explore this option.
 
 ### Powering Bluey
 

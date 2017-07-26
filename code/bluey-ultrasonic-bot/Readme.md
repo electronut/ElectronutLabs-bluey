@@ -6,6 +6,10 @@
   
 The bluey-ble-ultrasonic-bot is a 2 wheeldrive with contolled and autonomous modes. When the user is connected to the bot via nRF toolbox app he can control the bot by using direction keys. But when as soon as he disconnects the bot, it goes to autonomous mode. The bot moves forward if it doesnt meet any obstacle. But if it does when the obstacle is in the range of 24cm or lesser, it stops to avoid collision. Then it turns left to avoid the obstacle and proceeds.
 
+## Chassis
+
+The 2WD chassis shown in the photo was source from Feetech RC Model CO. LTD in China via *alibaba*. A similar one is sold by [Adafruit](https://www.adafruit.com/product/2939).
+
 ## Connections: 
 
 **Bluey**| **DRV8835**| **HCSR-04**| **Motor**

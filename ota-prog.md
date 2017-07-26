@@ -52,6 +52,17 @@ example *_build* directory. This will be similar to:  *nRF5_SDK_12.2.0_f012efa\e
 
 * Run: `nrfutil pkg generate --hw-version 52 --application-version 1 --application nrf52832_xxaa.hex --sd-req 0x8C --key-file private.key app_dfu_hrs_package.zip`
 
+You can also automate this step by adding the following in your project's *Makefile*:
+
+```
+# make DFU package
+dfupkg:
+	@echo Generating DFU package...
+	nrfutil pkg generate --hw-version 52 --application-version 1 --application $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex --sd-req 0x8C --key-file ../../../private.key forcesensor_dfu_package.zip
+```
+
+Then all you need to do is  `make dufpkg` and the zip file will be generated.
+
 ![](images/generate-package.png)
 
 *Note:* Use *--sd-req = 0x8C* for s132_nrf52_3.0.0 and *--sd-req = 0x98* for s132_nrf52_4.0.2.
