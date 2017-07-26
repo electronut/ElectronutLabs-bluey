@@ -48,7 +48,7 @@ Testing:
 
 * Configure buttons by clicking the **Edit** tab on top-right corner of the mobile app.
 
-* Select any button, choose an icon indicating this button and enter the value as shown in image below. Click on **Done** tab to save your changes.
+* Select any button, choose an icon indicating this button and enter the value as shown in image below. Click on **Ok** followed by  **Done** tab to save your changes.
 
 ![](images/config.jpg)
 
