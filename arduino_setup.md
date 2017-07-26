@@ -4,6 +4,17 @@
 
 [More detailed instructions will be over at: [electronut/arduino-bluey](https://github.com/electronut/arduino-bluey)]
 
+### Board Manager
+
+ 1. [Download and install the Arduino IDE](https://www.arduino.cc/en/Main/Software) (At least v1.6.12)
+ 2. Start the Arduino IDE
+ 3. Go into Preferences
+ 4. Add ```https://raw.githubusercontent.com/electronut/arduino-bluey/master/docs/package_electronutlabs_boards_index.json``` as an "Additional Board Manager URL"
+ 5. Open the Boards Manager from the Tools -> Board menu and install "Electronut labs nRF5 Boards"
+ 6. Select 'Electronut labs bluey' from the Tools -> Board menu
+
+__NOTE:__ During installation it takes the Arduino IDE a few minutes to extract the tools after they have been downloaded, please be patient.
+
 ## Usage
 
 * After tools installation, you can now select "Electronut labs bluey" from the tools menu, and other related options. 
