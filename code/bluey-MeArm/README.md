@@ -51,3 +51,17 @@ Testing:
 * Select any button, choose an icon indicating this button and enter the value as shown in image below.
 
 ![](images/config.jpg)
+
+* Create 8 such buttons with following values.
+
+Icon | Value
+---- | -----
+Up arrow (^) | clawOpen
+Right arrow (>) | rightA
+Left arrow (<) | leftIn
+Down arrow     | baseCW
+1 | baseCCW
+2 | leftOut
+3 | clawClose
+4 | rightB
+
