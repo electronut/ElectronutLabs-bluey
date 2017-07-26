@@ -15,6 +15,18 @@ In our application, we use Bluey as the processing unit to control MeArm and as 
 * Issue `dfupkg` to generate zip package. 
 * The generated package is used to perform over-the-air(OTA) device firmware update (DFU). Follow instructions mentioned [here](../ota-prog.md) for detailed description on OTA programming to upload firmware to bluey.
 
+
+#### Connections
+
+Motor | Pin
+----- | ---
+VCC   | 5V
+GND   | GND
+PWM (Base Servo) | 27
+PWM (Left Servo) | 28
+PWM (Right Servo)| 29
+PWM (Claw Servo) | 30
+
 Testing:
 
 * 
