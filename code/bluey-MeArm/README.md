@@ -12,7 +12,7 @@ In our application, we use Bluey as the processing unit to control MeArm and as 
 * Copy *bluey-MeArm* directory in *nRF5_SDK_12.2.0_f012efa\examples\ble_peripheral*.
 * Open *nRF5_SDK_12.2.0_f012efa\examples\ble_peripheral\bluey-MeArm\bluey1.2\s132\armgcc* in command prompt.
 * Issue `make` command to compile the program.
-* Issue `dfupkg` to generate zip package. 
+* Issue `make dfupkg` to generate zip package. 
 * The generated package is used to perform over-the-air(OTA) device firmware update (DFU). Follow instructions mentioned [here](../ota-prog.md) for detailed description on OTA programming to upload firmware to bluey.
 
 
