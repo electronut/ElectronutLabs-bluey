@@ -27,6 +27,8 @@ PWM (Left Servo) | 28
 PWM (Right Servo)| 29
 PWM (Claw Servo) | 30
 
+*Note!* Do not power the servo motors from bluey directly as the current draw of 4 servo motors is high and cannot be supported by the board. Use a dedicated power supply unit instead.
+
 Testing:
 
 * 
