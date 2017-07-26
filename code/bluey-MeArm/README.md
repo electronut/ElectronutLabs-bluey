@@ -48,7 +48,7 @@ Testing:
 
 * Configure buttons by clicking the **Edit** tab on top-right corner of the mobile app.
 
-* Select any button, choose an icon indicating this button and enter the value as shown in image below.
+* Select any button, choose an icon indicating this button and enter the value as shown in image below. Click on **Done** tab to save your changes.
 
 ![](images/config.jpg)
 
@@ -65,3 +65,4 @@ Down arrow     | baseCW
 3 | clawClose
 4 | rightB
 
+* Pressing any one of these buttons, will result in corresponding change in the position of the servo associated with the button.
