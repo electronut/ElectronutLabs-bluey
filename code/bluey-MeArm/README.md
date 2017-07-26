@@ -44,7 +44,7 @@ Testing:
 
 * On successful connection, **Bluey-MeArm** is seen on the screen.
 
-![](Bluey-Mearm.jpg)
+![](images/Bluey-Mearm.jpg)
 
 * Configure buttons by clicking the **Edit** tab on top-right corner of the mobile app.
 
