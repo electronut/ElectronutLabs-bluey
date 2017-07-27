@@ -23,7 +23,7 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
 
 * Bluey's blue LED will start blinking in a 'timebomb' pattern, indicating that it is in DFU bootloader mode. Now you can press upload button in arduino IDE to program your code.
 
-* If your bluey does not have a bootloader preinstalled, it can be programmed via the 'Tools->Burn bootloader' menu (you need one of the supported programmers). The source for the bootloader is [here](https://github.com/electronut/bluey_serial_dfu_bootloader).
+* If your bluey does not have a bootloader preinstalled, it can be programmed via the 'Tools->Burn bootloader' menu (it is configured to use Bumpy as the programmer). The source for the bootloader is [here](https://github.com/electronut/bluey_serial_dfu_bootloader).
 
 * As mentioned in [electronut/arduino-bluey](https://github.com/electronut/arduino-bluey) `README`, you may need to program softdevice once before programming any sketches that use BLE capabilities (i.e. depend on softdevice being programmed).
 
