@@ -1,4 +1,6 @@
-## MeArm using Bluey.
+## Controlling a MeArm using Bluey.
+
+![Bluey MeArm](images/bluey-mearm-sm.jpg)
 
 This is an example project to demonstrate the use of Bluey to control MeArm over BLE.
 
