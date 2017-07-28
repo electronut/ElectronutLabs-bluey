@@ -204,11 +204,11 @@ void handle_bbevent(BBEvent* bbEvent)
         case eBBEvent_RightServo_A:
         {
           app_pwm_enable(&PWM_S3);
-          for(i = 0; i < 20; i++) {
+          for(i = 100; i > 80; i--) {
             app_pwm_channel_duty_set(&PWM_S3, 0, i);
             nrf_delay_ms(3);
           }
-          app_pwm_disable(&PWM_S3);
+          app_pwm_disable(&PWM_S3);  
         }
         break;
 
@@ -216,7 +216,7 @@ void handle_bbevent(BBEvent* bbEvent)
         case eBBEvent_RightServo_B:
         {
           app_pwm_enable(&PWM_S3);
-          for(i = 100; i > 80; i--) {
+          for(i = 0; i < 20; i++) {
             app_pwm_channel_duty_set(&PWM_S3, 0, i);
             nrf_delay_ms(3);
           }
@@ -229,11 +229,11 @@ void handle_bbevent(BBEvent* bbEvent)
         {
           if(!claw_state) {
             app_pwm_enable(&PWM_S4);
-            for(i = 0; i < 80; i++) {
+            for(i = 80; i > 0; i--) {
               app_pwm_channel_duty_set(&PWM_S4, 0, i);
               nrf_delay_ms(3);
             }
-            claw_state = true;
+            claw_state = false;
             app_pwm_disable(&PWM_S4);
           }
         }
@@ -244,11 +244,11 @@ void handle_bbevent(BBEvent* bbEvent)
         {
           if(claw_state){
             app_pwm_enable(&PWM_S4);
-            for(i = 80; i > 0; i--) {
+            for(i = 0; i < 80; i++) {
               app_pwm_channel_duty_set(&PWM_S4, 0, i);
               nrf_delay_ms(3);
             }
-            claw_state = false;
+            claw_state = true;
             app_pwm_disable(&PWM_S4);
           }
         }
