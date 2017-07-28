@@ -145,6 +145,7 @@ void pwm_init(void)
   APP_ERROR_CHECK(err_code);
 }
 
+bool claw_state = false;
 /**
  * @brief function to handle servo motors.
  */
@@ -156,7 +157,7 @@ void handle_bbevent(BBEvent* bbEvent)
         case eBBEvent_BaseServo_CW:
         {
           app_pwm_enable(&PWM_S1);
-          for(i = 0; i < 30; i++) {
+          for(i = 0; i < 20; i++) {
             app_pwm_channel_duty_set(&PWM_S1, 0, i);
             nrf_delay_ms(3);
           }
@@ -168,7 +169,7 @@ void handle_bbevent(BBEvent* bbEvent)
         case eBBEvent_BaseServo_CCW:
         {
           app_pwm_enable(&PWM_S1);
-          for(i = 100; i > 70; i--) {
+          for(i = 100; i > 80; i--) {
             app_pwm_channel_duty_set(&PWM_S1, 0, i);
             nrf_delay_ms(3);
           }
@@ -179,7 +180,7 @@ void handle_bbevent(BBEvent* bbEvent)
         case eBBEvent_LeftServo_In:
         {
           app_pwm_enable(&PWM_S2);
-          for(i = 0; i < 30; i++) {
+          for(i = 0; i < 20; i++) {
             app_pwm_channel_duty_set(&PWM_S2, 0, i);
             nrf_delay_ms(3);
           }
@@ -191,7 +192,7 @@ void handle_bbevent(BBEvent* bbEvent)
         case eBBEvent_LeftServo_Out:
         {
           app_pwm_enable(&PWM_S2);
-          for(i = 100; i > 70; i--) {
+          for(i = 100; i > 80; i--) {
             app_pwm_channel_duty_set(&PWM_S2, 0, i);
             nrf_delay_ms(3);
           }
@@ -203,7 +204,7 @@ void handle_bbevent(BBEvent* bbEvent)
         case eBBEvent_RightServo_A:
         {
           app_pwm_enable(&PWM_S3);
-          for(i = 0; i < 30; i++) {
+          for(i = 0; i < 20; i++) {
             app_pwm_channel_duty_set(&PWM_S3, 0, i);
             nrf_delay_ms(3);
           }
@@ -215,7 +216,7 @@ void handle_bbevent(BBEvent* bbEvent)
         case eBBEvent_RightServo_B:
         {
           app_pwm_enable(&PWM_S3);
-          for(i = 100; i > 70; i--) {
+          for(i = 100; i > 80; i--) {
             app_pwm_channel_duty_set(&PWM_S3, 0, i);
             nrf_delay_ms(3);
           }
@@ -226,24 +227,30 @@ void handle_bbevent(BBEvent* bbEvent)
         // Open MeArm claw
         case eBBEvent_ClawServo_Open:
         {
-          app_pwm_enable(&PWM_S4);
-          for(i = 0; i < 10; i++) {
-            app_pwm_channel_duty_set(&PWM_S4, 0, i);
-            nrf_delay_ms(3);
+          if(!claw_state) {
+            app_pwm_enable(&PWM_S4);
+            for(i = 0; i < 80; i++) {
+              app_pwm_channel_duty_set(&PWM_S4, 0, i);
+              nrf_delay_ms(3);
+            }
+            claw_state = true;
+            app_pwm_disable(&PWM_S4);
           }
-          app_pwm_disable(&PWM_S4);
         }
         break;
 
         // close MeArm claw
         case eBBEvent_ClawServo_Close:
         {
-          app_pwm_enable(&PWM_S4);
-          for(i = 100; i > 90; i--) {
-            app_pwm_channel_duty_set(&PWM_S4, 0, i);
-            nrf_delay_ms(3);
+          if(claw_state){
+            app_pwm_enable(&PWM_S4);
+            for(i = 80; i > 0; i--) {
+              app_pwm_channel_duty_set(&PWM_S4, 0, i);
+              nrf_delay_ms(3);
+            }
+            claw_state = false;
+            app_pwm_disable(&PWM_S4);
           }
-          app_pwm_disable(&PWM_S4);
         }
         break;
 
