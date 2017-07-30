@@ -95,4 +95,4 @@ and
 
 <h2 name="linux"> Installation on Linux & OS X</h2>
 
-Linux and OS X already come with tooks luke *make*. You just need to install AERM GCC and, Nordic nRF5 SDK, and some Nordic utilities like *nrfutil*. This is all covered in the Nordic tutorial - [Development with GCC and Eclipse](https://devzone.nordicsemi.com/tutorials/7/).
+Linux and OS X already come with tooks luke *make*. You just need to install ARM GCC, Nordic nRF5 SDK, and some Nordic utilities like *nrfutil*. This is all covered in the Nordic tutorial - [Development with GCC and Eclipse](https://devzone.nordicsemi.com/tutorials/7/).
