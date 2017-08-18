@@ -1,0 +1,7 @@
+{
+    "git.ignoreLimitWarning": true,
+    "files.associations": {
+        "i2s_ws2812b_drive.h": "c",
+        "nrf_drv_i2s.h": "c"
+    }
+}
