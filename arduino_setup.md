@@ -21,6 +21,11 @@ indicate that the bootloader mode is active.
 
 __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract the tools after they have been downloaded, please be patient.
 
+## Uploading Bootloader
+
+Although Bluey is shipped with the bootloader that enables programming the device using Arduino IDE, in case you erase the bootloader from Bluey, it is possible to flash it again using a SWD programmer. You can use nRF5-DK,  
+
+
 ## Usage
 
 * After tools installation, you can now select "Electronut labs bluey" from the tools menu, and other related options. 
