@@ -7,8 +7,7 @@ contains the source and precompiled hex file of the bootloader as `hex/s132_nrf5
 
 The bootloader has the softdevice s132 in it, so no other action is needed to use the BLEPeripheral library.
 
-Bootloader mode is triggered by pressing and holding both prss buttons on bluey and releasing the reset button. The blue LED will start blinkng at an accelerating rate rpeatedly to 
-indicate that the bootloader mode is active.
+Bootloader mode is triggered by pressing and holding both prss buttons on bluey and releasing the reset button. The blue LED will start blinkng at an accelerating rate repeatedly to indicate that the bootloader mode is active.
 
 ### Board Manager
 
@@ -23,8 +22,18 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
 
 ## Uploading Bootloader
 
-Although Bluey is shipped with the bootloader that enables programming the device using Arduino IDE, in case you erase the bootloader from Bluey, it is possible to flash it again using a SWD programmer. You can use nRF5-DK,  
+Although Bluey is shipped with the bootloader that enables programming the device using Arduino IDE, in case you erase the bootloader from Bluey, it is possible to flash it again using a [Bumpy](http://electronut.in/portfolio/bumpy/).
 
+### Steps
+
+1. Download [bootloader]((https://github.com/electronut/bluey_serial_dfu_bootloader/))
+2. Open command prompt and access the directory containing bootloader hex file.
+3. Follow steps as mentioned in the Bumpy [github](https://github.com/electronut/ElectronutLabs-bumpy) repository to connect and attach to Bluey target.
+4. Issue: `load s132_nrf52_2.0.0_softdevice.hex` command. Wait for the command to execute and load the file completely.
+5. Issue: `detach` command to free the target.
+6. Issue: `Quit` command to close arm-gdb debugger.
+7. Unplug Bumpy.
+8. Connect Bluey to your PC via USB cable. You should notice the familiar blue LED blinkking at an accelerating rate, indicating Bluey is in bootloader mode.
 
 ## Usage
 
