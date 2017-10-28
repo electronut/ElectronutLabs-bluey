@@ -137,9 +137,6 @@ Bluey has an additional menu item under `Tools -> Low Frequency Clock` that allo
 
 <h2 name="Nordic OTA"> Guide: Nordic DFU-OTA Bootloader </h2>
 
-
-## Bluey: Nordic DFU-OTA 
-
 To get a project up and running with **bluey**, you need to first build the code to generate a *.hex*
 file and then upload it to the board.
 
@@ -179,6 +176,8 @@ The sensors on bluey require a minimum of 2.7 Volts to function properly.
 Please note that the *maximum power supply to bluey is 6 Volts*. Do not
 exceed it! We also have reverse polarity protection on all power supplies,
 but better not to tempt fate. :-)
+
+<hr />
 
 ## What can you do with Bluey?
 
