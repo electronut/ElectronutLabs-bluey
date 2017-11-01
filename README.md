@@ -81,6 +81,8 @@ Although Bluey is shipped with the bootloader that enables programming the devic
 
 * Bluey's blue LED will start blinking in a 'timebomb' pattern, indicating that it is in DFU bootloader mode. Now you can press upload button in arduino IDE to program your code.
 
+* Bluey library for arduino is available [here](https://github.com/electronut/ElectronutLabs_Bluey_Arduino_Library). Download the zip file from github repository and extract the files to *Documents/Arduino/libraries* directory for Windows OS.
+
 ## Pin mapping
 
 ```
