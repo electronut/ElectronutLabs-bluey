@@ -77,7 +77,7 @@ Although Bluey is shipped with the bootloader that enables programming the devic
 
 * After tools installation, you can now select "Electronut labs bluey" from the tools menu, and other related options. 
 
-* Bluey comes preprogrammed with [serial DFU bootloader], which Nordic's nrfjprog utility can program using serial connection. To trigger bootloader, press and hold button1, press the Reset button and then release button1.
+* Bluey comes preprogrammed with [serial DFU bootloader](https://github.com/electronut/bluey_serial_dfu_bootloader/), which Nordic's nrfjprog utility can program using serial connection. To trigger bootloader, press and hold button1, press the Reset button and then release button1.
 
 * Bluey's blue LED will start blinking in a 'timebomb' pattern, indicating that it is in DFU bootloader mode. Now you can press upload button in arduino IDE to program your code.
 
