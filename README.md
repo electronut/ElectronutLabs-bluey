@@ -36,7 +36,7 @@ Bluey is shipped with either Arduino bootloader or Nordic DFU-OTA bootloader as 
 
 <h2 name="Arduino"> Guide: Using Arduino </h2>
 
-<img src="images/bluey1.2-sm.jpg" alt="Bluey 1.1" />
+<img src="images/arduino-ide.jpg" alt="Bluey 1.1" />
 
 ## Installation
 
