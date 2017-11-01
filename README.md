@@ -117,7 +117,7 @@ Although Bluey is shipped with the bootloader that enables programming the devic
 
 ## Low Frequency Clock Source (LFCLKSRC)
 
-If the selected board has an external 32 kHz crystal connected, it will be used as the source for the low frequency clock. Otherwise the internal 32 kHz RC oscillator will be used. The low frequency clock is used by the `delay(ms)` and `millis()` Arduino API's.
+Bluey has an external 32 kHz crystal connected, thus, it will be used as the source for the low frequency clock. The internal 32 kHz RC oscillator can be used by removing the external crystal. The low frequency clock is used by the `delay(ms)` and `millis()` Arduino API's.
 
 Bluey has an additional menu item under `Tools -> Low Frequency Clock` that allows you to select the low frequency clock source.
 
