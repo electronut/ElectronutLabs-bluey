@@ -26,15 +26,15 @@ NFC, and in fact the board comes with a built-in NFC PCB antenna.
 
 ## Getting Started with Bluey
 
-Bluey is shipped with either Arduino bootloader or Nordic DFU-OTA bootloader as per the sellection at the tie of purchase. While Arduino bootloader facilitates programming Bluey using Arduino IDE via serial USB cable, Nordic's DFU-OTA bootloader allows the user to update device firmware using Nordic's software development kit (SDK) and nRF Connect mobile application over bluetooth.
+Bluey is shipped with either Arduino bootloader or Nordic DFU-OTA bootloader as per the selection at the time of purchase. While Arduino bootloader facilitates programming Bluey using Arduino IDE via serial USB cable, Nordic's DFU-OTA bootloader allows the user to update device firmware using Nordic's software development kit (SDK) and nRF Connect mobile application over bluetooth.
 
-<h3><a href="#Arduino">Guide: Arduino Bootloader</a><h3/>
+<h3><a href="#Arduino">Guide: Using Arduino</a><h3/>
 
-<h3><a href="#Nordic OTA">Guide: Nordic DFU-OTA Bootloader</a><h3/>
+<h3><a href="#Nordic OTA">Guide: Using Nordic SDK</a><h3/>
 
 <hr />
 
-<h2 name="Arduino"> Guide: Arduino Bootloader </h2>
+<h2 name="Arduino"> Guide: Using Arduino </h2>
 
 <img src="images/bluey1.2-sm.jpg" alt="Bluey 1.1" />
 
@@ -135,7 +135,7 @@ Bluey has an additional menu item under `Tools -> Low Frequency Clock` that allo
 
 <hr />
 
-<h2 name="Nordic OTA"> Guide: Nordic DFU-OTA Bootloader </h2>
+<h2 name="Nordic OTA"> Guide: Using Nordic SDK </h2>
 
 To get a project up and running with **bluey**, you need to first build the code to generate a *.hex*
 file and then upload it to the board.
