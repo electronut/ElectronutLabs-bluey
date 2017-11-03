@@ -28,6 +28,8 @@ NFC, and in fact the board comes with a built-in NFC PCB antenna.
 
 Bluey is shipped with either Arduino bootloader or Nordic DFU-OTA bootloader as per the selection at the time of purchase. While Arduino bootloader facilitates programming Bluey using Arduino IDE via serial USB cable, Nordic's DFU-OTA bootloader allows the user to update device firmware using Nordic's software development kit (SDK) and nRF Connect mobile application over bluetooth.
 
+We have created an [Arduino library](https://github.com/electronut/ElectronutLabs_Bluey_Arduino_Library) with example projects to help you get started quickly.
+
 <h3><a href="#Arduino">Guide: Using Arduino</a><h3/>
 
 <h3><a href="#Nordic OTA">Guide: Using Nordic SDK</a><h3/>
@@ -81,7 +83,7 @@ Although Bluey is shipped with the bootloader that enables programming the devic
 
 * Bluey's blue LED will start blinking in a 'timebomb' pattern, indicating that it is in DFU bootloader mode. Now you can press upload button in arduino IDE to program your code.
 
-* Bluey library for arduino is available [here](https://github.com/electronut/ElectronutLabs_Bluey_Arduino_Library). Download the zip file from github repository and extract the files to *Documents/Arduino/libraries* directory for Windows OS.
+* Bluey library for arduino is available at [ElectronutLabs_Bluey_Arduino_Library](https://github.com/electronut/ElectronutLabs_Bluey_Arduino_Library) repository. Download the zip file from github repository and extract the files to *Documents/Arduino/libraries* directory for Windows OS.
 
 ### Steps
 
