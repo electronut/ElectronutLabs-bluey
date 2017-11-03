@@ -87,7 +87,7 @@ Although Bluey is shipped with the bootloader that enables programming the devic
 
 ### Steps
 
-* Set the device in bootloader mode as described above. 
+* Set the device in bootloader mode. To trigger bootloader, press and hold button1 (SW3) , press the Reset button (RST) and then release button1.
 
 * Go to: Tools > Boards. Select **Electronut labs Bluey**.
 
