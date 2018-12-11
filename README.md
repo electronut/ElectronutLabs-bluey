@@ -30,11 +30,11 @@ Bluey is shipped with either Arduino bootloader or Nordic DFU-OTA bootloader as 
 
 We have created an [Arduino library](https://github.com/electronut/ElectronutLabs_Bluey_Arduino_Library) with example projects to help you get started quickly.
 
-<h3><a href="#Arduino">Guide: Using Arduino</a><h3/>
+<h3><a href="#Arduino">Guide: Using Arduino</a></h3>
 
-<h3><a href="#Nordic OTA">Guide: Using Nordic SDK</a><h3/>
+<h3><a href="#Nordic OTA">Guide: Using Nordic SDK</a></h3>
 
-<hr />
+<hr>
 
 <h2 name="Arduino"> Guide: Using Arduino </h2>
 
@@ -45,7 +45,7 @@ We have created an [Arduino library](https://github.com/electronut/ElectronutLab
 Uploading without programmer requires bootloader programmed on the board. The repo [electronut/bluey_serial_dfu_bootloader](https://github.com/electronut/bluey_serial_dfu_bootloader/) 
 contains the source and precompiled hex file of the bootloader as `hex/s132_nrf52_2.0.0_softdevice.hex`.
 
-The bootloader has the softdevice s132 in it, so no other action is needed to use the BLEPeripheral library.
+The bootloader has the softdevice s132 in it, so no other action is needed to use the BLE Peripheral library.
 
 Bootloader mode is triggered by pressing and holding both prss buttons on bluey and releasing the reset button. The blue LED will start blinkng at an accelerating rate repeatedly to indicate that the bootloader mode is active.
 
