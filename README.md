@@ -40,6 +40,10 @@ We have created an [Arduino library](https://github.com/electronut/ElectronutLab
 
 <img src="images/arduino-ide.png" alt="Bluey 1.1" />
 
+
+
+
+
 ## Installation
 
 Uploading without programmer requires bootloader programmed on the board. The repo [electronut/bluey_serial_dfu_bootloader](https://github.com/electronut/bluey_serial_dfu_bootloader/) 
