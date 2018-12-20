@@ -66,7 +66,7 @@ Although Bluey is shipped with the bootloader that enables programming the devic
 
 ### Steps
 
-1. Download [bootloader]((https://github.com/electronut/bluey_serial_dfu_bootloader/))
+1. Download [bootloader](https://github.com/electronut/bluey_serial_dfu_bootloader/)
 2. Open command prompt and access the directory containing bootloader hex file.
 3. Follow steps as mentioned in the Bumpy [github](https://github.com/electronut/ElectronutLabs-bumpy) repository to connect and attach to Bluey target.
 4. Issue: `load s132_nrf52_2.0.0_softdevice.hex` command. Wait for the command to execute and load the file completely.
