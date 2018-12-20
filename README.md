@@ -36,7 +36,7 @@ We have created an [Arduino library](https://github.com/electronut/ElectronutLab
 
 <hr>
 
-<h2 name="Arduino"> Guide: Using Arduino </h2>
+<h2 id="Arduino"> Guide: Using Arduino </h2>
 
 <img src="images/arduino-ide.png" alt="Bluey 1.1" />
 
@@ -155,7 +155,7 @@ Bluey has an additional menu item under `Tools -> Low Frequency Clock` that allo
 
 <hr />
 
-<h2 name="Nordic OTA"> Guide: Using Nordic SDK </h2>
+<h2 id="Nordic OTA"> Guide: Using Nordic SDK </h2>
 
 To get a project up and running with **bluey**, you need to first build the code to generate a *.hex*
 file and then upload it to the board.
