@@ -54,7 +54,7 @@ Bootloader mode is triggered by pressing and holding both prss buttons on bluey 
  1. [Download and install the Arduino IDE](https://www.arduino.cc/en/Main/Software) (At least v1.6.12)
  2. Start the Arduino IDE
  3. Go into Preferences
- 4. Add ```https://raw.githubusercontent.com/electronut/arduino-bluey/master/docs/package_electronutlabs_boards_index.json``` as an "Additional Board Manager URL"
+ 4. Add ```https://raw.githubusercontent.com/electronut/arduino-boards/master/package_electronutlabs_boards_index.json``` as an "Additional Board Manager URL"
  5. Open the Boards Manager from the Tools -> Board menu and install "Electronut labs nRF5 Boards"
  6. Select 'Electronut labs bluey' from the Tools -> Board menu
 
